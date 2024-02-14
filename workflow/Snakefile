@@ -6,7 +6,6 @@ include: "rules/common.smk"
 # Define the parameters using the --config option
 fq1 = config["fq1"]
 fq2 = config["fq2"]
-#output_path = config["output_path"]
 sample = config["sample"]
 consensusTEs = config["consensusTEs"]
 threads = config["threads"]

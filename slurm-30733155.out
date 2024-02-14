@@ -1,0 +1,38 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+The flag 'directory' used in rule process_candidate_regions is only valid for outputs, not inputs.
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                          count
+-------------------------  -------
+align_reads                      1
+bam_to_fvec                      1
+candidate_regions                1
+decompress                       1
+fastp                            1
+process_candidate_regions        1
+total                            6
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Feb 13 20:13:10 2024]
+localrule fastp:
+    output: fastp/COR-023.csv.R1.fq.gz, fastp/COR-023.csv.R2.fq.gz, fastp/COR-023.csv.html, fastp/COR-023.csv.json
+    jobid: 4
+    reason: Missing output files: fastp/COR-023.csv.R2.fq.gz, fastp/COR-023.csv.R1.fq.gz
+    wildcards: sample=COR-023.csv
+    threads: 8
+    resources: tmpdir=/tmp
+
+fastp -w 8 --detect_adapter_for_pe -i /nas/longleaf/home/adaigle/work/mcclintock_stuff/rech_fq/SRRs/COR-023_1.fastq.gz -I /nas/longleaf/home/adaigle/work/mcclintock_stuff/rech_fq/SRRs/COR-023_2.fastq.gz -o fastp/COR-023.R1.fq.gz -O fastp/COR-023.R2.fq.gz -h fastp/COR-023.html -j fastp/COR-023.json
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+slurmstepd: error: *** JOB 30733155 ON c151403 CANCELLED AT 2024-02-13T20:13:46 ***
