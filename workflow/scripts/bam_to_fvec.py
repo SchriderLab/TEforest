@@ -10,11 +10,24 @@ import gc
 import numpy as np
 import pandas as pd
 from scipy import stats
-from exceptions import *
+
+# from exceptions import *
 import logging
 
 df = pd.DataFrame
 arr = np.ndarray
+
+
+class EmptyRegionError(Exception):
+    """Raised when data accessed from BAM file is empty for a given region."""
+
+    pass
+
+
+class EmtpyFeatVecError(Exception):
+    """Raised when a feature vector is empty but the BAM region was not."""
+
+    pass
 
 
 class SVMaker:
@@ -56,7 +69,7 @@ class SVMaker:
 
         # Get number of rows in bam file slice
         num_reads = int(subprocess.check_output(samtools_cmd + ["-c"]).decode("utf-8"))
-        #if num_reads > 10000:
+        # if num_reads > 10000:
         #    logging.warning(
         #        self.reg_str + "has too many reads, subsetting to a random 10000."
         #    )
@@ -127,7 +140,8 @@ class SVMaker:
         """
         region_data = region_data.drop_duplicates(ignore_index=True)
         region_data = region_data.dropna()
-        region_data = region_data[region_data["Quality"] > 0]
+        # removed this bc we need low mapping quality reads for repetitve regions
+        # region_data = region_data[region_data["Quality"] > 0]
         region_data = region_data[region_data["CIGAR"] != "*"].reset_index()
 
         return region_data
@@ -143,7 +157,7 @@ class SVMaker:
         """
         try:
             bam_df["Read_Length"] = bam_df["Sequence"].apply(len)
-            read_len = stats.mode(np.abs(bam_df["Read_Length"])).mode[0]
+            read_len = stats.mode(np.abs(bam_df["Read_Length"]), keepdims=True).mode[0]
         except:
             return None
 
@@ -272,6 +286,7 @@ class SVMaker:
                 str(int(region["Ref_begin"])),
                 str(int(region["Ref_end"])),
                 str(int(region["Class"])),
+                region["TE"],
             ]
         )
 
@@ -356,6 +371,67 @@ class SVMaker:
             )
             return None
 
+    def update_region(self, region: pd.Series, bamfile: str, savefile: bool = True):
+        """Generates data for a given region according to inputs, for writing files.
+        Instead of saving to a file, this will load in the preexisting file, and
+        concatenate the feature vectors together.
+        Args:
+            region (pd.Df): Information about genomic region
+            self.output_dir (str): Directory to output npy files to
+            num_procs (int): Number of processes to give samtools for accessing BAM files
+        """
+        self._set_reg_str(region)
+
+        try:
+
+            bam_df = self._get_bam_data(
+                bamfile,
+                region["Chrom"],
+                region["Ref_begin"],
+                region["Ref_end"],
+            )
+            if bam_df is None:
+                raise EmptyRegionError
+
+            reg_start = int(region["Ref_begin"])
+            reg_end = int(region["Ref_end"])
+            start_diff = int(bam_df["Read_Start"].min())
+
+            mapper = ReadMapper(start_diff, reg_start, reg_end)
+            pileup_arr = mapper.map_reads(bam_df)
+            if pileup_arr is None:
+                raise EmtpyFeatVecError
+
+            summary_arr = self._summarize_reads(pileup_arr)
+            # print("Summary arr", summary_arr)
+            feat_vec = self._create_sum_stats(summary_arr)
+            # print("Feat vec", feat_vec)
+
+            if savefile:
+                outfile = self._set_outfile_name(region)
+                first_feat_vec = np.load(
+                    os.path.join(self.output_dir, region["Sample"], outfile + ".npy")
+                )
+                second_feat_vec = np.concatenate((first_feat_vec, feat_vec), axis=0)
+                # if not os.path.exists(
+                #    os.path.join(self.output_dir, region["Sample"], outfile)
+                # ):
+                #    self._check_create_dir(region)
+                self._save_featvec(outfile, region, second_feat_vec)
+                #    print(outfile + " made.")
+
+                # else:
+                #    print(outfile + " already exists. Passing...")
+            else:
+                return feat_vec
+
+        except Exception:
+            logging.warning(
+                self.reg_str + f" couldn't be loaded.",
+                exc_info=True,
+            )
+            return None
+
 
 class ReadMapper:
     def __init__(self, start_diff: int, start: int, end: int):
@@ -384,34 +460,34 @@ class ReadMapper:
         """
         # fmt: off
 
-        reads_df.loc[:, "Read_Start"] = reads_df.loc[:, "Read_Start"] - self.start_diff
+        reads_df.loc[: , "Read_Start"] = reads_df.loc[: , "Read_Start"] - self.start_diff
 
         reads_df = reads_df.reset_index()
         if reads_df.shape[0] > 0:
             # Feats, reads, bp
-            pileup_arr = np.zeros((21, reads_df.shape[0], self.end - self.start))
+            pileup_arr = np.zeros((21 , reads_df.shape[0] , self.end - self.start))
             max_chunk_index = pileup_arr.shape[2] - 1
 
             for i in range(pileup_arr.shape[1]):
                 # Draw CIGAR string values on row
                 read_start_ind = reads_df["Read_Start"][i]
                 binary_cig_arr = self._parse_cigar(reads_df["CIGAR"][i])
-                _read_inds = list(range(read_start_ind, read_start_ind + binary_cig_arr.shape[2]))
-                read_inds = [i for i in _read_inds if i >= 0]
+                _read_inds = list(range(read_start_ind , read_start_ind + binary_cig_arr.shape[2]))
+                read_inds =[i for i in _read_inds if i >= 0]
 
                 # Nothing to map
                 if read_inds[0] >= max_chunk_index:
                     continue
 
-                read_inds, pileup_arr = self._map_cigar(pileup_arr, i, read_inds, max_chunk_index, binary_cig_arr)
-                pileup_arr = self._iterate_feats(reads_df, pileup_arr, i, read_inds)
+                read_inds , pileup_arr = self._map_cigar(pileup_arr , i , read_inds , max_chunk_index , binary_cig_arr)
+                pileup_arr = self._iterate_feats(reads_df , pileup_arr , i , read_inds)
                 #pileup_arr = self._draw_inserts(reads_df, pileup_arr, i, read_inds, max_chunk_index)
 
                 # Quality scores, will just scale these post-generation instead of binary vectors
-                pileup_arr[19, i, read_inds] = reads_df["Quality"][i]
+                pileup_arr[19 , i , read_inds] = reads_df["Quality"][i]
 
                 # Template length as a separate one?
-                pileup_arr[20, i, read_inds] = np.abs(reads_df["Template_Length"][i])
+                pileup_arr[20 , i , read_inds] = np.abs(reads_df["Template_Length"][i])
 
             return pileup_arr
 
@@ -568,10 +644,34 @@ def region_generator(sub_regions, output_dir, bam_dir):
 
     for idx, region in sub_regions.iterrows():
         # print(region)
-        bamfile = os.path.join(bam_dir, region["Sample"] + ".merge.sorted.bam")
+        bamfile = os.path.join(bam_dir, region["Sample"] + ".bam")
+        # this was used to access mcclintock bams, which add a _1.
+        # bamfile = os.path.join(bam_dir, region["Sample"] + "_1.sorted.bam")
+        # this line was used to get the final heterozygote file
+        # in the future the appropriate sample name should be used
+        # bamfile = os.path.join(bam_dir, "final_product.sort.bam")
         svm = SVMaker(bamfile, output_dir)
 
         svm.create_region(region, bamfile, True)
+
+        if idx % 1000 == 0:
+            gc.collect()
+
+
+def te_specific_region_generator(sub_regions, output_dir, te_bam_dir):
+    """
+    Run this if running this script separately on a dataset.
+    Otherwise create an SVMaker object and call create_mapper() for a single region.
+    """
+
+    for idx, region in sub_regions.iterrows():
+        # print(region)
+        bamfile = os.path.join(
+            te_bam_dir, region["Sample"] + "/" + region["TE"] + "_to_ISO1.bam"
+        )
+        svm = SVMaker(bamfile, output_dir)
+
+        svm.update_region(region, bamfile, True)
 
         if idx % 1000 == 0:
             gc.collect()
@@ -638,6 +738,19 @@ def parse_arguments() -> argparse.ArgumentParser:
         dest="stop_idx",
         help="Where to stop indexing the pandas dataframe for SLURM array parallelization.",
     )
+
+    parser.add_argument(
+        "-tebd",
+        "--te_bam_dir",
+        metavar="TE_BAM_DIR",
+        type=str,
+        required=False,
+        default="TrainingData/bamfiles/",
+        dest="te_bam_dir",
+        help="Path to TE BAM file directory. BAM filenames must match the entries in SAMPLE \
+                            column in input-file.csv. TE specific bam files must follow \
+                            structure TEname_to_ISO1.bam",
+    )
     args = parser.parse_args()
 
     return args
@@ -650,13 +763,14 @@ def main() -> None:
     print("Using ", N, "processes")
 
     regions = pd.read_csv(ua.input_file, header=None)  # , sep="\t")
-    regions.columns = ["Sample", "Chrom", "Ref_begin", "Ref_end", "Class"]
+    regions.columns = ["Sample", "Chrom", "Ref_begin", "Ref_end", "Class", "TE"]
     print(len(regions), "files to generate data for.")
     print(regions.head())
 
     # n = 5000
     # region_chunks = [regions[i : i + n] for i in range(0, regions.shape[0], n)]
     region_generator(regions, ua.output_dir, ua.bam_dir)
+    te_specific_region_generator(regions, ua.output_dir, ua.te_bam_dir)
 
     # p = mp.Pool(processes=1)
     # p.starmap(
