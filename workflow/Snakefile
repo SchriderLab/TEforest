@@ -3,8 +3,98 @@ from snakemake.utils import min_version
 min_version("8.0")
 
 include: "rules/common.smk"
+# Define the parameters using the --config option
+fq1 = config["fq1"]
+fq2 = config["fq2"]
+#output_path = config["output_path"]
+sample = config["sample"]
+consensusTEs = config["consensusTEs"]
+threads = config["threads"]
+ref_genome = config["ref_genome"]
+ref_te_locations = config["ref_te_locations"]
+euchromatin = config["euchromatin"]
 
 rule all:
     input:
         [],
+
+rule save_info:
+    output:
+        "info.txt"
+    shell:
+        """
+        echo "fq1 path: {fq1}" > {output}
+        echo "fq2 path: {fq2}" >> {output}
+        echo "Output path: {output}" >> {output}
+        echo "Sample name: {sample}" >> {output}
+        echo "Sample name: {threads}" >> {output}
+        """
+rule fastp:
+    output:
+        fq1_gz="fastp/{sample}.R1.fq.gz",
+        fq2_gz="fastp/{sample}.R2.fq.gz",
+        html="fastp/{sample}.html",
+        json="fastp/{sample}.json"
+    threads: threads
+    shell:
+        "fastp -w {threads} --detect_adapter_for_pe -i {fq1} -I {fq2} -o fastp/{sample}.R1.fq.gz -O fastp/{sample}.R2.fq.gz -h fastp/{sample}.html -j fastp/{sample}.json"
+
+candidate_regions_script = workflow.basedir + "/scripts/find_candidate_regions.sh"
+
+rule decompress:
+    input:
+        fq1_gz="fastp/{sample}.R1.fq.gz",
+        fq2_gz="fastp/{sample}.R2.fq.gz"
+    output:
+        fq1_qc="fastp/{sample}.R1.fq",
+        fq2_qc="fastp/{sample}.R2.fq"
+    threads: threads
+    shell:
+        "gunzip -c {input.fq1_gz} > {output.fq1_qc}; "
+        "gunzip -c {input.fq2_gz} > {output.fq2_qc}"
+
+rule candidate_regions:
+    input:
+        fq1_qc="fastp/{sample}.R1.fq",
+        fq2_qc="fastp/{sample}.R2.fq"
+    output:
+        directory("candidate_regions_data/{sample}"),
+        "candidate_regions_data/{sample}/completed.txt"
+    threads: threads
+    shell:
+        "{candidate_regions_script} -o candidate_regions_data/{sample} -c {consensusTEs} -r {ref_te_locations} -@ {threads} -g {ref_genome} -1 fastp/{sample}.R1.fq -2 fastp/{sample}.R2.fq -n {sample}"
+
+process_regions_script = workflow.basedir + "/scripts/process_candidate_regions.r"
+
+rule process_candidate_regions:
+    input:
+        directory("candidate_regions_data/{sample}")
+    output:
+        featvec_csv="featvec_csvs/{sample}.csv"
+    shell:
+        "{process_regions_script} {sample} {euchromatin}"
+
+rule align_reads:
+    input:
+        fq1_qc="fastp/{sample}.R1.fq",
+        fq2_qc="fastp/{sample}.R2.fq"
+    output:
+        bam="aligned/{sample}.bam"
+    threads: threads
+    shell:
+        """
+        bwa-mem2 mem -t {threads} {ref_genome} {input.fq1_qc} {input.fq2_qc} | samtools sort -@ {threads} -o {output.bam} -
+        samtools index {output.bam}
+        """
+
+bam_to_fvec_script = workflow.basedir + "/scripts/bam_to_fvec.py"
+
+rule bam_to_fvec:
+    input:
+        featvec_csv="featvec_csvs/{sample}.csv",
+        bam="aligned/{sample}.bam"
+    output:
+        directory("feature_vectors/{sample}")
+    shell:
+        "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors -bd {input.bam} -tebd {candidate_regions_data}"
 
