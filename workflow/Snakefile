@@ -7,11 +7,12 @@ include: "rules/common.smk"
 
 
 # Define the parameters using the --config option
+# sample=config["sample"]
 
 
 rule all:
     output:
-        sample=config["sample"],
+        [],
 
 
 rule save_info:
