@@ -16,19 +16,19 @@ rule all:
 
 
 rule fastp:
-    input:
-        #fq1=config["fq1"],
-        fq2=config["fq2"],
     output:
         fq1_gz="fastp/{sample}.R1.fq.gz",
         fq2_gz="fastp/{sample}.R2.fq.gz",
         html="fastp/{sample}.html",
         json="fastp/{sample}.json",
     threads: config["threads"]
+    params:
+        fq1=config["fq1"],
+        fq2=config["fq2"],
     benchmark:
         "benchmarks/{sample}.fastp.benchmark.txt"
     shell:
-        "fastp -w {threads} --detect_adapter_for_pe -i {input.fq1} -I {input.fq2} -o fastp/{sample}.R1.fq.gz -O fastp/{sample}.R2.fq.gz -h fastp/{sample}.html -j fastp/{sample}.json"
+        "fastp -w {threads} --detect_adapter_for_pe -i {params.fq1} -I {params.fq2} -o fastp/{sample}.R1.fq.gz -O fastp/{sample}.R2.fq.gz -h fastp/{sample}.html -j fastp/{sample}.json"
 
 
 rule decompress:
