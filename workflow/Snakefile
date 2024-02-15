@@ -7,16 +7,10 @@ include: "rules/common.smk"
 
 
 # Define the parameters using the --config option
-fq1 = config["fq1"]
-fq2 = config["fq2"]
+
 sample = config["sample"]
-consensusTEs = config["consensusTEs"]
-threads = config["threads"]
-ref_genome = config["ref_genome"]
-ref_te_locations = config["ref_te_locations"]
-euchromatin = config["euchromatin"]
-
-
+#threads = config["threads"]
+#threads = min(threads, cores)
 rule all:
     input:
         [],
@@ -36,17 +30,20 @@ rule save_info:
 
 
 rule fastp:
+    input:
+        fq1 = config["fq1"],
+        fq2 = config["fq2"],
     output:
         fq1_gz="fastp/{sample}.R1.fq.gz",
         fq2_gz="fastp/{sample}.R2.fq.gz",
         html="fastp/{sample}.html",
         json="fastp/{sample}.json",
-    threads: threads
+    threads: config["threads"]
+    benchmark:
+        "benchmarks/{sample}.fastp.benchmark.txt"
     shell:
-        "fastp -w {threads} --detect_adapter_for_pe -i {fq1} -I {fq2} -o fastp/{sample}.R1.fq.gz -O fastp/{sample}.R2.fq.gz -h fastp/{sample}.html -j fastp/{sample}.json"
+        "fastp -w {threads} --detect_adapter_for_pe -i {input.fq1} -I {input.fq2} -o fastp/{sample}.R1.fq.gz -O fastp/{sample}.R2.fq.gz -h fastp/{sample}.html -j fastp/{sample}.json"
 
-
-candidate_regions_script = workflow.basedir + "/scripts/find_candidate_regions.sh"
 
 
 rule decompress:
@@ -56,22 +53,33 @@ rule decompress:
     output:
         fq1_qc="fastp/{sample}.R1.fq",
         fq2_qc="fastp/{sample}.R2.fq",
-    threads: threads
+    threads: config["threads"]
+    benchmark:
+        "benchmarks/{sample}.decompress.benchmark.txt"
     shell:
         "gunzip -c {input.fq1_gz} > {output.fq1_qc}; "
         "gunzip -c {input.fq2_gz} > {output.fq2_qc}"
+
+
+candidate_regions_script = workflow.basedir + "/scripts/find_candidate_regions.sh"
+
 
 
 rule candidate_regions:
     input:
         fq1_qc="fastp/{sample}.R1.fq",
         fq2_qc="fastp/{sample}.R2.fq",
+        consensusTEs = config["consensusTEs"],
+        ref_genome = config["ref_genome"],
+        ref_te_locations = config["ref_te_locations"],
     output:
         directory("candidate_regions_data/{sample}"),
         "candidate_regions_data/{sample}/completed.txt",
-    threads: threads
+    threads: config["threads"]
+    benchmark:
+        "benchmarks/{sample}.candidate_regions.benchmark.txt"
     shell:
-        "{candidate_regions_script} -o candidate_regions_data/{sample} -c {consensusTEs} -r {ref_te_locations} -@ {threads} -g {ref_genome} -1 fastp/{sample}.R1.fq -2 fastp/{sample}.R2.fq -n {sample}"
+        "{candidate_regions_script} -o candidate_regions_data/{sample} -c {input.consensusTEs} -r {input.ref_te_locations} -@ {threads} -g {input.ref_genome} -1 {input.fq1_qc} -2 {input.fq2_qc} -n {sample}"
 
 
 process_regions_script = workflow.basedir + "/scripts/process_candidate_regions.r"
@@ -80,22 +88,28 @@ process_regions_script = workflow.basedir + "/scripts/process_candidate_regions.
 rule process_candidate_regions:
     input:
         "candidate_regions_data/{sample}",
+        euchromatin = config["euchromatin"],
     output:
         featvec_csv="featvec_csvs/{sample}.csv",
+    benchmark:
+        "benchmarks/{sample}.process_candidate_regions.benchmark.txt"
     shell:
-        "{process_regions_script} {sample} {euchromatin}"
+        "{process_regions_script} {sample} {input.euchromatin}"
 
 
 rule align_reads:
     input:
         fq1_qc="fastp/{sample}.R1.fq",
         fq2_qc="fastp/{sample}.R2.fq",
+        ref_genome = config["ref_genome"],
     output:
         bam="aligned/{sample}.bam",
-    threads: threads
+    threads: config["threads"]
+    benchmark:
+        "benchmarks/{sample}.align_reads.benchmark.txt"
     shell:
         """
-        bwa-mem2 mem -t {threads} {ref_genome} {input.fq1_qc} {input.fq2_qc} | samtools sort -@ {threads} -o {output.bam} -
+        bwa-mem2 mem -t {threads} {input.ref_genome} {input.fq1_qc} {input.fq2_qc} | samtools sort -@ {threads} -o {output.bam} -
         samtools index {output.bam}
         """
 
@@ -108,6 +122,41 @@ rule bam_to_fvec:
         featvec_csv="featvec_csvs/{sample}.csv",
         bam="aligned/{sample}.bam",
     output:
-        directory("feature_vectors/{sample}"),
+        feat_vec_dir = directory("feature_vectors/{sample}"),
+    benchmark:
+        "benchmarks/{sample}.bam_to_fvec.benchmark.txt"
     shell:
         "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors -bd aligned -tebd candidate_regions_data"
+
+
+
+condense_data_script = workflow.basedir + "/scripts/condense_training_data.py"
+
+
+rule condense_data:
+    input:
+        feat_vec_dir = "feature_vectors/{sample}",
+    output:
+        npz = "condensed_feature_vectors/{sample}/{sample}_condense.npz",
+    benchmark:
+        "benchmarks/{sample}.condense_data.benchmark.txt"
+    shell:
+        "python {condense_data_script} -i {input.feat_vec_dir} -o {output.npz}"
+
+
+
+use_model_script = workflow.basedir + "/scripts/use_model.py"
+
+
+rule use_model:
+    input:
+        #featvec_csv="featvec_csvs/{sample}.csv",
+        npz = "condensed_feature_vectors/{sample}/{sample}_condense.npz",
+        model = config["model"],
+    output:
+        output = "output/{sample}/predictions.csv"
+    threads: config["threads"]
+    benchmark:
+        "benchmarks/{sample}.use_model.benchmark.txt"
+    shell:
+        "python {use_model_script} -n {input.npz} -m {input.model} -o output/{sample}"

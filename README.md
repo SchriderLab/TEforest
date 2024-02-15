@@ -1,7 +1,5 @@
-# \<your workflow name\>
+# \<TEforest\>
 
 [![Actions Status](https://github.com/mrvollger/SmkTemplate/workflows/CI/badge.svg)](https://github.com/mrvollger/SmkTemplate/actions)
 
-This is a Snakemake project template. The `Snakefile` is under `workflow`.
-
-[Slides](https://mrvollger.github.io/SmkTemplate/slides) describing and justifying the use of this template.
+This is a Snakemake project. The `Snakefile` is under `workflow`.
