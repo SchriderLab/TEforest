@@ -15,22 +15,9 @@ rule all:
         [],
 
 
-rule save_info:
-    output:
-        "info.txt",
-    shell:
-        """
-        echo "fq1 path: {fq1}" > {output}
-        echo "fq2 path: {fq2}" >> {output}
-        echo "Output path: {output}" >> {output}
-        echo "Sample name: {sample}" >> {output}
-        echo "Sample name: {threads}" >> {output}
-        """
-
-
 rule fastp:
     input:
-        fq1=config["fq1"],
+        #fq1=config["fq1"],
         fq2=config["fq2"],
     output:
         fq1_gz="fastp/{sample}.R1.fq.gz",
