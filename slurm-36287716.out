@@ -1,0 +1,2837 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:148: SyntaxWarning: invalid escape sequence '\/'
+  output:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:149: SyntaxWarning: invalid escape sequence '\/'
+  featvec_csv="featvec_csvs/{sample}.csv",
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:155: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:155: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:185: SyntaxWarning: invalid escape sequence '\/'
+  generate_synthetic_hets_script = workflow.basedir + "/scripts/generate_heterozygote_fqs.sh"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:186: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:194: SyntaxWarning: invalid escape sequence '\/'
+  het_reads_dir = directory("het_reads/{sample}"),
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:194: SyntaxWarning: invalid escape sequence '\/'
+  het_reads_dir = directory("het_reads/{sample}"),
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                                count
+-------------------------------  -------
+benchmark                              3
+find_breakpoints_het                   3
+find_breakpoints_het_classifier        3
+split_data                             3
+split_data_classifier                  3
+train_validate                         3
+train_validate_classifier              3
+total                                 21
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Apr 17 14:16:54 2024]
+localcheckpoint train_validate:
+    input: feature_vectors_het/A2_A3
+    output: 2L2R/A2_A3.txt, 3L3RX/A2_A3.txt
+    jobid: 24
+    reason: Missing output files: 2L2R/A2_A3.txt
+    wildcards: sample=A2_A3
+    threads: 32
+    resources: tmpdir=/tmp
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s A2_A3 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo
+Output directory exists
+Output directory exists
+/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/A2_A3 /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/JUT-008_MUN-009
+Condensing data:   0%|          | 0/10215 [00:00<?, ?it/s]Condensing data:   1%|▏         | 136/10215 [00:00<00:07, 1355.87it/s]Condensing data:   3%|▎         | 272/10215 [00:00<00:08, 1153.03it/s]Condensing data:   5%|▍         | 495/10215 [00:00<00:06, 1600.76it/s]Condensing data:   7%|▋         | 683/10215 [00:00<00:05, 1704.67it/s]Condensing data:   8%|▊         | 858/10215 [00:00<00:06, 1401.13it/s]Condensing data:  10%|▉         | 1008/10215 [00:00<00:07, 1305.41it/s]Condensing data:  11%|█         | 1146/10215 [00:00<00:07, 1264.09it/s]Condensing data:  13%|█▎        | 1277/10215 [00:00<00:07, 1220.72it/s]Condensing data:  14%|█▎        | 1402/10215 [00:01<00:07, 1161.95it/s]Condensing data:  15%|█▍        | 1520/10215 [00:01<00:08, 1085.51it/s]Condensing data:  16%|█▌        | 1630/10215 [00:01<00:08, 988.53it/s] Condensing data:  17%|█▋        | 1731/10215 [00:01<00:08, 978.30it/s]Condensing data:  18%|█▊        | 1833/10215 [00:01<00:08, 986.29it/s]Condensing data:  19%|█▉        | 1934/10215 [00:01<00:08, 986.91it/s]Condensing data:  20%|█▉        | 2034/10215 [00:01<00:08, 981.31it/s]Condensing data:  21%|██        | 2145/10215 [00:01<00:07, 1015.94it/s]Condensing data:  22%|██▏       | 2248/10215 [00:01<00:07, 1003.28it/s]Condensing data:  23%|██▎       | 2381/10215 [00:02<00:07, 1097.27it/s]Condensing data:  24%|██▍       | 2492/10215 [00:02<00:07, 1082.17it/s]Condensing data:  26%|██▌       | 2619/10215 [00:02<00:06, 1134.56it/s]Condensing data:  27%|██▋       | 2762/10215 [00:02<00:06, 1217.18it/s]Condensing data:  28%|██▊       | 2896/10215 [00:02<00:05, 1252.76it/s]Condensing data:  30%|██▉       | 3030/10215 [00:02<00:05, 1277.38it/s]Condensing data:  31%|███       | 3160/10215 [00:02<00:05, 1282.15it/s]Condensing data:  32%|███▏      | 3289/10215 [00:02<00:05, 1279.11it/s]Condensing data:  33%|███▎      | 3418/10215 [00:02<00:05, 1201.14it/s]Condensing data:  35%|███▍      | 3540/10215 [00:03<00:05, 1138.58it/s]Condensing data:  36%|███▌      | 3657/10215 [00:03<00:05, 1145.55it/s]Condensing data:  37%|███▋      | 3773/10215 [00:03<00:05, 1104.04it/s]Condensing data:  38%|███▊      | 3885/10215 [00:03<00:06, 1026.83it/s]Condensing data:  39%|███▉      | 3991/10215 [00:03<00:06, 1033.07it/s]Condensing data:  40%|████      | 4100/10215 [00:03<00:05, 1046.28it/s]Condensing data:  41%|████      | 4210/10215 [00:03<00:05, 1060.77it/s]Condensing data:  42%|████▏     | 4317/10215 [00:03<00:05, 1046.55it/s]Condensing data:  43%|████▎     | 4423/10215 [00:03<00:05, 1049.15it/s]Condensing data:  44%|████▍     | 4538/10215 [00:03<00:05, 1075.49it/s]Condensing data:  46%|████▌     | 4651/10215 [00:04<00:05, 1091.11it/s]Condensing data:  47%|████▋     | 4805/10215 [00:04<00:04, 1220.57it/s]Condensing data:  49%|████▊     | 4958/10215 [00:04<00:04, 1307.72it/s]Condensing data:  50%|█████     | 5126/10215 [00:04<00:03, 1416.76it/s]Condensing data:  52%|█████▏    | 5326/10215 [00:04<00:03, 1590.14it/s]Condensing data:  54%|█████▍    | 5534/10215 [00:04<00:02, 1735.29it/s]Condensing data:  56%|█████▌    | 5715/10215 [00:04<00:02, 1756.47it/s]Condensing data:  58%|█████▊    | 5891/10215 [00:04<00:02, 1726.11it/s]Condensing data:  60%|█████▉    | 6095/10215 [00:04<00:02, 1818.57it/s]Condensing data:  62%|██████▏   | 6325/10215 [00:04<00:01, 1960.99it/s]Condensing data:  64%|██████▍   | 6538/10215 [00:05<00:01, 2009.99it/s]Condensing data:  66%|██████▌   | 6764/10215 [00:05<00:01, 2083.62it/s]Condensing data:  68%|██████▊   | 6974/10215 [00:05<00:01, 2085.51it/s]Condensing data:  70%|███████   | 7183/10215 [00:07<00:11, 257.16it/s] Condensing data:  72%|███████▏  | 7332/10215 [00:08<00:13, 215.75it/s]Condensing data:  73%|███████▎  | 7441/10215 [00:08<00:11, 249.25it/s]Condensing data:  74%|███████▍  | 7551/10215 [00:09<00:08, 300.32it/s]Condensing data:  75%|███████▍  | 7659/10215 [00:09<00:07, 362.04it/s]Condensing data:  76%|███████▌  | 7767/10215 [00:09<00:05, 434.70it/s]Condensing data:  77%|███████▋  | 7889/10215 [00:09<00:04, 533.79it/s]Condensing data:  78%|███████▊  | 8007/10215 [00:09<00:03, 632.70it/s]Condensing data:  80%|███████▉  | 8121/10215 [00:09<00:02, 723.48it/s]Condensing data:  81%|████████  | 8234/10215 [00:09<00:02, 793.47it/s]Condensing data:  82%|████████▏ | 8345/10215 [00:09<00:02, 827.88it/s]Condensing data:  83%|████████▎ | 8467/10215 [00:09<00:01, 918.96it/s]Condensing data:  84%|████████▍ | 8594/10215 [00:10<00:01, 1005.83it/s]Condensing data:  85%|████████▌ | 8712/10215 [00:10<00:01, 1050.63it/s]Condensing data:  86%|████████▋ | 8833/10215 [00:10<00:01, 1093.99it/s]Condensing data:  88%|████████▊ | 8951/10215 [00:10<00:01, 1072.99it/s]Condensing data:  89%|████████▊ | 9064/10215 [00:10<00:01, 1082.56it/s]Condensing data:  90%|████████▉ | 9177/10215 [00:10<00:00, 1094.20it/s]Condensing data:  91%|█████████ | 9298/10215 [00:10<00:00, 1126.20it/s]Condensing data:  92%|█████████▏| 9413/10215 [00:11<00:02, 310.01it/s] Condensing data:  93%|█████████▎| 9497/10215 [00:12<00:03, 188.26it/s]Condensing data:  94%|█████████▍| 9618/10215 [00:12<00:02, 259.86it/s]Condensing data:  95%|█████████▌| 9721/10215 [00:12<00:01, 329.97it/s]Condensing data:  96%|█████████▌| 9820/10215 [00:12<00:00, 405.63it/s]Condensing data:  97%|█████████▋| 9923/10215 [00:13<00:00, 493.14it/s]Condensing data:  98%|█████████▊| 10017/10215 [00:13<00:00, 567.28it/s]Condensing data:  99%|█████████▉| 10114/10215 [00:13<00:00, 642.50it/s]Condensing data: 100%|█████████▉| 10209/10215 [00:13<00:00, 708.28it/s]Condensing data: 100%|██████████| 10215/10215 [00:13<00:00, 763.89it/s]
+Condensing data:   0%|          | 0/24625 [00:00<?, ?it/s]Condensing data:   1%|          | 194/24625 [00:00<00:12, 1928.03it/s]Condensing data:   2%|▏         | 389/24625 [00:00<00:12, 1922.19it/s]Condensing data:   2%|▏         | 582/24625 [00:02<02:15, 177.20it/s] Condensing data:   3%|▎         | 691/24625 [00:02<01:46, 224.35it/s]Condensing data:   3%|▎         | 789/24625 [00:02<01:31, 260.00it/s]Condensing data:   4%|▎         | 869/24625 [00:03<01:23, 285.84it/s]Condensing data:   4%|▍         | 937/24625 [00:03<01:13, 323.46it/s]Condensing data:   4%|▍         | 1003/24625 [00:03<01:04, 366.50it/s]Condensing data:   4%|▍         | 1069/24625 [00:03<00:57, 409.38it/s]Condensing data:   5%|▍         | 1134/24625 [00:03<00:52, 451.41it/s]Condensing data:   5%|▍         | 1199/24625 [00:03<00:48, 480.15it/s]Condensing data:   5%|▌         | 1282/24625 [00:03<00:41, 557.25it/s]Condensing data:   5%|▌         | 1351/24625 [00:03<00:40, 568.53it/s]Condensing data:   6%|▌         | 1426/24625 [00:03<00:37, 610.66it/s]Condensing data:   6%|▌         | 1495/24625 [00:03<00:37, 619.30it/s]Condensing data:   6%|▋         | 1563/24625 [00:04<00:38, 596.58it/s]Condensing data:   7%|▋         | 1632/24625 [00:04<00:37, 619.66it/s]Condensing data:   7%|▋         | 1702/24625 [00:04<00:35, 641.52it/s]Condensing data:   7%|▋         | 1769/24625 [00:04<00:35, 638.19it/s]Condensing data:   8%|▊         | 1848/24625 [00:04<00:33, 679.63it/s]Condensing data:   8%|▊         | 1918/24625 [00:04<00:33, 667.85it/s]Condensing data:   8%|▊         | 1986/24625 [00:04<00:34, 651.61it/s]Condensing data:   8%|▊         | 2052/24625 [00:04<00:34, 651.98it/s]Condensing data:   9%|▊         | 2118/24625 [00:04<00:37, 605.87it/s]Condensing data:   9%|▉         | 2180/24625 [00:05<00:37, 591.69it/s]Condensing data:   9%|▉         | 2240/24625 [00:05<00:39, 572.08it/s]Condensing data:   9%|▉         | 2298/24625 [00:05<00:39, 562.83it/s]Condensing data:  10%|▉         | 2363/24625 [00:05<00:37, 586.27it/s]Condensing data:  10%|▉         | 2435/24625 [00:05<00:35, 621.42it/s]Condensing data:  10%|█         | 2498/24625 [00:05<00:37, 596.87it/s]Condensing data:  10%|█         | 2559/24625 [00:05<00:37, 595.39it/s]Condensing data:  11%|█         | 2636/24625 [00:05<00:34, 643.48it/s]Condensing data:  11%|█         | 2701/24625 [00:05<00:34, 629.36it/s]Condensing data:  11%|█         | 2765/24625 [00:06<00:36, 597.14it/s]Condensing data:  12%|█▏        | 2833/24625 [00:06<00:35, 619.47it/s]Condensing data:  12%|█▏        | 2910/24625 [00:06<00:32, 661.25it/s]Condensing data:  12%|█▏        | 2977/24625 [00:06<00:32, 663.70it/s]Condensing data:  12%|█▏        | 3060/24625 [00:06<00:30, 710.75it/s]Condensing data:  13%|█▎        | 3139/24625 [00:06<00:29, 733.11it/s]Condensing data:  13%|█▎        | 3213/24625 [00:06<00:29, 730.38it/s]Condensing data:  13%|█▎        | 3288/24625 [00:06<00:29, 734.12it/s]Condensing data:  14%|█▎        | 3362/24625 [00:06<00:29, 719.72it/s]Condensing data:  14%|█▍        | 3435/24625 [00:06<00:31, 662.27it/s]Condensing data:  14%|█▍        | 3506/24625 [00:07<00:31, 674.38it/s]Condensing data:  15%|█▍        | 3575/24625 [00:07<00:33, 633.81it/s]Condensing data:  15%|█▍        | 3648/24625 [00:07<00:31, 659.21it/s]Condensing data:  15%|█▌        | 3726/24625 [00:07<00:30, 692.30it/s]Condensing data:  15%|█▌        | 3797/24625 [00:07<00:30, 683.81it/s]Condensing data:  16%|█▌        | 3877/24625 [00:07<00:28, 715.67it/s]Condensing data:  16%|█▌        | 3953/24625 [00:07<00:28, 728.34it/s]Condensing data:  16%|█▋        | 4030/24625 [00:07<00:27, 739.50it/s]Condensing data:  17%|█▋        | 4106/24625 [00:07<00:27, 741.43it/s]Condensing data:  17%|█▋        | 4181/24625 [00:08<00:27, 736.88it/s]Condensing data:  17%|█▋        | 4257/24625 [00:08<00:27, 743.63it/s]Condensing data:  18%|█▊        | 4344/24625 [00:08<00:26, 779.87it/s]Condensing data:  18%|█▊        | 4430/24625 [00:08<00:25, 802.93it/s]Condensing data:  18%|█▊        | 4521/24625 [00:08<00:24, 833.52it/s]Condensing data:  19%|█▊        | 4605/24625 [00:08<00:24, 818.99it/s]Condensing data:  19%|█▉        | 4692/24625 [00:08<00:23, 832.49it/s]Condensing data:  19%|█▉        | 4796/24625 [00:08<00:22, 891.62it/s]Condensing data:  20%|█▉        | 4886/24625 [00:08<00:22, 874.08it/s]Condensing data:  20%|██        | 4974/24625 [00:08<00:24, 815.27it/s]Condensing data:  21%|██        | 5057/24625 [00:09<00:23, 819.12it/s]Condensing data:  21%|██        | 5140/24625 [00:09<00:24, 798.89it/s]Condensing data:  21%|██        | 5225/24625 [00:09<00:23, 810.20it/s]Condensing data:  22%|██▏       | 5328/24625 [00:09<00:22, 872.19it/s]Condensing data:  22%|██▏       | 5433/24625 [00:09<00:20, 920.66it/s]Condensing data:  22%|██▏       | 5535/24625 [00:09<00:20, 948.22it/s]Condensing data:  23%|██▎       | 5645/24625 [00:09<00:19, 990.29it/s]Condensing data:  23%|██▎       | 5745/24625 [00:09<00:20, 943.39it/s]Condensing data:  24%|██▎       | 5840/24625 [00:09<00:21, 890.65it/s]Condensing data:  24%|██▍       | 5930/24625 [00:10<00:22, 829.66it/s]Condensing data:  24%|██▍       | 6019/24625 [00:10<00:22, 845.10it/s]Condensing data:  25%|██▍       | 6112/24625 [00:10<00:21, 866.71it/s]Condensing data:  25%|██▌       | 6258/24625 [00:10<00:17, 1034.18it/s]Condensing data:  26%|██▌       | 6396/24625 [00:10<00:16, 1133.03it/s]Condensing data:  26%|██▋       | 6511/24625 [00:10<00:16, 1110.05it/s]Condensing data:  27%|██▋       | 6624/24625 [00:10<00:16, 1095.08it/s]Condensing data:  27%|██▋       | 6740/24625 [00:10<00:16, 1112.01it/s]Condensing data:  28%|██▊       | 6873/24625 [00:10<00:15, 1174.07it/s]Condensing data:  28%|██▊       | 6991/24625 [00:11<00:18, 931.69it/s] Condensing data:  29%|██▉       | 7093/24625 [00:11<00:19, 912.89it/s]Condensing data:  29%|██▉       | 7190/24625 [00:13<02:21, 123.12it/s]Condensing data:  29%|██▉       | 7259/24625 [00:13<01:59, 145.24it/s]Condensing data:  30%|██▉       | 7321/24625 [00:14<01:44, 165.47it/s]Condensing data:  30%|██▉       | 7374/24625 [00:14<01:33, 183.80it/s]Condensing data:  30%|███       | 7421/24625 [00:14<01:22, 207.90it/s]Condensing data:  30%|███       | 7491/24625 [00:14<01:04, 265.06it/s]Condensing data:  31%|███       | 7606/24625 [00:14<00:43, 390.89it/s]Condensing data:  31%|███       | 7678/24625 [00:14<00:41, 413.24it/s]Condensing data:  31%|███▏      | 7743/24625 [00:14<00:42, 393.89it/s]Condensing data:  32%|███▏      | 7799/24625 [00:15<00:43, 382.79it/s]Condensing data:  32%|███▏      | 7849/24625 [00:15<00:44, 378.84it/s]Condensing data:  32%|███▏      | 7901/24625 [00:15<00:41, 406.86it/s]Condensing data:  32%|███▏      | 7949/24625 [00:15<00:41, 400.57it/s]Condensing data:  32%|███▏      | 7994/24625 [00:15<00:44, 373.98it/s]Condensing data:  33%|███▎      | 8035/24625 [00:15<00:46, 355.47it/s]Condensing data:  33%|███▎      | 8073/24625 [00:15<00:46, 358.09it/s]Condensing data:  33%|███▎      | 8111/24625 [00:15<00:46, 357.53it/s]Condensing data:  33%|███▎      | 8148/24625 [00:16<00:46, 355.36it/s]Condensing data:  33%|███▎      | 8185/24625 [00:16<00:47, 349.46it/s]Condensing data:  34%|███▎      | 8256/24625 [00:16<00:36, 446.93it/s]Condensing data:  34%|███▍      | 8392/24625 [00:16<00:23, 701.31it/s]Condensing data:  35%|███▍      | 8520/24625 [00:16<00:18, 865.97it/s]Condensing data:  35%|███▌      | 8661/24625 [00:16<00:15, 1022.81it/s]Condensing data:  36%|███▌      | 8800/24625 [00:16<00:14, 1130.01it/s]Condensing data:  36%|███▋      | 8941/24625 [00:16<00:12, 1212.43it/s]Condensing data:  37%|███▋      | 9066/24625 [00:16<00:12, 1223.12it/s]Condensing data:  37%|███▋      | 9203/24625 [00:17<00:12, 1266.64it/s]Condensing data:  38%|███▊      | 9331/24625 [00:17<00:12, 1220.88it/s]Condensing data:  38%|███▊      | 9470/24625 [00:17<00:11, 1269.65it/s]Condensing data:  39%|███▉      | 9617/24625 [00:17<00:11, 1326.79it/s]Condensing data:  40%|███▉      | 9761/24625 [00:17<00:10, 1359.34it/s]Condensing data:  40%|████      | 9898/24625 [00:17<00:11, 1296.61it/s]Condensing data:  41%|████      | 10032/24625 [00:17<00:11, 1305.54it/s]Condensing data:  41%|████▏     | 10177/24625 [00:17<00:10, 1346.32it/s]Condensing data:  42%|████▏     | 10313/24625 [00:17<00:11, 1219.49it/s]Condensing data:  42%|████▏     | 10438/24625 [00:17<00:11, 1200.86it/s]Condensing data:  43%|████▎     | 10579/24625 [00:18<00:11, 1257.97it/s]Condensing data:  44%|████▎     | 10720/24625 [00:18<00:10, 1298.67it/s]Condensing data:  44%|████▍     | 10859/24625 [00:18<00:10, 1318.63it/s]Condensing data:  45%|████▍     | 11009/24625 [00:18<00:09, 1370.48it/s]Condensing data:  45%|████▌     | 11154/24625 [00:18<00:09, 1391.27it/s]Condensing data:  46%|████▌     | 11294/24625 [00:18<00:10, 1320.32it/s]Condensing data:  46%|████▋     | 11428/24625 [00:18<00:10, 1311.82it/s]Condensing data:  47%|████▋     | 11560/24625 [00:18<00:11, 1104.24it/s]Condensing data:  48%|████▊     | 11698/24625 [00:18<00:11, 1173.88it/s]Condensing data:  48%|████▊     | 11821/24625 [00:19<00:11, 1152.54it/s]Condensing data:  49%|████▊     | 11971/24625 [00:19<00:10, 1246.32it/s]Condensing data:  49%|████▉     | 12100/24625 [00:19<00:10, 1192.48it/s]Condensing data:  50%|████▉     | 12222/24625 [00:19<00:10, 1179.36it/s]Condensing data:  50%|█████     | 12342/24625 [00:19<00:15, 813.50it/s] Condensing data:  51%|█████     | 12440/24625 [00:21<01:04, 188.75it/s]Condensing data:  51%|█████     | 12555/24625 [00:21<00:48, 249.90it/s]Condensing data:  51%|█████▏    | 12647/24625 [00:21<00:39, 305.52it/s]Condensing data:  52%|█████▏    | 12748/24625 [00:21<00:31, 380.20it/s]Condensing data:  52%|█████▏    | 12847/24625 [00:21<00:25, 460.26it/s]Condensing data:  53%|█████▎    | 12944/24625 [00:21<00:21, 539.56it/s]Condensing data:  53%|█████▎    | 13038/24625 [00:22<00:20, 552.39it/s]Condensing data:  53%|█████▎    | 13122/24625 [00:22<00:19, 594.72it/s]Condensing data:  54%|█████▎    | 13219/24625 [00:22<00:16, 673.14it/s]Condensing data:  54%|█████▍    | 13305/24625 [00:23<00:40, 277.59it/s]Condensing data:  54%|█████▍    | 13369/24625 [00:24<01:20, 139.77it/s]Condensing data:  55%|█████▍    | 13462/24625 [00:24<00:58, 192.18it/s]Condensing data:  55%|█████▌    | 13553/24625 [00:24<00:43, 254.29it/s]Condensing data:  55%|█████▌    | 13651/24625 [00:24<00:32, 333.97it/s]Condensing data:  56%|█████▌    | 13751/24625 [00:24<00:25, 423.33it/s]Condensing data:  56%|█████▋    | 13854/24625 [00:24<00:20, 521.45it/s]Condensing data:  57%|█████▋    | 13966/24625 [00:24<00:16, 632.98it/s]Condensing data:  57%|█████▋    | 14062/24625 [00:25<00:15, 671.71it/s]Condensing data:  58%|█████▊    | 14162/24625 [00:25<00:14, 744.52it/s]Condensing data:  58%|█████▊    | 14259/24625 [00:25<00:13, 795.79it/s]Condensing data:  58%|█████▊    | 14354/24625 [00:25<00:12, 808.58it/s]Condensing data:  59%|█████▊    | 14446/24625 [00:25<00:12, 827.24it/s]Condensing data:  59%|█████▉    | 14537/24625 [00:25<00:12, 826.58it/s]Condensing data:  59%|█████▉    | 14625/24625 [00:25<00:12, 809.68it/s]Condensing data:  60%|█████▉    | 14710/24625 [00:25<00:12, 810.90it/s]Condensing data:  60%|██████    | 14794/24625 [00:25<00:12, 803.97it/s]Condensing data:  60%|██████    | 14877/24625 [00:25<00:12, 801.56it/s]Condensing data:  61%|██████    | 14975/24625 [00:26<00:11, 848.79it/s]Condensing data:  61%|██████    | 15066/24625 [00:26<00:11, 863.53it/s]Condensing data:  62%|██████▏   | 15174/24625 [00:26<00:10, 923.07it/s]Condensing data:  62%|██████▏   | 15281/24625 [00:26<00:09, 964.79it/s]Condensing data:  62%|██████▏   | 15379/24625 [00:26<00:09, 939.16it/s]Condensing data:  63%|██████▎   | 15474/24625 [00:26<00:09, 924.59it/s]Condensing data:  63%|██████▎   | 15577/24625 [00:26<00:09, 953.70it/s]Condensing data:  64%|██████▎   | 15673/24625 [00:26<00:09, 949.59it/s]Condensing data:  64%|██████▍   | 15772/24625 [00:26<00:09, 958.81it/s]Condensing data:  64%|██████▍   | 15869/24625 [00:27<00:09, 919.38it/s]Condensing data:  65%|██████▍   | 15962/24625 [00:27<00:09, 906.08it/s]Condensing data:  65%|██████▌   | 16056/24625 [00:27<00:09, 911.99it/s]Condensing data:  66%|██████▌   | 16148/24625 [00:27<00:09, 902.71it/s]Condensing data:  66%|██████▌   | 16239/24625 [00:27<00:09, 887.74it/s]Condensing data:  66%|██████▋   | 16328/24625 [00:27<00:09, 861.22it/s]Condensing data:  67%|██████▋   | 16422/24625 [00:27<00:09, 881.84it/s]Condensing data:  67%|██████▋   | 16511/24625 [00:27<00:09, 856.52it/s]Condensing data:  67%|██████▋   | 16616/24625 [00:27<00:08, 910.99it/s]Condensing data:  68%|██████▊   | 16708/24625 [00:27<00:09, 838.67it/s]Condensing data:  68%|██████▊   | 16800/24625 [00:28<00:09, 858.96it/s]Condensing data:  69%|██████▊   | 16894/24625 [00:28<00:08, 880.77it/s]Condensing data:  69%|██████▉   | 16994/24625 [00:28<00:08, 912.47it/s]Condensing data:  69%|██████▉   | 17089/24625 [00:28<00:08, 923.25it/s]Condensing data:  70%|██████▉   | 17182/24625 [00:28<00:08, 913.43it/s]Condensing data:  70%|███████   | 17283/24625 [00:28<00:07, 937.81it/s]Condensing data:  71%|███████   | 17378/24625 [00:28<00:07, 924.79it/s]Condensing data:  71%|███████   | 17471/24625 [00:28<00:07, 920.52it/s]Condensing data:  71%|███████▏  | 17578/24625 [00:28<00:07, 960.08it/s]Condensing data:  72%|███████▏  | 17675/24625 [00:29<00:07, 908.62it/s]Condensing data:  72%|███████▏  | 17767/24625 [00:29<00:07, 889.92it/s]Condensing data:  73%|███████▎  | 17857/24625 [00:29<00:07, 866.66it/s]Condensing data:  73%|███████▎  | 17953/24625 [00:29<00:07, 890.88it/s]Condensing data:  73%|███████▎  | 18043/24625 [00:29<00:07, 873.95it/s]Condensing data:  74%|███████▎  | 18134/24625 [00:29<00:07, 883.32it/s]Condensing data:  74%|███████▍  | 18241/24625 [00:29<00:06, 935.41it/s]Condensing data:  75%|███████▍  | 18374/24625 [00:29<00:05, 1048.11it/s]Condensing data:  75%|███████▌  | 18491/24625 [00:29<00:05, 1083.29it/s]Condensing data:  76%|███████▌  | 18605/24625 [00:29<00:05, 1097.06it/s]Condensing data:  76%|███████▌  | 18715/24625 [00:30<00:05, 1089.88it/s]Condensing data:  77%|███████▋  | 18843/24625 [00:30<00:05, 1144.47it/s]Condensing data:  77%|███████▋  | 18958/24625 [00:30<00:05, 1122.38it/s]Condensing data:  77%|███████▋  | 19077/24625 [00:30<00:04, 1137.34it/s]Condensing data:  78%|███████▊  | 19205/24625 [00:30<00:04, 1177.09it/s]Condensing data:  78%|███████▊  | 19323/24625 [00:30<00:04, 1150.71it/s]Condensing data:  79%|███████▉  | 19451/24625 [00:30<00:04, 1187.03it/s]Condensing data:  79%|███████▉  | 19570/24625 [00:30<00:04, 1183.71it/s]Condensing data:  80%|████████  | 19700/24625 [00:30<00:04, 1216.41it/s]Condensing data:  80%|████████  | 19822/24625 [00:31<00:04, 1174.30it/s]Condensing data:  81%|████████  | 19940/24625 [00:31<00:04, 1163.35it/s]Condensing data:  81%|████████▏ | 20057/24625 [00:31<00:03, 1142.65it/s]Condensing data:  82%|████████▏ | 20172/24625 [00:31<00:04, 1036.93it/s]Condensing data:  82%|████████▏ | 20297/24625 [00:31<00:03, 1092.38it/s]Condensing data:  83%|████████▎ | 20440/24625 [00:31<00:03, 1185.00it/s]Condensing data:  83%|████████▎ | 20561/24625 [00:31<00:03, 1045.87it/s]Condensing data:  84%|████████▍ | 20682/24625 [00:31<00:03, 1087.56it/s]Condensing data:  85%|████████▍ | 20842/24625 [00:31<00:03, 1227.21it/s]Condensing data:  85%|████████▌ | 20969/24625 [00:32<00:03, 1133.11it/s]Condensing data:  86%|████████▌ | 21087/24625 [00:32<00:03, 884.61it/s] Condensing data:  86%|████████▌ | 21186/24625 [00:32<00:03, 894.38it/s]Condensing data:  87%|████████▋ | 21326/24625 [00:32<00:03, 1016.75it/s]Condensing data:  87%|████████▋ | 21446/24625 [00:32<00:02, 1061.59it/s]Condensing data:  88%|████████▊ | 21559/24625 [00:32<00:03, 1002.07it/s]Condensing data:  88%|████████▊ | 21665/24625 [00:32<00:03, 933.92it/s] Condensing data:  88%|████████▊ | 21781/24625 [00:32<00:02, 989.66it/s]Condensing data:  89%|████████▉ | 21884/24625 [00:33<00:03, 911.97it/s]Condensing data:  89%|████████▉ | 21993/24625 [00:33<00:02, 957.07it/s]Condensing data:  90%|████████▉ | 22115/24625 [00:33<00:02, 1026.14it/s]Condensing data:  90%|█████████ | 22221/24625 [00:33<00:02, 953.33it/s] Condensing data:  91%|█████████ | 22320/24625 [00:33<00:02, 904.17it/s]Condensing data:  91%|█████████ | 22439/24625 [00:33<00:02, 976.87it/s]Condensing data:  92%|█████████▏| 22553/24625 [00:33<00:02, 1017.93it/s]Condensing data:  92%|█████████▏| 22666/24625 [00:33<00:01, 1048.36it/s]Condensing data:  92%|█████████▏| 22773/24625 [00:33<00:01, 1000.70it/s]Condensing data:  93%|█████████▎| 22875/24625 [00:34<00:01, 998.44it/s] Condensing data:  93%|█████████▎| 23011/24625 [00:34<00:01, 1098.15it/s]Condensing data:  94%|█████████▍| 23142/24625 [00:34<00:01, 1158.10it/s]Condensing data:  95%|█████████▍| 23280/24625 [00:34<00:01, 1222.12it/s]Condensing data:  95%|█████████▌| 23404/24625 [00:34<00:01, 1196.78it/s]Condensing data:  96%|█████████▌| 23525/24625 [00:34<00:00, 1127.57it/s]Condensing data:  96%|█████████▌| 23646/24625 [00:34<00:00, 1148.78it/s]Condensing data:  97%|█████████▋| 23817/24625 [00:34<00:00, 1308.56it/s]Condensing data:  97%|█████████▋| 23967/24625 [00:34<00:00, 1363.21it/s]Condensing data:  98%|█████████▊| 24109/24625 [00:34<00:00, 1377.91it/s]Condensing data:  98%|█████████▊| 24248/24625 [00:35<00:00, 1253.31it/s]Condensing data:  99%|█████████▉| 24377/24625 [00:35<00:00, 1158.46it/s]Condensing data: 100%|█████████▉| 24524/24625 [00:35<00:00, 1240.28it/s]Condensing data: 100%|██████████| 24625/24625 [00:35<00:00, 695.78it/s] 
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=-1)]: Done 136 tasks      | elapsed:    4.0s
+[Parallel(n_jobs=-1)]: Done 386 tasks      | elapsed:   10.1s
+[Parallel(n_jobs=-1)]: Done 500 out of 500 | elapsed:   13.0s finished
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+10215 samples found.
+
+[0.128      0.         0.         0.         0.         0.
+ 1.972      0.         0.         0.         0.         0.
+ 0.         0.018      0.         0.         0.         0.
+ 0.002      0.         0.         0.         0.         0.
+ 0.         0.952      0.         0.         0.         0.
+ 0.         0.         0.         0.596      0.         0.
+ 0.         0.         1.29       0.         0.         0.
+ 1.40466667 1.782      0.         0.         0.         1.4845
+ 0.         0.         0.         0.         0.         0.16
+ 1.618      0.         0.         0.         0.976      0.
+ 0.002      0.         0.         0.         0.         0.018
+ 0.         0.         0.         0.         0.012      0.
+ 0.         0.         0.         0.         0.         1.066
+ 1.002      0.         0.         0.         0.         0.
+ 0.564      0.         0.         0.008      0.         0.
+ 0.         0.         0.         1.044      0.         0.
+ 0.         0.         0.         0.         0.068      1.896
+ 0.         0.         0.03       0.         1.59       0.
+ 0.         0.         0.         0.004      1.38       0.
+ 0.006      0.         0.         1.03       0.014      1.99
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.006      0.         0.         0.
+ 0.         0.         0.         0.434      0.         0.
+ 0.         0.338      0.         0.         0.         0.974
+ 0.05       0.         0.         0.         0.006      1.036
+ 0.         0.         0.         0.         0.         0.
+ 0.8        0.         0.         0.         0.83       0.
+ 0.         0.         0.         0.         0.         0.192
+ 0.         0.732      0.002      0.         0.         0.016
+ 0.         0.         0.024      1.978      0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.888      0.         1.788      0.         0.         0.
+ 0.002      1.278      0.         0.         0.         1.9405
+ 0.         0.         0.         0.         0.         0.006
+ 0.         0.         0.         0.892      0.         0.
+ 0.         0.         1.202      1.036      0.         0.
+ 0.         0.         0.         0.         0.012      0.
+ 0.01       0.         1.09       0.         0.         0.
+ 1.008      0.         1.334      0.         0.         0.
+ 0.         0.004      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 1.032      0.         0.         1.02       0.         0.
+ 0.004      0.         0.         0.364      0.         0.424
+ 0.         0.         1.94516667 0.         1.97266667 0.
+ 0.         0.         0.         0.002      0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.032      0.         0.         1.948
+ 0.         0.         0.         0.         0.         0.
+ 1.056      0.         0.         1.024      0.018      0.
+ 0.946      0.         1.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         1.994      0.         0.
+ 0.         0.018      0.         0.         0.         0.
+ 0.         0.         0.         0.026      0.218      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.954      0.         0.036      0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.012      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.86       0.         0.         0.         0.         0.
+ 1.8        0.         0.         0.104      0.         0.
+ 0.         0.014      0.         0.         0.036      0.
+ 0.         0.         0.062      1.5        0.         0.
+ 0.002      0.         0.35       0.         0.         1.308
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.026      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 1.218      0.         0.         0.         0.         0.
+ 0.         0.004      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.002      0.
+ 0.         0.         0.         0.         1.57       0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         1.154      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.966
+ 0.        ]
+[0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 1. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 2. 0. 0. 0. 1. 1. 0. 0. 0. 1.
+ 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0.
+ 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 1. 0. 2.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 2. 0. 0. 0. 0. 2. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.
+ 1. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 2. 0. 2. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 1. 0. 0. 1. 0. 0.
+ 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 1. 0.]
+Mean Squared Error on Test Set: 0.02470406539465101
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=-1)]: Done 136 tasks      | elapsed:   12.1s
+[Parallel(n_jobs=-1)]: Done 386 tasks      | elapsed:   30.5s
+[Parallel(n_jobs=-1)]: Done 500 out of 500 | elapsed:   39.0s finished
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+24625 samples found.
+
+[0. 0. 0. ... 0. 0. 0.]
+[0. 0. 0. ... 0. 0. 0.]
+Mean Squared Error on Test Set: 0.02332018181818182
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/24625 [00:00<?, ?it/s]  2%|▏         | 444/24625 [00:00<00:05, 4435.15it/s]  4%|▎         | 888/24625 [00:00<00:05, 4340.97it/s]  5%|▌         | 1323/24625 [00:00<00:05, 4293.28it/s]  7%|▋         | 1753/24625 [00:00<00:05, 4267.02it/s]  9%|▉         | 2180/24625 [00:00<00:05, 4172.83it/s] 11%|█         | 2598/24625 [00:00<00:05, 4151.80it/s] 12%|█▏        | 3014/24625 [00:00<00:05, 4116.32it/s] 14%|█▍        | 3426/24625 [00:00<00:05, 4038.45it/s] 16%|█▌        | 3831/24625 [00:00<00:05, 3998.36it/s] 17%|█▋        | 4231/24625 [00:01<00:05, 3978.94it/s] 19%|█▉        | 4629/24625 [00:01<00:05, 3950.22it/s] 20%|██        | 5025/24625 [00:01<00:05, 3889.64it/s] 22%|██▏       | 5415/24625 [00:01<00:05, 3838.78it/s] 24%|██▎       | 5799/24625 [00:01<00:04, 3812.69it/s] 25%|██▌       | 6181/24625 [00:01<00:04, 3738.88it/s] 27%|██▋       | 6556/24625 [00:01<00:04, 3712.09it/s] 28%|██▊       | 6928/24625 [00:01<00:05, 3052.59it/s] 30%|██▉       | 7282/24625 [00:01<00:05, 3176.89it/s] 31%|███       | 7619/24625 [00:02<00:05, 3227.04it/s] 32%|███▏      | 7967/24625 [00:02<00:05, 3295.18it/s] 34%|███▎      | 8305/24625 [00:02<00:04, 3306.32it/s] 35%|███▌      | 8644/24625 [00:02<00:04, 3327.87it/s] 36%|███▋      | 8982/24625 [00:02<00:04, 3287.49it/s] 38%|███▊      | 9314/24625 [00:02<00:04, 3278.36it/s] 39%|███▉      | 9644/24625 [00:02<00:04, 3244.16it/s] 40%|████      | 9970/24625 [00:02<00:04, 3209.71it/s] 42%|████▏     | 10293/24625 [00:02<00:04, 3177.18it/s] 43%|████▎     | 10614/24625 [00:02<00:04, 3184.72it/s] 44%|████▍     | 10933/24625 [00:03<00:04, 3151.22it/s] 46%|████▌     | 11253/24625 [00:03<00:04, 3165.03it/s] 47%|████▋     | 11570/24625 [00:03<00:04, 3134.68it/s] 48%|████▊     | 11885/24625 [00:03<00:04, 3138.72it/s] 50%|████▉     | 12200/24625 [00:03<00:04, 3068.99it/s] 51%|█████     | 12508/24625 [00:03<00:03, 3071.12it/s] 52%|█████▏    | 12816/24625 [00:03<00:03, 3017.40it/s] 53%|█████▎    | 13120/24625 [00:03<00:03, 3022.25it/s] 55%|█████▍    | 13423/24625 [00:03<00:03, 2994.74it/s] 56%|█████▌    | 13723/24625 [00:03<00:03, 2992.26it/s] 57%|█████▋    | 14023/24625 [00:04<00:03, 2981.92it/s] 58%|█████▊    | 14322/24625 [00:04<00:03, 2948.55it/s] 59%|█████▉    | 14617/24625 [00:04<00:03, 2939.46it/s] 61%|██████    | 14912/24625 [00:04<00:03, 2907.55it/s] 62%|██████▏   | 15203/24625 [00:04<00:03, 2886.09it/s] 63%|██████▎   | 15492/24625 [00:04<00:03, 2839.20it/s] 64%|██████▍   | 15777/24625 [00:04<00:03, 2837.18it/s] 65%|██████▌   | 16061/24625 [00:04<00:03, 2799.45it/s] 66%|██████▋   | 16342/24625 [00:04<00:02, 2799.82it/s] 68%|██████▊   | 16623/24625 [00:05<00:02, 2797.49it/s] 69%|██████▊   | 16903/24625 [00:05<00:02, 2762.88it/s] 70%|██████▉   | 17185/24625 [00:05<00:02, 2779.45it/s] 71%|███████   | 17464/24625 [00:05<00:02, 2705.62it/s] 72%|███████▏  | 17742/24625 [00:05<00:02, 2724.77it/s] 73%|███████▎  | 18018/24625 [00:05<00:02, 2734.25it/s] 74%|███████▍  | 18292/24625 [00:05<00:02, 2704.83it/s] 75%|███████▌  | 18566/24625 [00:05<00:02, 2713.10it/s] 76%|███████▋  | 18838/24625 [00:05<00:02, 2682.89it/s] 78%|███████▊  | 19108/24625 [00:05<00:02, 2685.33it/s] 79%|███████▊  | 19377/24625 [00:06<00:01, 2663.01it/s] 80%|███████▉  | 19644/24625 [00:06<00:01, 2663.20it/s] 81%|████████  | 19911/24625 [00:06<00:01, 2660.11it/s] 82%|████████▏ | 20178/24625 [00:06<00:01, 2622.94it/s] 83%|████████▎ | 20441/24625 [00:06<00:01, 2600.06it/s] 84%|████████▍ | 20702/24625 [00:06<00:01, 2584.45it/s] 85%|████████▌ | 20961/24625 [00:06<00:01, 2522.08it/s] 86%|████████▌ | 21214/24625 [00:06<00:01, 2497.30it/s] 87%|████████▋ | 21464/24625 [00:06<00:01, 2461.89it/s] 88%|████████▊ | 21711/24625 [00:06<00:01, 2454.43it/s] 89%|████████▉ | 21957/24625 [00:07<00:01, 2442.63it/s] 90%|█████████ | 22202/24625 [00:07<00:01, 2400.58it/s] 91%|█████████ | 22443/24625 [00:07<00:00, 2400.90it/s] 92%|█████████▏| 22684/24625 [00:07<00:00, 2387.07it/s] 93%|█████████▎| 22923/24625 [00:07<00:00, 2357.37it/s] 94%|█████████▍| 23159/24625 [00:07<00:00, 2354.44it/s] 95%|█████████▌| 23395/24625 [00:07<00:00, 2323.48it/s] 96%|█████████▌| 23628/24625 [00:07<00:00, 2322.42it/s] 97%|█████████▋| 23861/24625 [00:07<00:00, 2322.61it/s] 98%|█████████▊| 24094/24625 [00:07<00:00, 2319.98it/s] 99%|█████████▉| 24327/24625 [00:08<00:00, 2322.77it/s]100%|█████████▉| 24564/24625 [00:08<00:00, 2334.01it/s]100%|██████████| 24625/24625 [00:08<00:00, 2999.65it/s]
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/10215 [00:00<?, ?it/s]  7%|▋         | 743/10215 [00:00<00:01, 7425.76it/s] 15%|█▍        | 1486/10215 [00:00<00:01, 7371.74it/s] 22%|██▏       | 2224/10215 [00:00<00:01, 6974.56it/s] 29%|██▊       | 2924/10215 [00:00<00:01, 6906.50it/s] 35%|███▌      | 3616/10215 [00:00<00:00, 6721.73it/s] 42%|████▏     | 4290/10215 [00:00<00:00, 6634.47it/s] 49%|████▊     | 4955/10215 [00:00<00:00, 6311.27it/s] 55%|█████▍    | 5589/10215 [00:00<00:00, 6189.82it/s] 61%|██████    | 6210/10215 [00:00<00:00, 6035.20it/s] 67%|██████▋   | 6815/10215 [00:01<00:00, 5859.47it/s] 72%|███████▏  | 7402/10215 [00:01<00:00, 5702.35it/s] 78%|███████▊  | 7973/10215 [00:01<00:00, 5609.54it/s] 84%|████████▎ | 8535/10215 [00:01<00:00, 5489.72it/s] 89%|████████▉ | 9085/10215 [00:01<00:00, 5380.63it/s] 94%|█████████▍| 9624/10215 [00:01<00:00, 5279.46it/s] 99%|█████████▉| 10152/10215 [00:01<00:00, 5222.40it/s]100%|██████████| 10215/10215 [00:01<00:00, 5916.64it/s]
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[Wed Apr 17 14:35:37 2024]
+Finished job 24.
+1 of 21 steps (5%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Apr 17 14:35:37 2024]
+localcheckpoint train_validate:
+    input: feature_vectors_het/AKA-017_GIM-024
+    output: 2L2R/AKA-017_GIM-024.txt, 3L3RX/AKA-017_GIM-024.txt
+    jobid: 20
+    reason: Missing output files: 2L2R/AKA-017_GIM-024.txt
+    wildcards: sample=AKA-017_GIM-024
+    threads: 32
+    resources: tmpdir=/tmp
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s AKA-017_GIM-024 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo
+Output directory exists
+Output directory exists
+/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/A2_A3 /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/JUT-008_MUN-009
+Condensing data:   0%|          | 0/10215 [00:00<?, ?it/s]Condensing data:   1%|          | 97/10215 [00:00<00:10, 964.29it/s]Condensing data:   2%|▏         | 194/10215 [00:00<00:11, 881.35it/s]Condensing data:   3%|▎         | 287/10215 [00:00<00:11, 889.90it/s]Condensing data:   4%|▎         | 377/10215 [00:00<00:14, 683.95it/s]Condensing data:   4%|▍         | 451/10215 [00:00<00:15, 616.77it/s]Condensing data:   5%|▌         | 517/10215 [00:00<00:16, 599.99it/s]Condensing data:   6%|▌         | 580/10215 [00:00<00:17, 560.71it/s]Condensing data:   6%|▌         | 638/10215 [00:01<00:18, 529.91it/s]Condensing data:   7%|▋         | 692/10215 [00:01<00:18, 514.53it/s]Condensing data:   8%|▊         | 784/10215 [00:01<00:15, 620.66it/s]Condensing data:   9%|▊         | 870/10215 [00:01<00:13, 685.50it/s]Condensing data:  10%|▉         | 974/10215 [00:01<00:11, 783.31it/s]Condensing data:  11%|█         | 1076/10215 [00:01<00:10, 850.33it/s]Condensing data:  12%|█▏        | 1192/10215 [00:01<00:09, 938.27it/s]Condensing data:  13%|█▎        | 1319/10215 [00:01<00:08, 1032.46it/s]Condensing data:  14%|█▍        | 1433/10215 [00:01<00:08, 1059.85it/s]Condensing data:  15%|█▌        | 1541/10215 [00:03<00:47, 182.74it/s] Condensing data:  16%|█▌        | 1618/10215 [00:03<00:42, 204.56it/s]Condensing data:  17%|█▋        | 1750/10215 [00:03<00:28, 295.19it/s]Condensing data:  18%|█▊        | 1863/10215 [00:04<00:21, 381.64it/s]Condensing data:  19%|█▉        | 1978/10215 [00:04<00:17, 479.43it/s]Condensing data:  20%|██        | 2083/10215 [00:04<00:14, 567.63it/s]Condensing data:  22%|██▏       | 2197/10215 [00:04<00:11, 671.58it/s]Condensing data:  23%|██▎       | 2302/10215 [00:04<00:10, 745.27it/s]Condensing data:  24%|██▍       | 2453/10215 [00:04<00:08, 918.33it/s]Condensing data:  25%|██▌       | 2604/10215 [00:04<00:07, 1062.89it/s]Condensing data:  27%|██▋       | 2736/10215 [00:04<00:06, 1129.08it/s]Condensing data:  29%|██▊       | 2922/10215 [00:04<00:05, 1324.88it/s]Condensing data:  30%|███       | 3080/10215 [00:04<00:05, 1393.40it/s]Condensing data:  32%|███▏      | 3237/10215 [00:05<00:04, 1441.23it/s]Condensing data:  33%|███▎      | 3389/10215 [00:05<00:04, 1438.48it/s]Condensing data:  35%|███▍      | 3560/10215 [00:05<00:04, 1515.26it/s]Condensing data:  36%|███▋      | 3716/10215 [00:05<00:04, 1494.69it/s]Condensing data:  38%|███▊      | 3869/10215 [00:05<00:04, 1500.15it/s]Condensing data:  39%|███▉      | 4021/10215 [00:05<00:04, 1488.55it/s]Condensing data:  41%|████      | 4172/10215 [00:05<00:04, 1471.78it/s]Condensing data:  42%|████▏     | 4321/10215 [00:05<00:04, 1466.98it/s]Condensing data:  44%|████▎     | 4469/10215 [00:05<00:03, 1459.18it/s]Condensing data:  45%|████▌     | 4631/10215 [00:05<00:03, 1505.73it/s]Condensing data:  47%|████▋     | 4783/10215 [00:06<00:04, 1351.59it/s]Condensing data:  48%|████▊     | 4922/10215 [00:06<00:04, 1173.44it/s]Condensing data:  49%|████▉     | 5046/10215 [00:06<00:04, 1053.86it/s]Condensing data:  50%|█████     | 5157/10215 [00:06<00:05, 951.31it/s] Condensing data:  51%|█████▏    | 5257/10215 [00:06<00:05, 912.33it/s]Condensing data:  52%|█████▏    | 5352/10215 [00:06<00:05, 874.78it/s]Condensing data:  53%|█████▎    | 5442/10215 [00:06<00:05, 857.37it/s]Condensing data:  54%|█████▍    | 5529/10215 [00:07<00:05, 834.91it/s]Condensing data:  55%|█████▍    | 5614/10215 [00:07<00:05, 838.55it/s]Condensing data:  56%|█████▌    | 5699/10215 [00:07<00:05, 810.26it/s]Condensing data:  57%|█████▋    | 5781/10215 [00:07<00:05, 811.05it/s]Condensing data:  57%|█████▋    | 5863/10215 [00:07<00:05, 811.44it/s]Condensing data:  58%|█████▊    | 5948/10215 [00:07<00:05, 821.55it/s]Condensing data:  59%|█████▉    | 6031/10215 [00:07<00:05, 792.54it/s]Condensing data:  60%|█████▉    | 6111/10215 [00:07<00:05, 693.51it/s]Condensing data:  61%|██████    | 6183/10215 [00:07<00:06, 608.81it/s]Condensing data:  61%|██████    | 6247/10215 [00:08<00:07, 549.65it/s]Condensing data:  62%|██████▏   | 6305/10215 [00:08<00:07, 551.06it/s]Condensing data:  62%|██████▏   | 6370/10215 [00:08<00:06, 575.56it/s]Condensing data:  63%|██████▎   | 6430/10215 [00:08<00:06, 572.70it/s]Condensing data:  64%|██████▎   | 6489/10215 [00:08<00:06, 562.88it/s]Condensing data:  64%|██████▍   | 6551/10215 [00:08<00:06, 576.86it/s]Condensing data:  65%|██████▍   | 6617/10215 [00:08<00:06, 598.76it/s]Condensing data:  66%|██████▌   | 6693/10215 [00:08<00:05, 644.66it/s]Condensing data:  66%|██████▋   | 6773/10215 [00:08<00:04, 689.27it/s]Condensing data:  67%|██████▋   | 6895/10215 [00:09<00:03, 840.38it/s]Condensing data:  68%|██████▊   | 6986/10215 [00:09<00:03, 860.78it/s]Condensing data:  69%|██████▉   | 7085/10215 [00:09<00:03, 896.84it/s]Condensing data:  70%|███████   | 7193/10215 [00:09<00:03, 950.42it/s]Condensing data:  71%|███████▏  | 7293/10215 [00:09<00:03, 962.48it/s]Condensing data:  72%|███████▏  | 7402/10215 [00:09<00:02, 999.55it/s]Condensing data:  73%|███████▎  | 7503/10215 [00:09<00:02, 992.53it/s]Condensing data:  75%|███████▌  | 7709/10215 [00:09<00:01, 1308.43it/s]Condensing data:  78%|███████▊  | 7946/10215 [00:09<00:01, 1621.32it/s]Condensing data:  80%|████████  | 8198/10215 [00:09<00:01, 1887.78it/s]Condensing data:  83%|████████▎ | 8430/10215 [00:10<00:00, 2014.50it/s]Condensing data:  85%|████████▍ | 8654/10215 [00:10<00:00, 2080.19it/s]Condensing data:  87%|████████▋ | 8863/10215 [00:10<00:00, 1860.52it/s]Condensing data:  89%|████████▊ | 9054/10215 [00:10<00:00, 1698.03it/s]Condensing data:  90%|█████████ | 9230/10215 [00:10<00:00, 1618.91it/s]Condensing data:  92%|█████████▏| 9411/10215 [00:10<00:00, 1668.29it/s]Condensing data:  94%|█████████▍| 9639/10215 [00:10<00:00, 1834.58it/s]Condensing data:  96%|█████████▋| 9849/10215 [00:10<00:00, 1908.60it/s]Condensing data:  99%|█████████▉| 10106/10215 [00:10<00:00, 2095.55it/s]Condensing data: 100%|██████████| 10215/10215 [00:10<00:00, 930.53it/s] 
+Condensing data:   0%|          | 0/24625 [00:00<?, ?it/s]Condensing data:   1%|          | 166/24625 [00:00<00:14, 1645.24it/s]Condensing data:   1%|▏         | 336/24625 [00:00<00:14, 1670.85it/s]Condensing data:   2%|▏         | 506/24625 [00:00<00:14, 1682.57it/s]Condensing data:   3%|▎         | 718/24625 [00:00<00:12, 1854.09it/s]Condensing data:   4%|▍         | 969/24625 [00:00<00:11, 2088.02it/s]Condensing data:   5%|▍         | 1194/24625 [00:00<00:10, 2142.26it/s]Condensing data:   6%|▌         | 1426/24625 [00:00<00:10, 2198.86it/s]Condensing data:   7%|▋         | 1675/24625 [00:00<00:10, 2284.68it/s]Condensing data:   8%|▊         | 1904/24625 [00:00<00:10, 2223.44it/s]Condensing data:   9%|▊         | 2127/24625 [00:01<00:10, 2218.26it/s]Condensing data:  10%|▉         | 2350/24625 [00:01<00:28, 788.05it/s] Condensing data:  10%|█         | 2514/24625 [00:04<02:00, 183.46it/s]Condensing data:  11%|█         | 2662/24625 [00:04<01:34, 231.47it/s]Condensing data:  11%|█▏        | 2795/24625 [00:04<01:16, 286.64it/s]Condensing data:  12%|█▏        | 2923/24625 [00:05<01:02, 348.07it/s]Condensing data:  12%|█▏        | 3044/24625 [00:05<00:51, 415.29it/s]Condensing data:  13%|█▎        | 3159/24625 [00:05<00:45, 471.80it/s]Condensing data:  13%|█▎        | 3264/24625 [00:05<00:40, 532.72it/s]Condensing data:  14%|█▎        | 3364/24625 [00:05<00:35, 600.10it/s]Condensing data:  14%|█▍        | 3463/24625 [00:05<00:32, 659.34it/s]Condensing data:  14%|█▍        | 3560/24625 [00:05<00:29, 709.61it/s]Condensing data:  15%|█▍        | 3657/24625 [00:05<00:27, 766.61it/s]Condensing data:  15%|█▌        | 3753/24625 [00:06<00:25, 807.00it/s]Condensing data:  16%|█▌        | 3848/24625 [00:06<00:24, 832.82it/s]Condensing data:  16%|█▌        | 3942/24625 [00:06<00:24, 840.63it/s]Condensing data:  16%|█▋        | 4048/24625 [00:06<00:22, 897.96it/s]Condensing data:  17%|█▋        | 4147/24625 [00:06<00:22, 921.56it/s]Condensing data:  17%|█▋        | 4249/24625 [00:06<00:21, 948.70it/s]Condensing data:  18%|█▊        | 4353/24625 [00:06<00:20, 973.83it/s]Condensing data:  18%|█▊        | 4461/24625 [00:06<00:20, 997.39it/s]Condensing data:  19%|█▊        | 4572/24625 [00:06<00:19, 1030.14it/s]Condensing data:  19%|█▉        | 4677/24625 [00:06<00:19, 1014.15it/s]Condensing data:  19%|█▉        | 4786/24625 [00:07<00:19, 1033.45it/s]Condensing data:  20%|█▉        | 4891/24625 [00:07<00:19, 1035.87it/s]Condensing data:  20%|██        | 5004/24625 [00:07<00:18, 1062.34it/s]Condensing data:  21%|██        | 5111/24625 [00:07<00:18, 1047.27it/s]Condensing data:  21%|██        | 5217/24625 [00:07<00:19, 973.62it/s] Condensing data:  22%|██▏       | 5320/24625 [00:07<00:19, 986.28it/s]Condensing data:  22%|██▏       | 5435/24625 [00:07<00:18, 1031.37it/s]Condensing data:  22%|██▏       | 5539/24625 [00:07<00:19, 1003.97it/s]Condensing data:  23%|██▎       | 5652/24625 [00:07<00:18, 1038.51it/s]Condensing data:  23%|██▎       | 5757/24625 [00:07<00:18, 997.56it/s] Condensing data:  24%|██▍       | 5858/24625 [00:08<00:19, 970.68it/s]Condensing data:  24%|██▍       | 5956/24625 [00:08<00:19, 954.87it/s]Condensing data:  25%|██▍       | 6052/24625 [00:08<00:20, 928.37it/s]Condensing data:  25%|██▍       | 6151/24625 [00:08<00:19, 944.27it/s]Condensing data:  25%|██▌       | 6246/24625 [00:08<00:19, 945.60it/s]Condensing data:  26%|██▌       | 6351/24625 [00:08<00:18, 973.23it/s]Condensing data:  26%|██▌       | 6454/24625 [00:08<00:18, 989.52it/s]Condensing data:  27%|██▋       | 6564/24625 [00:08<00:17, 1020.66it/s]Condensing data:  27%|██▋       | 6667/24625 [00:08<00:17, 1010.33it/s]Condensing data:  27%|██▋       | 6769/24625 [00:09<00:18, 989.10it/s] Condensing data:  28%|██▊       | 6871/24625 [00:09<00:17, 996.54it/s]Condensing data:  28%|██▊       | 6971/24625 [00:09<00:18, 953.35it/s]Condensing data:  29%|██▊       | 7067/24625 [00:09<00:19, 899.04it/s]Condensing data:  29%|██▉       | 7167/24625 [00:09<00:18, 923.36it/s]Condensing data:  30%|██▉       | 7279/24625 [00:09<00:17, 975.84it/s]Condensing data:  30%|██▉       | 7383/24625 [00:09<00:17, 993.36it/s]Condensing data:  30%|███       | 7483/24625 [00:09<00:17, 990.29it/s]Condensing data:  31%|███       | 7596/24625 [00:09<00:16, 1029.86it/s]Condensing data:  31%|███▏      | 7700/24625 [00:09<00:16, 1025.55it/s]Condensing data:  32%|███▏      | 7808/24625 [00:10<00:16, 1041.56it/s]Condensing data:  32%|███▏      | 7919/24625 [00:10<00:15, 1061.41it/s]Condensing data:  33%|███▎      | 8031/24625 [00:10<00:15, 1078.79it/s]Condensing data:  33%|███▎      | 8140/24625 [00:10<00:15, 1037.78it/s]Condensing data:  34%|███▎      | 8252/24625 [00:10<00:15, 1059.75it/s]Condensing data:  34%|███▍      | 8359/24625 [00:10<00:15, 1062.59it/s]Condensing data:  34%|███▍      | 8495/24625 [00:10<00:14, 1149.96it/s]Condensing data:  35%|███▌      | 8629/24625 [00:10<00:13, 1206.24it/s]Condensing data:  36%|███▌      | 8757/24625 [00:10<00:12, 1227.46it/s]Condensing data:  36%|███▌      | 8892/24625 [00:10<00:12, 1256.79it/s]Condensing data:  37%|███▋      | 9066/24625 [00:11<00:11, 1398.23it/s]Condensing data:  38%|███▊      | 9266/24625 [00:11<00:09, 1575.62it/s]Condensing data:  38%|███▊      | 9465/24625 [00:11<00:08, 1698.33it/s]Condensing data:  39%|███▉      | 9663/24625 [00:11<00:08, 1782.34it/s]Condensing data:  40%|████      | 9860/24625 [00:11<00:08, 1835.77it/s]Condensing data:  41%|████      | 10072/24625 [00:11<00:07, 1920.30it/s]Condensing data:  42%|████▏     | 10299/24625 [00:11<00:07, 2024.32it/s]Condensing data:  43%|████▎     | 10524/24625 [00:11<00:06, 2090.18it/s]Condensing data:  44%|████▎     | 10734/24625 [00:11<00:06, 2086.51it/s]Condensing data:  44%|████▍     | 10943/24625 [00:12<00:06, 1990.34it/s]Condensing data:  45%|████▌     | 11143/24625 [00:13<00:42, 315.33it/s] Condensing data:  46%|████▌     | 11313/24625 [00:14<00:33, 400.30it/s]Condensing data:  47%|████▋     | 11465/24625 [00:14<00:27, 479.95it/s]Condensing data:  47%|████▋     | 11607/24625 [00:14<00:22, 566.44it/s]Condensing data:  48%|████▊     | 11744/24625 [00:14<00:19, 658.31it/s]Condensing data:  48%|████▊     | 11877/24625 [00:14<00:17, 744.90it/s]Condensing data:  49%|████▉     | 12006/24625 [00:14<00:15, 824.62it/s]Condensing data:  49%|████▉     | 12132/24625 [00:14<00:13, 909.12it/s]Condensing data:  50%|████▉     | 12258/24625 [00:14<00:12, 979.37it/s]Condensing data:  50%|█████     | 12400/24625 [00:14<00:11, 1082.49it/s]Condensing data:  51%|█████     | 12534/24625 [00:15<00:10, 1146.33it/s]Condensing data:  51%|█████▏    | 12665/24625 [00:15<00:10, 1142.04it/s]Condensing data:  52%|█████▏    | 12791/24625 [00:15<00:10, 1131.46it/s]Condensing data:  52%|█████▏    | 12916/24625 [00:15<00:10, 1162.64it/s]Condensing data:  53%|█████▎    | 13040/24625 [00:15<00:09, 1183.32it/s]Condensing data:  53%|█████▎    | 13164/24625 [00:15<00:09, 1198.47it/s]Condensing data:  54%|█████▍    | 13310/24625 [00:15<00:08, 1272.52it/s]Condensing data:  55%|█████▍    | 13459/24625 [00:15<00:08, 1331.67it/s]Condensing data:  55%|█████▌    | 13594/24625 [00:15<00:08, 1306.28it/s]Condensing data:  56%|█████▌    | 13726/24625 [00:15<00:08, 1302.48it/s]Condensing data:  56%|█████▋    | 13859/24625 [00:16<00:08, 1309.40it/s]Condensing data:  57%|█████▋    | 13991/24625 [00:16<00:08, 1279.93it/s]Condensing data:  57%|█████▋    | 14125/24625 [00:16<00:08, 1294.67it/s]Condensing data:  58%|█████▊    | 14261/24625 [00:16<00:07, 1313.52it/s]Condensing data:  58%|█████▊    | 14405/24625 [00:16<00:07, 1350.29it/s]Condensing data:  59%|█████▉    | 14564/24625 [00:16<00:07, 1420.30it/s]Condensing data:  60%|█████▉    | 14707/24625 [00:16<00:07, 1405.50it/s]Condensing data:  60%|██████    | 14848/24625 [00:16<00:07, 1361.40it/s]Condensing data:  61%|██████    | 14985/24625 [00:16<00:07, 1310.79it/s]Condensing data:  61%|██████▏   | 15133/24625 [00:17<00:06, 1357.56it/s]Condensing data:  62%|██████▏   | 15275/24625 [00:17<00:06, 1374.74it/s]Condensing data:  63%|██████▎   | 15423/24625 [00:17<00:06, 1403.70it/s]Condensing data:  63%|██████▎   | 15566/24625 [00:17<00:06, 1410.64it/s]Condensing data:  64%|██████▍   | 15708/24625 [00:17<00:06, 1408.29it/s]Condensing data:  64%|██████▍   | 15850/24625 [00:17<00:06, 1341.90it/s]Condensing data:  65%|██████▍   | 15994/24625 [00:17<00:06, 1366.78it/s]Condensing data:  66%|██████▌   | 16132/24625 [00:17<00:06, 1363.77it/s]Condensing data:  66%|██████▌   | 16273/24625 [00:17<00:06, 1376.46it/s]Condensing data:  67%|██████▋   | 16449/24625 [00:17<00:05, 1488.16it/s]Condensing data:  67%|██████▋   | 16599/24625 [00:18<00:05, 1433.47it/s]Condensing data:  68%|██████▊   | 16744/24625 [00:18<00:05, 1426.71it/s]Condensing data:  69%|██████▊   | 16888/24625 [00:18<00:05, 1388.63it/s]Condensing data:  69%|██████▉   | 17028/24625 [00:18<00:05, 1357.99it/s]Condensing data:  70%|██████▉   | 17171/24625 [00:18<00:05, 1375.02it/s]Condensing data:  70%|███████   | 17310/24625 [00:18<00:05, 1378.00it/s]Condensing data:  71%|███████   | 17449/24625 [00:18<00:05, 1376.76it/s]Condensing data:  72%|███████▏  | 17653/24625 [00:18<00:04, 1569.47it/s]Condensing data:  73%|███████▎  | 17861/24625 [00:18<00:03, 1718.87it/s]Condensing data:  74%|███████▎  | 18102/24625 [00:18<00:03, 1918.34it/s]Condensing data:  75%|███████▍  | 18356/24625 [00:19<00:02, 2100.46it/s]Condensing data:  76%|███████▌  | 18606/24625 [00:19<00:02, 2218.46it/s]Condensing data:  77%|███████▋  | 18857/24625 [00:19<00:02, 2302.85it/s]Condensing data:  78%|███████▊  | 19088/24625 [00:19<00:02, 2296.71it/s]Condensing data:  79%|███████▊  | 19332/24625 [00:19<00:02, 2332.03it/s]Condensing data:  79%|███████▉  | 19566/24625 [00:19<00:02, 2283.05it/s]Condensing data:  80%|████████  | 19801/24625 [00:19<00:02, 2295.61it/s]Condensing data:  81%|████████▏ | 20033/24625 [00:19<00:01, 2298.51it/s]Condensing data:  82%|████████▏ | 20264/24625 [00:19<00:01, 2277.64it/s]Condensing data:  83%|████████▎ | 20492/24625 [00:20<00:01, 2207.15it/s]Condensing data:  84%|████████▍ | 20714/24625 [00:20<00:01, 2100.40it/s]Condensing data:  85%|████████▍ | 20926/24625 [00:20<00:01, 2013.61it/s]Condensing data:  86%|████████▌ | 21154/24625 [00:20<00:01, 2086.05it/s]Condensing data:  87%|████████▋ | 21364/24625 [00:20<00:01, 2017.81it/s]Condensing data:  88%|████████▊ | 21567/24625 [00:20<00:01, 2019.43it/s]Condensing data:  88%|████████▊ | 21771/24625 [00:20<00:01, 2024.43it/s]Condensing data:  89%|████████▉ | 21975/24625 [00:20<00:01, 1914.61it/s]Condensing data:  90%|█████████ | 22168/24625 [00:20<00:01, 1906.15it/s]Condensing data:  91%|█████████ | 22399/24625 [00:20<00:01, 2021.02it/s]Condensing data:  92%|█████████▏| 22603/24625 [00:21<00:01, 1992.83it/s]Condensing data:  93%|█████████▎| 22833/24625 [00:21<00:00, 2080.98it/s]Condensing data:  94%|█████████▍| 23086/24625 [00:21<00:00, 2211.37it/s]Condensing data:  95%|█████████▍| 23325/24625 [00:21<00:00, 2263.04it/s]Condensing data:  96%|█████████▌| 23564/24625 [00:21<00:00, 2300.01it/s]Condensing data:  97%|█████████▋| 23795/24625 [00:21<00:00, 2252.90it/s]Condensing data:  98%|█████████▊| 24021/24625 [00:21<00:00, 2160.25it/s]Condensing data:  99%|█████████▊| 24268/24625 [00:21<00:00, 2247.60it/s]Condensing data:  99%|█████████▉| 24499/24625 [00:21<00:00, 2264.95it/s]Condensing data: 100%|██████████| 24625/24625 [00:21<00:00, 1121.30it/s]
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=-1)]: Done 136 tasks      | elapsed:    3.5s
+[Parallel(n_jobs=-1)]: Done 386 tasks      | elapsed:    9.1s
+[Parallel(n_jobs=-1)]: Done 500 out of 500 | elapsed:   11.6s finished
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+10215 samples found.
+
+[0.128      0.         0.         0.         0.         0.
+ 1.972      0.         0.         0.         0.         0.
+ 0.         0.018      0.         0.         0.         0.
+ 0.002      0.         0.         0.         0.         0.
+ 0.         0.952      0.         0.         0.         0.
+ 0.         0.         0.         0.596      0.         0.
+ 0.         0.         1.29       0.         0.         0.
+ 1.40466667 1.782      0.         0.         0.         1.4845
+ 0.         0.         0.         0.         0.         0.16
+ 1.618      0.         0.         0.         0.976      0.
+ 0.002      0.         0.         0.         0.         0.018
+ 0.         0.         0.         0.         0.012      0.
+ 0.         0.         0.         0.         0.         1.066
+ 1.002      0.         0.         0.         0.         0.
+ 0.564      0.         0.         0.008      0.         0.
+ 0.         0.         0.         1.044      0.         0.
+ 0.         0.         0.         0.         0.068      1.896
+ 0.         0.         0.03       0.         1.59       0.
+ 0.         0.         0.         0.004      1.38       0.
+ 0.006      0.         0.         1.03       0.014      1.99
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.006      0.         0.         0.
+ 0.         0.         0.         0.434      0.         0.
+ 0.         0.338      0.         0.         0.         0.974
+ 0.05       0.         0.         0.         0.006      1.036
+ 0.         0.         0.         0.         0.         0.
+ 0.8        0.         0.         0.         0.83       0.
+ 0.         0.         0.         0.         0.         0.192
+ 0.         0.732      0.002      0.         0.         0.016
+ 0.         0.         0.024      1.978      0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.888      0.         1.788      0.         0.         0.
+ 0.002      1.278      0.         0.         0.         1.9405
+ 0.         0.         0.         0.         0.         0.006
+ 0.         0.         0.         0.892      0.         0.
+ 0.         0.         1.202      1.036      0.         0.
+ 0.         0.         0.         0.         0.012      0.
+ 0.01       0.         1.09       0.         0.         0.
+ 1.008      0.         1.334      0.         0.         0.
+ 0.         0.004      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 1.032      0.         0.         1.02       0.         0.
+ 0.004      0.         0.         0.364      0.         0.424
+ 0.         0.         1.94516667 0.         1.97266667 0.
+ 0.         0.         0.         0.002      0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.032      0.         0.         1.948
+ 0.         0.         0.         0.         0.         0.
+ 1.056      0.         0.         1.024      0.018      0.
+ 0.946      0.         1.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         1.994      0.         0.
+ 0.         0.018      0.         0.         0.         0.
+ 0.         0.         0.         0.026      0.218      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.954      0.         0.036      0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.012      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.86       0.         0.         0.         0.         0.
+ 1.8        0.         0.         0.104      0.         0.
+ 0.         0.014      0.         0.         0.036      0.
+ 0.         0.         0.062      1.5        0.         0.
+ 0.002      0.         0.35       0.         0.         1.308
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.026      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 1.218      0.         0.         0.         0.         0.
+ 0.         0.004      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.002      0.
+ 0.         0.         0.         0.         1.57       0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         1.154      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.966
+ 0.        ]
+[0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 1. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 2. 0. 0. 0. 1. 1. 0. 0. 0. 1.
+ 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0.
+ 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 1. 0. 2.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 2. 0. 0. 0. 0. 2. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.
+ 1. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 2. 0. 2. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 1. 0. 0. 1. 0. 0.
+ 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 1. 0.]
+Mean Squared Error on Test Set: 0.02470406539465101
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=-1)]: Done 136 tasks      | elapsed:   11.9s
+[Parallel(n_jobs=-1)]: Done 386 tasks      | elapsed:   30.8s
+[Parallel(n_jobs=-1)]: Done 500 out of 500 | elapsed:   38.7s finished
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+24625 samples found.
+
+[0. 0. 0. ... 0. 0. 0.]
+[0. 0. 0. ... 0. 0. 0.]
+Mean Squared Error on Test Set: 0.02332018181818182
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/24625 [00:00<?, ?it/s]  2%|▏         | 446/24625 [00:00<00:05, 4450.14it/s]  4%|▎         | 892/24625 [00:00<00:05, 4348.59it/s]  5%|▌         | 1330/24625 [00:00<00:05, 4361.29it/s]  7%|▋         | 1767/24625 [00:00<00:05, 4344.86it/s]  9%|▉         | 2202/24625 [00:00<00:05, 4187.71it/s] 11%|█         | 2625/24625 [00:00<00:05, 4200.60it/s] 12%|█▏        | 3046/24625 [00:00<00:05, 4159.92it/s] 14%|█▍        | 3463/24625 [00:00<00:05, 4077.40it/s] 16%|█▌        | 3872/24625 [00:00<00:05, 4072.38it/s] 17%|█▋        | 4280/24625 [00:01<00:05, 4058.73it/s] 19%|█▉        | 4687/24625 [00:01<00:05, 3980.22it/s] 21%|██        | 5087/24625 [00:01<00:04, 3984.63it/s] 22%|██▏       | 5486/24625 [00:01<00:05, 3481.76it/s] 24%|██▍       | 5891/24625 [00:01<00:05, 3633.46it/s] 25%|██▌       | 6264/24625 [00:01<00:05, 3173.36it/s] 27%|██▋       | 6597/24625 [00:01<00:06, 2949.85it/s] 28%|██▊       | 6905/24625 [00:01<00:06, 2701.10it/s] 30%|██▉       | 7289/24625 [00:02<00:05, 2979.38it/s] 31%|███       | 7601/24625 [00:02<00:06, 2803.92it/s] 32%|███▏      | 7978/24625 [00:02<00:05, 3051.31it/s] 34%|███▎      | 8295/24625 [00:02<00:05, 2817.93it/s] 35%|███▌      | 8663/24625 [00:02<00:05, 3041.40it/s] 36%|███▋      | 8978/24625 [00:02<00:05, 2776.52it/s] 38%|███▊      | 9341/24625 [00:02<00:05, 2996.42it/s] 39%|███▉      | 9652/24625 [00:02<00:05, 2785.28it/s] 41%|████      | 10007/24625 [00:02<00:04, 2985.48it/s] 42%|████▏     | 10316/24625 [00:03<00:05, 2791.14it/s] 43%|████▎     | 10667/24625 [00:03<00:04, 2979.97it/s] 45%|████▍     | 10974/24625 [00:03<00:04, 2785.48it/s] 46%|████▌     | 11324/24625 [00:03<00:04, 2973.39it/s] 47%|████▋     | 11658/24625 [00:03<00:04, 3073.49it/s] 49%|████▊     | 11972/24625 [00:03<00:04, 3084.88it/s] 50%|████▉     | 12285/24625 [00:03<00:04, 3041.85it/s] 51%|█████     | 12595/24625 [00:03<00:03, 3058.43it/s] 52%|█████▏    | 12904/24625 [00:03<00:03, 3051.11it/s] 54%|█████▎    | 13224/24625 [00:04<00:03, 3091.18it/s] 55%|█████▍    | 13535/24625 [00:04<00:03, 3036.82it/s] 56%|█████▋    | 13852/24625 [00:04<00:03, 3074.54it/s] 58%|█████▊    | 14161/24625 [00:04<00:03, 3044.02it/s] 59%|█████▉    | 14473/24625 [00:04<00:03, 3064.55it/s] 60%|██████    | 14780/24625 [00:04<00:03, 3023.80it/s] 61%|██████▏   | 15091/24625 [00:04<00:03, 3046.53it/s] 63%|██████▎   | 15396/24625 [00:04<00:03, 2995.37it/s] 64%|██████▍   | 15701/24625 [00:04<00:02, 3008.82it/s] 65%|██████▍   | 16003/24625 [00:04<00:02, 3007.46it/s] 66%|██████▌   | 16304/24625 [00:05<00:02, 2968.46it/s] 67%|██████▋   | 16602/24625 [00:05<00:02, 2971.49it/s] 69%|██████▊   | 16900/24625 [00:05<00:02, 2932.31it/s] 70%|██████▉   | 17201/24625 [00:05<00:02, 2954.10it/s] 71%|███████   | 17497/24625 [00:05<00:02, 2924.48it/s] 72%|███████▏  | 17796/24625 [00:05<00:02, 2941.09it/s] 73%|███████▎  | 18091/24625 [00:05<00:02, 2894.81it/s] 75%|███████▍  | 18385/24625 [00:05<00:02, 2907.99it/s] 76%|███████▌  | 18677/24625 [00:05<00:02, 2909.09it/s] 77%|███████▋  | 18969/24625 [00:05<00:01, 2885.56it/s] 78%|███████▊  | 19258/24625 [00:06<00:01, 2886.32it/s] 79%|███████▉  | 19547/24625 [00:06<00:01, 2847.88it/s] 81%|████████  | 19832/24625 [00:06<00:01, 2847.11it/s] 82%|████████▏ | 20117/24625 [00:06<00:01, 2767.74it/s] 83%|████████▎ | 20398/24625 [00:06<00:01, 2777.79it/s] 84%|████████▍ | 20679/24625 [00:06<00:01, 2785.24it/s] 85%|████████▌ | 20958/24625 [00:06<00:01, 2749.89it/s] 86%|████████▌ | 21234/24625 [00:06<00:01, 2737.58it/s] 87%|████████▋ | 21508/24625 [00:06<00:01, 2712.89it/s] 88%|████████▊ | 21782/24625 [00:06<00:01, 2718.59it/s] 90%|████████▉ | 22054/24625 [00:07<00:00, 2667.64it/s] 91%|█████████ | 22321/24625 [00:07<00:00, 2667.73it/s] 92%|█████████▏| 22589/24625 [00:07<00:00, 2668.88it/s] 93%|█████████▎| 22856/24625 [00:07<00:00, 2614.78it/s] 94%|█████████▍| 23118/24625 [00:07<00:00, 2607.62it/s] 95%|█████████▍| 23379/24625 [00:07<00:00, 2585.16it/s] 96%|█████████▌| 23638/24625 [00:07<00:00, 2548.83it/s] 97%|█████████▋| 23898/24625 [00:07<00:00, 2562.09it/s] 98%|█████████▊| 24155/24625 [00:07<00:00, 2517.69it/s] 99%|█████████▉| 24411/24625 [00:08<00:00, 2529.70it/s]100%|██████████| 24625/24625 [00:08<00:00, 3038.91it/s]
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/10215 [00:00<?, ?it/s]  7%|▋         | 763/10215 [00:00<00:01, 7626.15it/s] 15%|█▍        | 1526/10215 [00:00<00:01, 7579.85it/s] 22%|██▏       | 2285/10215 [00:00<00:01, 7281.49it/s] 30%|██▉       | 3015/10215 [00:00<00:00, 7233.24it/s] 37%|███▋      | 3740/10215 [00:00<00:00, 7039.04it/s] 44%|████▎     | 4445/10215 [00:00<00:00, 6892.64it/s] 50%|█████     | 5136/10215 [00:00<00:00, 6648.94it/s] 57%|█████▋    | 5803/10215 [00:00<00:00, 6446.67it/s] 63%|██████▎   | 6450/10215 [00:00<00:00, 6263.36it/s] 69%|██████▉   | 7078/10215 [00:01<00:00, 6125.98it/s] 75%|███████▌  | 7692/10215 [00:01<00:00, 5862.66it/s] 81%|████████  | 8280/10215 [00:01<00:00, 5722.71it/s] 87%|████████▋ | 8854/10215 [00:01<00:00, 5533.20it/s] 92%|█████████▏| 9409/10215 [00:01<00:00, 5402.73it/s] 97%|█████████▋| 9950/10215 [00:01<00:00, 5309.87it/s]100%|██████████| 10215/10215 [00:01<00:00, 6104.75it/s]
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[Wed Apr 17 14:51:08 2024]
+Finished job 20.
+2 of 19 steps (11%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Apr 17 14:51:08 2024]
+localcheckpoint train_validate:
+    input: feature_vectors_het/JUT-008_MUN-009
+    output: 2L2R/JUT-008_MUN-009.txt, 3L3RX/JUT-008_MUN-009.txt
+    jobid: 8
+    reason: Missing output files: 2L2R/JUT-008_MUN-009.txt
+    wildcards: sample=JUT-008_MUN-009
+    threads: 32
+    resources: tmpdir=/tmp
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s JUT-008_MUN-009 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo
+Output directory exists
+Output directory exists
+/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/A2_A3 /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/feature_vectors_het/JUT-008_MUN-009
+Condensing data:   0%|          | 0/10215 [00:00<?, ?it/s]Condensing data:   2%|▏         | 225/10215 [00:00<00:04, 2234.47it/s]Condensing data:   5%|▍         | 476/10215 [00:00<00:04, 2395.18it/s]Condensing data:   7%|▋         | 716/10215 [00:00<00:04, 2228.29it/s]Condensing data:   9%|▉         | 963/10215 [00:00<00:03, 2313.61it/s]Condensing data:  12%|█▏        | 1196/10215 [00:00<00:04, 2237.51it/s]Condensing data:  14%|█▍        | 1421/10215 [00:00<00:04, 2161.31it/s]Condensing data:  16%|█▌        | 1638/10215 [00:00<00:04, 2022.41it/s]Condensing data:  18%|█▊        | 1842/10215 [00:00<00:04, 2020.79it/s]Condensing data:  20%|██        | 2046/10215 [00:00<00:04, 1983.27it/s]Condensing data:  22%|██▏       | 2261/10215 [00:01<00:03, 2030.24it/s]Condensing data:  25%|██▍       | 2511/10215 [00:01<00:03, 2167.75it/s]Condensing data:  27%|██▋       | 2755/10215 [00:01<00:03, 2246.78it/s]Condensing data:  30%|██▉       | 3022/10215 [00:01<00:03, 2372.00it/s]Condensing data:  32%|███▏      | 3266/10215 [00:01<00:02, 2391.53it/s]Condensing data:  34%|███▍      | 3511/10215 [00:01<00:02, 2407.75it/s]Condensing data:  37%|███▋      | 3753/10215 [00:01<00:02, 2290.30it/s]Condensing data:  39%|███▉      | 3986/10215 [00:01<00:02, 2301.08it/s]Condensing data:  41%|████▏     | 4233/10215 [00:01<00:02, 2349.94it/s]Condensing data:  44%|████▍     | 4502/10215 [00:01<00:02, 2449.36it/s]Condensing data:  46%|████▋     | 4748/10215 [00:02<00:02, 2233.94it/s]Condensing data:  49%|████▉     | 4988/10215 [00:02<00:02, 2279.94it/s]Condensing data:  51%|█████     | 5224/10215 [00:02<00:02, 2301.62it/s]Condensing data:  54%|█████▎    | 5470/10215 [00:02<00:02, 2346.21it/s]Condensing data:  56%|█████▌    | 5720/10215 [00:02<00:01, 2389.43it/s]Condensing data:  59%|█████▊    | 5982/10215 [00:02<00:01, 2455.81it/s]Condensing data:  61%|██████    | 6229/10215 [00:02<00:01, 2429.78it/s]Condensing data:  63%|██████▎   | 6473/10215 [00:02<00:01, 2123.22it/s]Condensing data:  66%|██████▌   | 6693/10215 [00:02<00:01, 2086.09it/s]Condensing data:  68%|██████▊   | 6907/10215 [00:03<00:01, 1962.09it/s]Condensing data:  70%|██████▉   | 7109/10215 [00:03<00:01, 1976.35it/s]Condensing data:  72%|███████▏  | 7310/10215 [00:03<00:01, 1978.13it/s]Condensing data:  74%|███████▎  | 7513/10215 [00:03<00:01, 1989.28it/s]Condensing data:  76%|███████▌  | 7714/10215 [00:03<00:01, 1963.76it/s]Condensing data:  78%|███████▊  | 7928/10215 [00:03<00:01, 2013.48it/s]Condensing data:  80%|███████▉  | 8131/10215 [00:03<00:01, 1923.47it/s]Condensing data:  82%|████████▏ | 8347/10215 [00:03<00:00, 1986.49it/s]Condensing data:  84%|████████▍ | 8577/10215 [00:03<00:00, 2076.14it/s]Condensing data:  86%|████████▌ | 8809/10215 [00:04<00:00, 2145.42it/s]Condensing data:  89%|████████▉ | 9067/10215 [00:04<00:00, 2272.70it/s]Condensing data:  91%|█████████ | 9309/10215 [00:04<00:00, 2315.92it/s]Condensing data:  93%|█████████▎| 9548/10215 [00:04<00:00, 2313.26it/s]Condensing data:  96%|█████████▌| 9780/10215 [00:04<00:00, 2305.65it/s]Condensing data:  98%|█████████▊| 10034/10215 [00:04<00:00, 2374.11it/s]Condensing data: 100%|██████████| 10215/10215 [00:04<00:00, 2200.21it/s]
+Condensing data:   0%|          | 0/24625 [00:00<?, ?it/s]Condensing data:   1%|          | 193/24625 [00:00<00:12, 1927.65it/s]Condensing data:   2%|▏         | 386/24625 [00:00<00:12, 1891.70it/s]Condensing data:   2%|▏         | 576/24625 [00:00<00:13, 1802.24it/s]Condensing data:   3%|▎         | 771/24625 [00:00<00:12, 1856.28it/s]Condensing data:   4%|▍         | 958/24625 [00:00<00:13, 1806.21it/s]Condensing data:   5%|▍         | 1157/24625 [00:00<00:12, 1862.39it/s]Condensing data:   5%|▌         | 1344/24625 [00:00<00:12, 1860.91it/s]Condensing data:   6%|▋         | 1583/24625 [00:00<00:11, 2023.83it/s]Condensing data:   7%|▋         | 1829/24625 [00:00<00:10, 2156.88it/s]Condensing data:   8%|▊         | 2068/24625 [00:01<00:10, 2226.73it/s]Condensing data:   9%|▉         | 2295/24625 [00:01<00:09, 2238.55it/s]Condensing data:  10%|█         | 2520/24625 [00:01<00:10, 2179.25it/s]Condensing data:  11%|█         | 2739/24625 [00:01<00:10, 2113.28it/s]Condensing data:  12%|█▏        | 2952/24625 [00:01<00:10, 2053.85it/s]Condensing data:  13%|█▎        | 3159/24625 [00:01<00:10, 2041.79it/s]Condensing data:  14%|█▎        | 3364/24625 [00:01<00:10, 1947.41it/s]Condensing data:  14%|█▍        | 3560/24625 [00:01<00:11, 1806.44it/s]Condensing data:  15%|█▌        | 3743/24625 [00:01<00:13, 1568.27it/s]Condensing data:  16%|█▌        | 3906/24625 [00:02<00:14, 1464.76it/s]Condensing data:  16%|█▋        | 4057/24625 [00:02<00:14, 1415.08it/s]Condensing data:  17%|█▋        | 4202/24625 [00:02<00:14, 1403.23it/s]Condensing data:  18%|█▊        | 4352/24625 [00:02<00:14, 1426.92it/s]Condensing data:  18%|█▊        | 4509/24625 [00:02<00:13, 1465.63it/s]Condensing data:  19%|█▉        | 4658/24625 [00:02<00:13, 1467.55it/s]Condensing data:  20%|█▉        | 4806/24625 [00:02<00:13, 1447.05it/s]Condensing data:  20%|██        | 4952/24625 [00:02<00:14, 1349.35it/s]Condensing data:  21%|██        | 5089/24625 [00:02<00:15, 1264.51it/s]Condensing data:  21%|██        | 5219/24625 [00:03<00:15, 1272.44it/s]Condensing data:  22%|██▏       | 5407/24625 [00:03<00:13, 1440.37it/s]Condensing data:  23%|██▎       | 5592/24625 [00:03<00:12, 1556.25it/s]Condensing data:  23%|██▎       | 5774/24625 [00:03<00:11, 1626.87it/s]Condensing data:  24%|██▍       | 5939/24625 [00:03<00:11, 1569.03it/s]Condensing data:  25%|██▍       | 6153/24625 [00:03<00:10, 1731.70it/s]Condensing data:  26%|██▌       | 6403/24625 [00:03<00:09, 1953.38it/s]Condensing data:  27%|██▋       | 6681/24625 [00:03<00:08, 2193.94it/s]Condensing data:  28%|██▊       | 6937/24625 [00:03<00:07, 2299.39it/s]Condensing data:  29%|██▉       | 7169/24625 [00:04<00:07, 2194.82it/s]Condensing data:  30%|███       | 7391/24625 [00:04<00:08, 2075.55it/s]Condensing data:  31%|███       | 7637/24625 [00:04<00:07, 2180.82it/s]Condensing data:  32%|███▏      | 7897/24625 [00:04<00:07, 2298.94it/s]Condensing data:  33%|███▎      | 8130/24625 [00:04<00:07, 2224.85it/s]Condensing data:  34%|███▍      | 8355/24625 [00:04<00:07, 2229.90it/s]Condensing data:  35%|███▍      | 8580/24625 [00:04<00:07, 2045.58it/s]Condensing data:  36%|███▌      | 8789/24625 [00:04<00:08, 1962.72it/s]Condensing data:  37%|███▋      | 9023/24625 [00:04<00:07, 2065.03it/s]Condensing data:  38%|███▊      | 9290/24625 [00:04<00:06, 2233.90it/s]Condensing data:  39%|███▊      | 9517/24625 [00:05<00:06, 2177.91it/s]Condensing data:  40%|███▉      | 9748/24625 [00:05<00:06, 2213.17it/s]Condensing data:  40%|████      | 9972/24625 [00:05<00:07, 1928.10it/s]Condensing data:  41%|████▏     | 10173/24625 [00:05<00:08, 1778.04it/s]Condensing data:  42%|████▏     | 10367/24625 [00:05<00:07, 1811.95it/s]Condensing data:  43%|████▎     | 10591/24625 [00:05<00:07, 1925.26it/s]Condensing data:  44%|████▍     | 10828/24625 [00:05<00:06, 2047.52it/s]Condensing data:  45%|████▍     | 11038/24625 [00:05<00:06, 2020.11it/s]Condensing data:  46%|████▌     | 11244/24625 [00:06<00:06, 2010.24it/s]Condensing data:  47%|████▋     | 11484/24625 [00:06<00:06, 2121.38it/s]Condensing data:  48%|████▊     | 11699/24625 [00:06<00:06, 2111.36it/s]Condensing data:  48%|████▊     | 11914/24625 [00:06<00:05, 2121.65it/s]Condensing data:  49%|████▉     | 12128/24625 [00:06<00:05, 2123.04it/s]Condensing data:  50%|█████     | 12342/24625 [00:06<00:05, 2086.83it/s]Condensing data:  51%|█████     | 12552/24625 [00:06<00:05, 2089.15it/s]Condensing data:  52%|█████▏    | 12762/24625 [00:06<00:05, 2038.02it/s]Condensing data:  53%|█████▎    | 12967/24625 [00:06<00:06, 1926.71it/s]Condensing data:  53%|█████▎    | 13162/24625 [00:06<00:06, 1880.80it/s]Condensing data:  54%|█████▍    | 13352/24625 [00:07<00:06, 1866.59it/s]Condensing data:  55%|█████▍    | 13540/24625 [00:07<00:05, 1849.16it/s]Condensing data:  56%|█████▌    | 13726/24625 [00:07<00:06, 1814.49it/s]Condensing data:  57%|█████▋    | 13941/24625 [00:07<00:05, 1909.47it/s]Condensing data:  58%|█████▊    | 14222/24625 [00:07<00:04, 2170.60it/s]Condensing data:  59%|█████▉    | 14469/24625 [00:07<00:04, 2256.91it/s]Condensing data:  60%|█████▉    | 14717/24625 [00:07<00:04, 2320.43it/s]Condensing data:  61%|██████    | 14950/24625 [00:07<00:04, 2238.32it/s]Condensing data:  62%|██████▏   | 15176/24625 [00:07<00:04, 1980.21it/s]Condensing data:  62%|██████▏   | 15380/24625 [00:08<00:05, 1838.80it/s]Condensing data:  63%|██████▎   | 15570/24625 [00:08<00:05, 1591.49it/s]Condensing data:  64%|██████▍   | 15738/24625 [00:08<00:06, 1465.84it/s]Condensing data:  65%|██████▍   | 15907/24625 [00:08<00:05, 1519.18it/s]Condensing data:  65%|██████▌   | 16098/24625 [00:08<00:05, 1616.52it/s]Condensing data:  66%|██████▌   | 16275/24625 [00:08<00:05, 1654.07it/s]Condensing data:  67%|██████▋   | 16458/24625 [00:08<00:04, 1700.71it/s]Condensing data:  68%|██████▊   | 16654/24625 [00:08<00:04, 1770.98it/s]Condensing data:  68%|██████▊   | 16834/24625 [00:08<00:04, 1745.06it/s]Condensing data:  69%|██████▉   | 17011/24625 [00:10<00:27, 274.03it/s] Condensing data:  70%|██████▉   | 17225/24625 [00:11<00:19, 386.26it/s]Condensing data:  71%|███████   | 17378/24625 [00:11<00:15, 458.45it/s]Condensing data:  71%|███████   | 17516/24625 [00:11<00:13, 541.69it/s]Condensing data:  72%|███████▏  | 17678/24625 [00:11<00:10, 672.30it/s]Condensing data:  72%|███████▏  | 17820/24625 [00:11<00:08, 763.68it/s]Condensing data:  73%|███████▎  | 17956/24625 [00:11<00:07, 838.90it/s]Condensing data:  73%|███████▎  | 18086/24625 [00:11<00:07, 917.89it/s]Condensing data:  74%|███████▍  | 18214/24625 [00:11<00:06, 985.76it/s]Condensing data:  74%|███████▍  | 18340/24625 [00:11<00:06, 1039.99it/s]Condensing data:  75%|███████▌  | 18473/24625 [00:12<00:05, 1110.99it/s]Condensing data:  76%|███████▌  | 18601/24625 [00:12<00:05, 1097.14it/s]Condensing data:  76%|███████▌  | 18722/24625 [00:12<00:05, 1048.59it/s]Condensing data:  76%|███████▋  | 18835/24625 [00:12<00:05, 1056.54it/s]Condensing data:  77%|███████▋  | 18950/24625 [00:12<00:05, 1079.07it/s]Condensing data:  77%|███████▋  | 19063/24625 [00:12<00:05, 1051.93it/s]Condensing data:  78%|███████▊  | 19172/24625 [00:12<00:05, 1023.32it/s]Condensing data:  78%|███████▊  | 19277/24625 [00:12<00:05, 970.09it/s] Condensing data:  79%|███████▊  | 19376/24625 [00:13<00:05, 928.45it/s]Condensing data:  79%|███████▉  | 19471/24625 [00:13<00:05, 891.14it/s]Condensing data:  79%|███████▉  | 19573/24625 [00:13<00:05, 924.38it/s]Condensing data:  80%|███████▉  | 19698/24625 [00:13<00:04, 1014.24it/s]Condensing data:  81%|████████  | 19832/24625 [00:13<00:04, 1105.28it/s]Condensing data:  81%|████████  | 19948/24625 [00:13<00:04, 1119.88it/s]Condensing data:  81%|████████▏ | 20062/24625 [00:13<00:04, 1109.04it/s]Condensing data:  82%|████████▏ | 20174/24625 [00:13<00:04, 1092.03it/s]Condensing data:  82%|████████▏ | 20288/24625 [00:13<00:03, 1104.37it/s]Condensing data:  83%|████████▎ | 20401/24625 [00:13<00:03, 1109.78it/s]Condensing data:  83%|████████▎ | 20513/24625 [00:15<00:23, 172.99it/s] Condensing data:  84%|████████▍ | 20626/24625 [00:15<00:17, 231.57it/s]Condensing data:  84%|████████▍ | 20716/24625 [00:16<00:13, 284.83it/s]Condensing data:  84%|████████▍ | 20805/24625 [00:16<00:11, 342.09it/s]Condensing data:  85%|████████▍ | 20909/24625 [00:16<00:08, 430.16it/s]Condensing data:  85%|████████▌ | 21011/24625 [00:16<00:06, 519.08it/s]Condensing data:  86%|████████▌ | 21105/24625 [00:16<00:05, 591.72it/s]Condensing data:  86%|████████▌ | 21199/24625 [00:16<00:05, 631.51it/s]Condensing data:  86%|████████▋ | 21287/24625 [00:16<00:05, 650.34it/s]Condensing data:  87%|████████▋ | 21375/24625 [00:16<00:04, 701.94it/s]Condensing data:  87%|████████▋ | 21460/24625 [00:16<00:04, 733.55it/s]Condensing data:  88%|████████▊ | 21550/24625 [00:17<00:03, 775.96it/s]Condensing data:  88%|████████▊ | 21636/24625 [00:17<00:03, 791.62it/s]Condensing data:  88%|████████▊ | 21721/24625 [00:17<00:03, 755.45it/s]Condensing data:  89%|████████▊ | 21801/24625 [00:17<00:03, 765.91it/s]Condensing data:  89%|████████▉ | 21881/24625 [00:17<00:03, 767.23it/s]Condensing data:  89%|████████▉ | 21965/24625 [00:17<00:03, 787.36it/s]Condensing data:  90%|████████▉ | 22046/24625 [00:17<00:03, 791.86it/s]Condensing data:  90%|████████▉ | 22128/24625 [00:17<00:03, 799.05it/s]Condensing data:  90%|█████████ | 22209/24625 [00:17<00:03, 788.14it/s]Condensing data:  91%|█████████ | 22298/24625 [00:17<00:02, 817.63it/s]Condensing data:  91%|█████████ | 22385/24625 [00:18<00:02, 829.83it/s]Condensing data:  91%|█████████ | 22469/24625 [00:18<00:02, 787.63it/s]Condensing data:  92%|█████████▏| 22565/24625 [00:18<00:02, 835.71it/s]Condensing data:  92%|█████████▏| 22650/24625 [00:18<00:02, 838.70it/s]Condensing data:  92%|█████████▏| 22735/24625 [00:18<00:02, 838.30it/s]Condensing data:  93%|█████████▎| 22825/24625 [00:18<00:02, 856.34it/s]Condensing data:  93%|█████████▎| 22919/24625 [00:18<00:01, 878.93it/s]Condensing data:  93%|█████████▎| 23015/24625 [00:18<00:01, 902.92it/s]Condensing data:  94%|█████████▍| 23110/24625 [00:18<00:01, 913.05it/s]Condensing data:  94%|█████████▍| 23202/24625 [00:19<00:01, 905.23it/s]Condensing data:  95%|█████████▍| 23297/24625 [00:19<00:01, 915.28it/s]Condensing data:  95%|█████████▌| 23401/24625 [00:19<00:01, 950.93it/s]Condensing data:  95%|█████████▌| 23511/24625 [00:19<00:01, 995.04it/s]Condensing data:  96%|█████████▌| 23626/24625 [00:19<00:00, 1040.39it/s]Condensing data:  96%|█████████▋| 23748/24625 [00:19<00:00, 1086.76it/s]Condensing data:  97%|█████████▋| 23878/24625 [00:19<00:00, 1149.98it/s]Condensing data:  97%|█████████▋| 24000/24625 [00:19<00:00, 1166.14it/s]Condensing data:  98%|█████████▊| 24137/24625 [00:19<00:00, 1226.49it/s]Condensing data:  99%|█████████▊| 24281/24625 [00:19<00:00, 1289.98it/s]Condensing data:  99%|█████████▉| 24411/24625 [00:20<00:00, 1292.46it/s]Condensing data: 100%|█████████▉| 24570/24625 [00:20<00:00, 1373.82it/s]Condensing data: 100%|██████████| 24625/24625 [00:20<00:00, 1219.64it/s]
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=-1)]: Done 136 tasks      | elapsed:    4.0s
+[Parallel(n_jobs=-1)]: Done 386 tasks      | elapsed:   10.1s
+[Parallel(n_jobs=-1)]: Done 500 out of 500 | elapsed:   12.9s finished
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+10215 samples found.
+
+[0.128      0.         0.         0.         0.         0.
+ 1.972      0.         0.         0.         0.         0.
+ 0.         0.018      0.         0.         0.         0.
+ 0.002      0.         0.         0.         0.         0.
+ 0.         0.952      0.         0.         0.         0.
+ 0.         0.         0.         0.596      0.         0.
+ 0.         0.         1.29       0.         0.         0.
+ 1.40466667 1.782      0.         0.         0.         1.4845
+ 0.         0.         0.         0.         0.         0.16
+ 1.618      0.         0.         0.         0.976      0.
+ 0.002      0.         0.         0.         0.         0.018
+ 0.         0.         0.         0.         0.012      0.
+ 0.         0.         0.         0.         0.         1.066
+ 1.002      0.         0.         0.         0.         0.
+ 0.564      0.         0.         0.008      0.         0.
+ 0.         0.         0.         1.044      0.         0.
+ 0.         0.         0.         0.         0.068      1.896
+ 0.         0.         0.03       0.         1.59       0.
+ 0.         0.         0.         0.004      1.38       0.
+ 0.006      0.         0.         1.03       0.014      1.99
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.006      0.         0.         0.
+ 0.         0.         0.         0.434      0.         0.
+ 0.         0.338      0.         0.         0.         0.974
+ 0.05       0.         0.         0.         0.006      1.036
+ 0.         0.         0.         0.         0.         0.
+ 0.8        0.         0.         0.         0.83       0.
+ 0.         0.         0.         0.         0.         0.192
+ 0.         0.732      0.002      0.         0.         0.016
+ 0.         0.         0.024      1.978      0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.888      0.         1.788      0.         0.         0.
+ 0.002      1.278      0.         0.         0.         1.9405
+ 0.         0.         0.         0.         0.         0.006
+ 0.         0.         0.         0.892      0.         0.
+ 0.         0.         1.202      1.036      0.         0.
+ 0.         0.         0.         0.         0.012      0.
+ 0.01       0.         1.09       0.         0.         0.
+ 1.008      0.         1.334      0.         0.         0.
+ 0.         0.004      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 1.032      0.         0.         1.02       0.         0.
+ 0.004      0.         0.         0.364      0.         0.424
+ 0.         0.         1.94516667 0.         1.97266667 0.
+ 0.         0.         0.         0.002      0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.032      0.         0.         1.948
+ 0.         0.         0.         0.         0.         0.
+ 1.056      0.         0.         1.024      0.018      0.
+ 0.946      0.         1.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         1.994      0.         0.
+ 0.         0.018      0.         0.         0.         0.
+ 0.         0.         0.         0.026      0.218      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.954      0.         0.036      0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.012      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.86       0.         0.         0.         0.         0.
+ 1.8        0.         0.         0.104      0.         0.
+ 0.         0.014      0.         0.         0.036      0.
+ 0.         0.         0.062      1.5        0.         0.
+ 0.002      0.         0.35       0.         0.         1.308
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.026      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 1.218      0.         0.         0.         0.         0.
+ 0.         0.004      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.002      0.
+ 0.         0.         0.         0.         1.57       0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         1.154      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.966
+ 0.        ]
+[0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 1. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 2. 0. 0. 0. 1. 1. 0. 0. 0. 1.
+ 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0.
+ 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 1. 0. 2.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 2. 0. 0. 0. 0. 2. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.
+ 1. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 2. 0. 2. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 1. 0. 0. 1. 0. 0.
+ 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 1. 0.]
+Mean Squared Error on Test Set: 0.02470406539465101
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=-1)]: Done 136 tasks      | elapsed:   12.5s
+[Parallel(n_jobs=-1)]: Done 386 tasks      | elapsed:   31.0s
+[Parallel(n_jobs=-1)]: Done 500 out of 500 | elapsed:   39.3s finished
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+24625 samples found.
+
+[0. 0. 0. ... 0. 0. 0.]
+[0. 0. 0. ... 0. 0. 0.]
+Mean Squared Error on Test Set: 0.02332018181818182
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/24625 [00:00<?, ?it/s]  2%|▏         | 454/24625 [00:00<00:05, 4531.89it/s]  4%|▎         | 908/24625 [00:00<00:05, 4375.64it/s]  6%|▌         | 1355/24625 [00:00<00:05, 4414.19it/s]  7%|▋         | 1797/24625 [00:00<00:05, 4310.37it/s]  9%|▉         | 2229/24625 [00:00<00:05, 4155.60it/s] 11%|█         | 2646/24625 [00:00<00:05, 4141.99it/s] 12%|█▏        | 3061/24625 [00:00<00:05, 4112.38it/s] 14%|█▍        | 3473/24625 [00:00<00:05, 4021.41it/s] 16%|█▌        | 3876/24625 [00:00<00:05, 4013.06it/s] 17%|█▋        | 4278/24625 [00:01<00:05, 4004.96it/s] 19%|█▉        | 4679/24625 [00:01<00:05, 3988.08it/s] 21%|██        | 5078/24625 [00:01<00:05, 3906.07it/s] 22%|██▏       | 5469/24625 [00:01<00:04, 3852.89it/s] 24%|██▍       | 5855/24625 [00:01<00:04, 3844.98it/s] 25%|██▌       | 6240/24625 [00:01<00:04, 3760.06it/s] 27%|██▋       | 6617/24625 [00:01<00:05, 3272.36it/s] 28%|██▊       | 6961/24625 [00:01<00:05, 3316.88it/s] 30%|██▉       | 7322/24625 [00:01<00:05, 3395.62it/s] 31%|███       | 7669/24625 [00:02<00:04, 3415.14it/s] 33%|███▎      | 8020/24625 [00:02<00:04, 3418.91it/s] 34%|███▍      | 8370/24625 [00:02<00:04, 3440.96it/s] 35%|███▌      | 8717/24625 [00:02<00:04, 3425.61it/s] 37%|███▋      | 9062/24625 [00:02<00:04, 3427.19it/s] 38%|███▊      | 9406/24625 [00:02<00:04, 3404.50it/s] 40%|███▉      | 9748/24625 [00:02<00:04, 3403.60it/s] 41%|████      | 10089/24625 [00:02<00:04, 3340.90it/s] 42%|████▏     | 10425/24625 [00:02<00:04, 3345.63it/s] 44%|████▎     | 10760/24625 [00:02<00:04, 3314.73it/s] 45%|████▌     | 11103/24625 [00:03<00:04, 3347.20it/s] 46%|████▋     | 11440/24625 [00:03<00:03, 3352.83it/s] 48%|████▊     | 11778/24625 [00:03<00:03, 3357.94it/s] 49%|████▉     | 12114/24625 [00:03<00:03, 3327.29it/s] 51%|█████     | 12447/24625 [00:03<00:03, 3312.20it/s] 52%|█████▏    | 12779/24625 [00:03<00:03, 3264.70it/s] 53%|█████▎    | 13106/24625 [00:03<00:03, 3256.06it/s] 55%|█████▍    | 13432/24625 [00:03<00:03, 3217.53it/s] 56%|█████▌    | 13754/24625 [00:03<00:03, 3207.81it/s] 57%|█████▋    | 14075/24625 [00:03<00:03, 3156.70it/s] 58%|█████▊    | 14393/24625 [00:04<00:03, 3161.40it/s] 60%|█████▉    | 14710/24625 [00:04<00:03, 3129.31it/s] 61%|██████    | 15032/24625 [00:04<00:03, 3154.12it/s] 62%|██████▏   | 15348/24625 [00:04<00:02, 3146.60it/s] 64%|██████▎   | 15663/24625 [00:04<00:02, 3100.38it/s] 65%|██████▍   | 15977/24625 [00:04<00:02, 3109.43it/s] 66%|██████▌   | 16289/24625 [00:04<00:02, 3052.61it/s] 67%|██████▋   | 16597/24625 [00:04<00:02, 3058.31it/s] 69%|██████▊   | 16904/24625 [00:04<00:02, 3033.98it/s] 70%|██████▉   | 17211/24625 [00:04<00:02, 3042.28it/s] 71%|███████   | 17516/24625 [00:05<00:02, 3027.26it/s] 72%|███████▏  | 17826/24625 [00:05<00:02, 3046.95it/s] 74%|███████▎  | 18131/24625 [00:05<00:02, 3027.14it/s] 75%|███████▍  | 18437/24625 [00:05<00:02, 3036.04it/s] 76%|███████▌  | 18741/24625 [00:05<00:01, 3018.28it/s] 77%|███████▋  | 19043/24625 [00:05<00:01, 3017.69it/s] 79%|███████▊  | 19345/24625 [00:05<00:01, 3011.66it/s] 80%|███████▉  | 19647/24625 [00:05<00:01, 2950.57it/s] 81%|████████  | 19943/24625 [00:05<00:01, 2920.54it/s] 82%|████████▏ | 20236/24625 [00:05<00:01, 2866.07it/s] 83%|████████▎ | 20523/24625 [00:06<00:01, 2845.02it/s] 84%|████████▍ | 20808/24625 [00:06<00:01, 2794.87it/s] 86%|████████▌ | 21088/24625 [00:06<00:01, 2783.00it/s] 87%|████████▋ | 21367/24625 [00:06<00:01, 2759.96it/s] 88%|████████▊ | 21644/24625 [00:06<00:01, 2718.85it/s] 89%|████████▉ | 21916/24625 [00:06<00:01, 2707.07it/s] 90%|█████████ | 22187/24625 [00:06<00:00, 2646.99it/s] 91%|█████████ | 22452/24625 [00:06<00:00, 2641.52it/s] 92%|█████████▏| 22717/24625 [00:06<00:00, 2615.19it/s] 93%|█████████▎| 22981/24625 [00:07<00:00, 2619.99it/s] 94%|█████████▍| 23244/24625 [00:07<00:00, 2622.84it/s] 95%|█████████▌| 23507/24625 [00:07<00:00, 2608.59it/s] 97%|█████████▋| 23774/24625 [00:07<00:00, 2624.56it/s] 98%|█████████▊| 24040/24625 [00:07<00:00, 2634.17it/s] 99%|█████████▊| 24304/24625 [00:07<00:00, 2610.54it/s]100%|█████████▉| 24566/24625 [00:07<00:00, 2608.83it/s]100%|██████████| 24625/24625 [00:07<00:00, 3214.36it/s]
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/10215 [00:00<?, ?it/s]  8%|▊         | 784/10215 [00:00<00:01, 7830.56it/s] 15%|█▌        | 1568/10215 [00:00<00:01, 7709.44it/s] 23%|██▎       | 2340/10215 [00:00<00:01, 7302.34it/s] 30%|███       | 3073/10215 [00:00<00:01, 7129.33it/s] 37%|███▋      | 3788/10215 [00:00<00:00, 6922.32it/s] 44%|████▍     | 4482/10215 [00:00<00:00, 6812.44it/s] 51%|█████     | 5164/10215 [00:00<00:00, 6408.13it/s] 57%|█████▋    | 5809/10215 [00:00<00:00, 6280.23it/s] 63%|██████▎   | 6440/10215 [00:00<00:00, 5979.94it/s] 69%|██████▉   | 7041/10215 [00:01<00:00, 5871.72it/s] 75%|███████▍  | 7630/10215 [00:01<00:00, 5686.34it/s] 80%|████████  | 8200/10215 [00:01<00:00, 5587.47it/s] 86%|████████▌ | 8760/10215 [00:01<00:00, 5527.07it/s] 91%|█████████ | 9313/10215 [00:01<00:00, 5477.68it/s] 97%|█████████▋| 9861/10215 [00:01<00:00, 5348.26it/s]100%|██████████| 10215/10215 [00:01<00:00, 6037.17it/s]
+[Parallel(n_jobs=32)]: Using backend ThreadingBackend with 32 concurrent workers.
+[Parallel(n_jobs=32)]: Done 136 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=32)]: Done 386 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=32)]: Done 500 out of 500 | elapsed:    0.1s finished
+[Wed Apr 17 15:06:24 2024]
+Finished job 8.
+3 of 17 steps (18%) done
+Select jobs to execute...
+Execute 6 jobs...
+
+[Wed Apr 17 15:06:24 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/AKA-017_GIM-024.csv, 3L3RX/AKA-017_GIM-024.csv
+    output: 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 3L3RX_model_validation_output/AKA-017_GIM-024_TEforest_bps_nonredundant.bed
+    log: logs/AKA-017_GIM-024/find_breakpoints.log
+    jobid: 13
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 3L3RX/AKA-017_GIM-024.csv, 2L2R/AKA-017_GIM-024.csv
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 2L2R/AKA-017_GIM-024.csv 2L2R_model_validation_output/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 3L3RX/AKA-017_GIM-024.csv 3L3RX_model_validation_output/ aligned_het/
+
+[Wed Apr 17 15:06:24 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/A2_A3.csv, 3L3RX/A2_A3.csv
+    output: 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output/A2_A3_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/A2_A3_TEforest_nonredundant.bed, 3L3RX_model_validation_output/A2_A3_TEforest_bps_nonredundant.bed
+    log: logs/A2_A3/find_breakpoints.log
+    jobid: 31
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 3L3RX/A2_A3.csv, 2L2R/A2_A3.csv
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 2L2R/A2_A3.csv 2L2R_model_validation_output/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 3L3RX/A2_A3.csv 3L3RX_model_validation_output/ aligned_het/
+
+[Wed Apr 17 15:06:25 2024]
+localrule split_data_classifier:
+    input: feature_vectors_het/A2_A3, 2L2R_classifer/A2_A3.txt, 3L3RX_classifer/A2_A3.txt
+    output: 2L2R_classifer/A2_A3.csv, 3L3RX_classifer/A2_A3.csv
+    jobid: 34
+    reason: Input files updated by another job: 2L2R_classifer/A2_A3.txt, 3L3RX_classifer/A2_A3.txt
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+echo 'file,true,pred,cntrl_score' > 2L2R_classifer/A2_A3.csv; cat 2L2R_classifer/predictions.csv | grep ^A2_A3 >> 2L2R_classifer/A2_A3.csv; echo 'file,true,pred,cntrl_score'> 3L3RX_classifer/A2_A3.csv; cat 3L3RX_classifer/predictions.csv | grep ^A2_A3 >> 3L3RX_classifer/A2_A3.csv
+
+[Wed Apr 17 15:06:25 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/JUT-008_MUN-009.csv, 3L3RX/JUT-008_MUN-009.csv
+    output: 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 3L3RX_model_validation_output/JUT-008_MUN-009_TEforest_bps_nonredundant.bed
+    log: logs/JUT-008_MUN-009/find_breakpoints.log
+    jobid: 1
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R/JUT-008_MUN-009.csv, 3L3RX/JUT-008_MUN-009.csv
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 2L2R/JUT-008_MUN-009.csv 2L2R_model_validation_output/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 3L3RX/JUT-008_MUN-009.csv 3L3RX_model_validation_output/ aligned_het/
+
+[Wed Apr 17 15:06:25 2024]
+localrule split_data_classifier:
+    input: feature_vectors_het/JUT-008_MUN-009, 2L2R_classifer/JUT-008_MUN-009.txt, 3L3RX_classifer/JUT-008_MUN-009.txt
+    output: 2L2R_classifer/JUT-008_MUN-009.csv, 3L3RX_classifer/JUT-008_MUN-009.csv
+    jobid: 10
+    reason: Input files updated by another job: 2L2R_classifer/JUT-008_MUN-009.txt, 3L3RX_classifer/JUT-008_MUN-009.txt
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=/tmp
+
+echo 'file,true,pred,cntrl_score' > 2L2R_classifer/JUT-008_MUN-009.csv; cat 2L2R_classifer/predictions.csv | grep ^JUT-008_MUN-009 >> 2L2R_classifer/JUT-008_MUN-009.csv; echo 'file,true,pred,cntrl_score'> 3L3RX_classifer/JUT-008_MUN-009.csv; cat 3L3RX_classifer/predictions.csv | grep ^JUT-008_MUN-009 >> 3L3RX_classifer/JUT-008_MUN-009.csv
+Loading required package: stats4
+Loading required package: stats4
+
+[Wed Apr 17 15:06:25 2024]
+localrule split_data_classifier:
+    input: feature_vectors_het/AKA-017_GIM-024, 2L2R_classifer/AKA-017_GIM-024.txt, 3L3RX_classifer/AKA-017_GIM-024.txt
+    output: 2L2R_classifer/AKA-017_GIM-024.csv, 3L3RX_classifer/AKA-017_GIM-024.csv
+    jobid: 22
+    reason: Input files updated by another job: 2L2R_classifer/AKA-017_GIM-024.txt, 3L3RX_classifer/AKA-017_GIM-024.txt
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=/tmp
+
+echo 'file,true,pred,cntrl_score' > 2L2R_classifer/AKA-017_GIM-024.csv; cat 2L2R_classifer/predictions.csv | grep ^AKA-017_GIM-024 >> 2L2R_classifer/AKA-017_GIM-024.csv; echo 'file,true,pred,cntrl_score'> 3L3RX_classifer/AKA-017_GIM-024.csv; cat 3L3RX_classifer/predictions.csv | grep ^AKA-017_GIM-024 >> 3L3RX_classifer/AKA-017_GIM-024.csv
+[Wed Apr 17 15:06:25 2024]
+Finished job 34.
+4 of 15 steps (27%) done
+Loading required package: BiocGenerics
+Loading required package: BiocGenerics
+[Wed Apr 17 15:06:25 2024]
+Finished job 10.
+5 of 15 steps (33%) done
+Loading required package: stats4
+[Wed Apr 17 15:06:25 2024]
+Finished job 22.
+6 of 15 steps (40%) done
+Select jobs to execute...
+Execute 3 jobs...
+
+[Wed Apr 17 15:06:25 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/A2_A3.csv, 3L3RX_classifer/A2_A3.csv
+    output: 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/A2_A3_TEforest_bps_nonredundant.bed
+    log: logs/A2_A3/find_breakpoints.log
+    jobid: 33
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 3L3RX_classifer/A2_A3.csv, 2L2R_classifer/A2_A3.csv
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 2L2R_classifer/A2_A3.csv 2L2R_model_validation_output_classifier/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 3L3RX_classifer/A2_A3.csv 3L3RX_model_validation_output_classifier/ aligned_het/
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: BiocGenerics
+Loading required package: S4Vectors
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+[Wed Apr 17 15:06:25 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/AKA-017_GIM-024.csv, 3L3RX_classifer/AKA-017_GIM-024.csv
+    output: 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/AKA-017_GIM-024_TEforest_bps_nonredundant.bed
+    log: logs/AKA-017_GIM-024/find_breakpoints.log
+    jobid: 21
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_classifer/AKA-017_GIM-024.csv, 3L3RX_classifer/AKA-017_GIM-024.csv
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 2L2R_classifer/AKA-017_GIM-024.csv 2L2R_model_validation_output_classifier/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 3L3RX_classifer/AKA-017_GIM-024.csv 3L3RX_model_validation_output_classifier/ aligned_het/
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+[Wed Apr 17 15:06:25 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/JUT-008_MUN-009.csv, 3L3RX_classifer/JUT-008_MUN-009.csv
+    output: 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/JUT-008_MUN-009_TEforest_bps_nonredundant.bed
+    log: logs/JUT-008_MUN-009/find_breakpoints.log
+    jobid: 9
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 3L3RX_classifer/JUT-008_MUN-009.csv, 2L2R_classifer/JUT-008_MUN-009.csv
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 2L2R_classifer/JUT-008_MUN-009.csv 2L2R_model_validation_output_classifier/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 3L3RX_classifer/JUT-008_MUN-009.csv 3L3RX_model_validation_output_classifier/ aligned_het/
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: IRanges
+Loading required package: IRanges
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+Loading required package: SummarizedExperiment
+Loading required package: SummarizedExperiment
+Loading required package: SummarizedExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: MatrixGenerics
+Loading required package: MatrixGenerics
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+Loading required package: matrixStats
+Loading required package: matrixStats
+Loading required package: matrixStats
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: SummarizedExperiment
+Loading required package: matrixStats
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Loading required package: Biobase
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Loading required package: Biobase
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: Biostrings
+Loading required package: Biostrings
+Loading required package: Biostrings
+Loading required package: XVector
+Loading required package: XVector
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Biostrings
+Loading required package: Rsamtools
+Loading required package: Rsamtools
+Loading required package: Rsamtools
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "AKA-017_GIM-024"                         
+[2] "2L2R_classifer/AKA-017_GIM-024.csv"      
+[3] "2L2R_model_validation_output_classifier/"
+[4] "aligned_het/"                            
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L2R_classifer/AKA-017_GIM-024.csv"
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "A2_A3"                                   
+[2] "2L2R_classifer/A2_A3.csv"                
+[3] "2L2R_model_validation_output_classifier/"
+[4] "aligned_het/"                            
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L2R_classifer/A2_A3.csv"
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "JUT-008_MUN-009"               "2L2R/JUT-008_MUN-009.csv"     
+[3] "2L2R_model_validation_output/" "aligned_het/"                 
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L2R/JUT-008_MUN-009.csv"
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "JUT-008_MUN-009"                         
+[2] "2L2R_classifer/JUT-008_MUN-009.csv"      
+[3] "2L2R_model_validation_output_classifier/"
+[4] "aligned_het/"                            
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L2R_classifer/JUT-008_MUN-009.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output_classifier' already exists
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output_classifier' already exists
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output' already exists
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output_classifier' already exists
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "A2_A3"                         "2L2R/A2_A3.csv"               
+[3] "2L2R_model_validation_output/" "aligned_het/"                 
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L2R/A2_A3.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output' already exists
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "AKA-017_GIM-024"               "2L2R/AKA-017_GIM-024.csv"     
+[3] "2L2R_model_validation_output/" "aligned_het/"                 
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L2R/AKA-017_GIM-024.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output' already exists
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+[1] "breakpoint finding complete!"
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[1] "breakpoint finding complete!"
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Loading required package: stats4
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "AKA-017_GIM-024"                          
+[2] "3L3RX_classifer/AKA-017_GIM-024.csv"      
+[3] "3L3RX_model_validation_output_classifier/"
+[4] "aligned_het/"                             
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/3L3RX_classifer/AKA-017_GIM-024.csv"
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output_classifier' already exists
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+[1] "A2_A3"                                    
+[2] "3L3RX_classifer/A2_A3.csv"                
+[3] "3L3RX_model_validation_output_classifier/"
+[4] "aligned_het/"                             
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/3L3RX_classifer/A2_A3.csv"
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output_classifier' already exists
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "JUT-008_MUN-009"                          
+[2] "3L3RX_classifer/JUT-008_MUN-009.csv"      
+[3] "3L3RX_model_validation_output_classifier/"
+[4] "aligned_het/"                             
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/3L3RX_classifer/JUT-008_MUN-009.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output_classifier' already exists
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Wed Apr 17 15:08:16 2024]
+Finished job 21.
+7 of 15 steps (47%) done
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Wed Apr 17 15:08:27 2024]
+Finished job 33.
+8 of 15 steps (53%) done
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Wed Apr 17 15:08:31 2024]
+Finished job 9.
+9 of 15 steps (60%) done
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "A2_A3"                          "3L3RX/A2_A3.csv"               
+[3] "3L3RX_model_validation_output/" "aligned_het/"                  
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/3L3RX/A2_A3.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output' already exists
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "JUT-008_MUN-009"                "3L3RX/JUT-008_MUN-009.csv"     
+[3] "3L3RX_model_validation_output/" "aligned_het/"                  
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/3L3RX/JUT-008_MUN-009.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output' already exists
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Wed Apr 17 15:10:06 2024]
+Finished job 31.
+10 of 15 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Apr 17 15:10:06 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/A2_A3.pdf
+    log: logs/A2_A3/bench.log
+    jobid: 30
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r A2 A3 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor TEforest_classifier 2L_2R_plots
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+Loading required package: lattice
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "A2"                                                              
+[2] "A3"                                                              
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_regressor"                                              
+[5] "TEforest_classifier"                                             
+[6] "2L_2R_plots"                                                     
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "AKA-017_GIM-024"                "3L3RX/AKA-017_GIM-024.csv"     
+[3] "3L3RX_model_validation_output/" "aligned_het/"                  
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/3L3RX/AKA-017_GIM-024.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output' already exists
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Wed Apr 17 15:11:25 2024]
+Finished job 1.
+11 of 15 steps (73%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Apr 17 15:11:25 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/JUT-008_MUN-009.pdf
+    log: logs/JUT-008_MUN-009/bench.log
+    jobid: 0
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r JUT-008 MUN-009 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor TEforest_classifier 2L_2R_plots
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+Loading required package: lattice
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "JUT-008"                                                         
+[2] "MUN-009"                                                         
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_regressor"                                              
+[5] "TEforest_classifier"                                             
+[6] "2L_2R_plots"                                                     
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Wed Apr 17 15:12:27 2024]
+Finished job 13.
+12 of 15 steps (80%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Apr 17 15:12:27 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/AKA-017_GIM-024.pdf
+    log: logs/AKA-017_GIM-024/bench.log
+    jobid: 12
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r AKA-017 GIM-024 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor TEforest_classifier 2L_2R_plots
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+Loading required package: lattice
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "AKA-017"                                                         
+[2] "GIM-024"                                                         
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_regressor"                                              
+[5] "TEforest_classifier"                                             
+[6] "2L_2R_plots"                                                     
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+             TRUE              TRUE              TRUE              TRUE 
+    freqpltnozero           freqplt 
+             TRUE             FALSE 
+Warning message:
+In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[1] "A2A3 done!"
+[Wed Apr 17 15:14:21 2024]
+Finished job 30.
+13 of 15 steps (87%) done
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+            FALSE             FALSE             FALSE             FALSE 
+    freqpltnozero           freqplt 
+            FALSE             FALSE 
+Warning messages:
+1: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/performance_plots' already exists
+2: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/breakpoints_plots' already exists
+3: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/hetplt' already exists
+4: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/homoplt' already exists
+5: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/freqpltnozero' already exists
+6: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Warning messages:
+1: Removed 1 rows containing missing values (`geom_bar()`). 
+2: Removed 1 rows containing missing values (`geom_text()`). 
+[1] "AKA-017GIM-024 done!"
+[Wed Apr 17 15:15:04 2024]
+Finished job 12.
+14 of 15 steps (93%) done
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+            FALSE             FALSE             FALSE             FALSE 
+    freqpltnozero           freqplt 
+            FALSE             FALSE 
+Warning messages:
+1: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/performance_plots' already exists
+2: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/breakpoints_plots' already exists
+3: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/hetplt' already exists
+4: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/homoplt' already exists
+5: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/freqpltnozero' already exists
+6: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_no75bpredo/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[1] "JUT-008MUN-009 done!"
+[Wed Apr 17 15:15:50 2024]
+Finished job 0.
+15 of 15 steps (100%) done
+Complete log: .snakemake/log/2024-04-17T141651.462639.snakemake.log

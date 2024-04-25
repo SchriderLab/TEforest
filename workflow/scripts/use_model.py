@@ -70,7 +70,7 @@ def main():
         samps["files"].append(id)
 
     preds = loaded_model.predict(samps["data"])
-    probs = loaded_model.predict_proba(samps["data"])
+    #probs = loaded_model.predict_proba(samps["data"])
     # pd.DataFrame(
     #    {
     #        "file": samps["files"],
@@ -85,7 +85,7 @@ def main():
         "file": samps["files"],
         "true": samps["labs"],
         "pred": preds,
-        "cntrl_score": probs[:, 0],
+        "cntrl_score": [0] * len(samps["files"]),
     }
 
     full_df = pd.DataFrame(data)
@@ -100,15 +100,17 @@ def main():
 
     # Define the output directory
     output_directory = ap.outdir
-
+    output_path = os.path.join(output_directory, f"predictions.csv")
+    # Save the group DataFrame to a CSV file
+    full_df.to_csv(output_path, index=False)
     # Iterate over the groups and save each group to a CSV file
-    for group_name, group_df in grouped:
-        # Define the full path to the output CSV file
-        print(group_name)
-        # output_path = os.path.join(output_directory, f"{group_name}.csv")
-        output_path = os.path.join(output_directory, f"predictions.csv")
-        # Save the group DataFrame to a CSV file
-        group_df.to_csv(output_path, index=False)
+    #for group_name, group_df in grouped:
+    #    # Define the full path to the output CSV file
+    #    print(group_name)
+    #    # output_path = os.path.join(output_directory, f"{group_name}.csv")
+    #    output_path = os.path.join(output_directory, f"predictions.csv")
+    #    # Save the group DataFrame to a CSV file
+    #    group_df.to_csv(output_path, index=False)
 
 
 if __name__ == "__main__":

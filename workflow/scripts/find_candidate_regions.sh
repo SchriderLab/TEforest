@@ -150,10 +150,13 @@ for name in ${names[@]}; do
   # Use read names to retrieve reads from original files
   # These commands ensure each read in the pair is retrieved
   # Change depending on the format of the file
-  sed 's/\(\SRR[0-9]*\.[0-9]*\)/@\1 \n@\1\//' ${output_directory}/readnames_${name}.txt | grep -A 3 -F -f - ${fq1}| sed '/--/d' > ${output_directory}/${name}_${genome_name}_1.fq 
-  sed 's/\(\SRR[0-9]*\.[0-9]*\)/@\1 \n@\1\//' ${output_directory}/readnames_${name}.txt | grep -A 3 -F -f - ${fq2}| sed '/--/d' > ${output_directory}/${name}_${genome_name}_2.fq 
+  #sed 's/\(\SRR[0-9]*\.[0-9]*\)/@\1 \n@\1\//' ${output_directory}/readnames_${name}.txt | grep -A 3 -F -f - ${fq1}| sed '/--/d' > ${output_directory}/${name}_${genome_name}_1.fq 
+  #sed 's/\(\SRR[0-9]*\.[0-9]*\)/@\1 \n@\1\//' ${output_directory}/readnames_${name}.txt | grep -A 3 -F -f - ${fq2}| sed '/--/d' > ${output_directory}/${name}_${genome_name}_2.fq 
   #sed 's/^/@/' ${output_directory}/readnames_${name}.txt | grep -A 3 -x -F -f - ${fq1} > ${output_directory}/${name}_${genome_name}_1.fq 
   #sed 's/^/@/' ${output_directory}/readnames_${name}.txt | grep -A 3 -x -F -f - ${fq2} > ${output_directory}/${name}_${genome_name}_2.fq 
+  seqkit grep -f ${output_directory}/readnames_${name}.txt ${fq1} -o ${output_directory}/${name}_${genome_name}_1.fq
+  seqkit grep -f ${output_directory}/readnames_${name}.txt ${fq2} -o ${output_directory}/${name}_${genome_name}_2.fq
+
   # Remap te mapping reads to the reference genome
   bwa-mem2 mem -t $threads ${ref_genome} ${output_directory}/${name}_${genome_name}_1.fq ${output_directory}/${name}_${genome_name}_2.fq | samtools view -@ $threads -b - | samtools sort -@ $threads -o ${output_directory}/${name}_to_ISO1.bam -
   

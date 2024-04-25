@@ -1,0 +1,189 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:148: SyntaxWarning: invalid escape sequence '\/'
+  output:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:149: SyntaxWarning: invalid escape sequence '\/'
+  featvec_csv="featvec_csvs/{sample}.csv",
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:155: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:155: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:185: SyntaxWarning: invalid escape sequence '\/'
+  generate_synthetic_hets_script = workflow.basedir + "/scripts/generate_heterozygote_fqs.sh"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:186: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:194: SyntaxWarning: invalid escape sequence '\/'
+  het_reads_dir = directory("het_reads/{sample}"),
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:194: SyntaxWarning: invalid escape sequence '\/'
+  het_reads_dir = directory("het_reads/{sample}"),
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                                      count
+-------------------------------------  -------
+bam_to_fvec_het                              1
+benchmark                                    3
+find_breakpoints_het                         3
+find_breakpoints_het_classifier              3
+process_candidate_regions_hettraining        1
+split_data                                   3
+split_data_classifier                        3
+train_validate                               3
+train_validate_classifier                    3
+total                                       23
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Apr 14 21:24:22 2024]
+localcheckpoint train_validate:
+    input: feature_vectors_het/AKA-017_GIM-024
+    output: 2L2R/AKA-017_GIM-024.txt, 3L3RX/AKA-017_GIM-024.txt
+    jobid: 32
+    reason: Missing output files: 3L3RX/AKA-017_GIM-024.txt, 2L2R/AKA-017_GIM-024.txt
+    wildcards: sample=AKA-017_GIM-024
+    threads: 32
+    resources: tmpdir=/tmp
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s AKA-017_GIM-024 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_no75bp
+Output directory exists
+Output directory exists
+/work/users/a/d/adaigle/test_TEforest/full_model_no75bp/feature_vectors_het/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_no75bp/feature_vectors_het/JUT-008_MUN-009
+Condensing data:   0%|          | 0/9505 [00:00<?, ?it/s]Condensing data:   2%|▏         | 187/9505 [00:00<00:04, 1865.16it/s]Condensing data:   4%|▍         | 392/9505 [00:00<00:04, 1966.13it/s]Condensing data:   6%|▌         | 589/9505 [00:00<00:04, 1874.95it/s]Condensing data:   8%|▊         | 782/9505 [00:00<00:04, 1893.45it/s]Condensing data:  10%|█         | 972/9505 [00:00<00:04, 1875.05it/s]Condensing data:  12%|█▏        | 1160/9505 [00:00<00:04, 1807.30it/s]Condensing data:  14%|█▍        | 1342/9505 [00:00<00:04, 1684.95it/s]Condensing data:  16%|█▌        | 1512/9505 [00:00<00:04, 1627.94it/s]Condensing data:  18%|█▊        | 1676/9505 [00:01<00:06, 1303.66it/s]Condensing data:  19%|█▉        | 1817/9505 [00:01<00:05, 1315.79it/s]Condensing data:  21%|██        | 1990/9505 [00:01<00:05, 1422.04it/s]Condensing data:  23%|██▎       | 2219/9505 [00:01<00:04, 1656.18it/s]Condensing data:  26%|██▌       | 2437/9505 [00:01<00:03, 1799.94it/s]Condensing data:  28%|██▊       | 2657/9505 [00:01<00:03, 1913.30it/s]Condensing data:  30%|███       | 2871/9505 [00:01<00:03, 1978.26it/s]Condensing data:  32%|███▏      | 3073/9505 [00:01<00:03, 1847.23it/s]Condensing data:  35%|███▍      | 3287/9505 [00:01<00:03, 1926.85it/s]Condensing data:  37%|███▋      | 3484/9505 [00:01<00:03, 1898.69it/s]Condensing data:  39%|███▊      | 3677/9505 [00:02<00:03, 1905.95it/s]Condensing data:  41%|████      | 3873/9505 [00:02<00:02, 1919.84it/s]Condensing data:  43%|████▎     | 4081/9505 [00:02<00:02, 1966.03it/s]Condensing data:  45%|████▌     | 4303/9505 [00:02<00:02, 2037.89it/s]Condensing data:  47%|████▋     | 4508/9505 [00:02<00:02, 2022.19it/s]Condensing data:  50%|████▉     | 4720/9505 [00:02<00:02, 2049.98it/s]Condensing data:  52%|█████▏    | 4930/9505 [00:02<00:02, 2060.32it/s]Condensing data:  54%|█████▍    | 5137/9505 [00:02<00:02, 2015.96it/s]Condensing data:  56%|█████▋    | 5358/9505 [00:02<00:02, 2071.90it/s]Condensing data:  59%|█████▊    | 5566/9505 [00:03<00:01, 2007.93it/s]Condensing data:  61%|██████    | 5789/9505 [00:03<00:01, 2071.13it/s]Condensing data:  63%|██████▎   | 6010/9505 [00:03<00:01, 2110.73it/s]Condensing data:  65%|██████▌   | 6223/9505 [00:03<00:01, 2114.27it/s]Condensing data:  68%|██████▊   | 6450/9505 [00:03<00:01, 2159.17it/s]Condensing data:  70%|███████   | 6671/9505 [00:03<00:01, 2171.62it/s]Condensing data:  73%|███████▎  | 6908/9505 [00:03<00:01, 2229.46it/s]Condensing data:  75%|███████▌  | 7142/9505 [00:03<00:01, 2262.03it/s]Condensing data:  78%|███████▊  | 7386/9505 [00:03<00:00, 2314.33it/s]Condensing data:  80%|████████  | 7618/9505 [00:03<00:00, 2280.74it/s]Condensing data:  83%|████████▎ | 7847/9505 [00:04<00:00, 2254.85it/s]Condensing data:  85%|████████▍ | 8073/9505 [00:04<00:00, 2107.65it/s]Condensing data:  87%|████████▋ | 8286/9505 [00:04<00:00, 2007.34it/s]Condensing data:  89%|████████▉ | 8489/9505 [00:04<00:00, 1981.79it/s]Condensing data:  92%|█████████▏| 8702/9505 [00:04<00:00, 2020.84it/s]Condensing data:  94%|█████████▍| 8924/9505 [00:04<00:00, 2077.66it/s]Condensing data:  96%|█████████▋| 9149/9505 [00:04<00:00, 2123.92it/s]Condensing data:  99%|█████████▊| 9363/9505 [00:04<00:00, 2112.11it/s]Condensing data: 100%|██████████| 9505/9505 [00:04<00:00, 1959.39it/s]
+Condensing data:   0%|          | 0/23207 [00:00<?, ?it/s]Condensing data:   1%|          | 219/23207 [00:00<00:10, 2181.53it/s]Condensing data:   2%|▏         | 449/23207 [00:00<00:10, 2250.55it/s]Condensing data:   3%|▎         | 675/23207 [00:00<00:10, 2240.98it/s]Condensing data:   4%|▍         | 900/23207 [00:00<00:10, 2228.24it/s]Condensing data:   5%|▍         | 1123/23207 [00:00<00:09, 2208.92it/s]Condensing data:   6%|▌         | 1345/23207 [00:00<00:09, 2205.98it/s]Condensing data:   7%|▋         | 1573/23207 [00:00<00:09, 2221.13it/s]Condensing data:   8%|▊         | 1796/23207 [00:00<00:10, 2105.77it/s]Condensing data:   9%|▊         | 2021/23207 [00:00<00:09, 2148.46it/s]Condensing data:  10%|▉         | 2237/23207 [00:01<00:10, 2038.79it/s]Condensing data:  11%|█         | 2454/23207 [00:01<00:09, 2075.82it/s]Condensing data:  11%|█▏        | 2663/23207 [00:01<00:10, 2031.25it/s]Condensing data:  12%|█▏        | 2874/23207 [00:01<00:09, 2053.89it/s]Condensing data:  13%|█▎        | 3081/23207 [00:01<00:10, 1951.43it/s]Condensing data:  14%|█▍        | 3278/23207 [00:01<00:10, 1891.61it/s]Condensing data:  15%|█▍        | 3469/23207 [00:01<00:10, 1892.27it/s]Condensing data:  16%|█▌        | 3659/23207 [00:01<00:10, 1834.34it/s]Condensing data:  17%|█▋        | 3844/23207 [00:01<00:10, 1826.18it/s]Condensing data:  17%|█▋        | 4028/23207 [00:02<00:10, 1755.13it/s]Condensing data:  18%|█▊        | 4205/23207 [00:02<00:11, 1606.38it/s]Condensing data:  19%|█▉        | 4369/23207 [00:02<00:11, 1572.05it/s]Condensing data:  20%|█▉        | 4528/23207 [00:02<00:11, 1572.82it/s]Condensing data:  20%|██        | 4687/23207 [00:02<00:12, 1495.05it/s]Condensing data:  21%|██        | 4838/23207 [00:02<00:12, 1464.09it/s]Condensing data:  22%|██▏       | 5000/23207 [00:02<00:12, 1505.84it/s]Condensing data:  22%|██▏       | 5153/23207 [00:02<00:11, 1512.42it/s]Condensing data:  23%|██▎       | 5324/23207 [00:02<00:11, 1567.19it/s]Condensing data:  24%|██▎       | 5482/23207 [00:02<00:11, 1546.91it/s]Condensing data:  24%|██▍       | 5644/23207 [00:03<00:11, 1566.34it/s]Condensing data:  25%|██▌       | 5852/23207 [00:03<00:10, 1716.20it/s]Condensing data:  26%|██▌       | 6068/23207 [00:03<00:09, 1808.40it/s]Condensing data:  27%|██▋       | 6270/23207 [00:03<00:09, 1868.81it/s]Condensing data:  28%|██▊       | 6461/23207 [00:03<00:08, 1879.76it/s]Condensing data:  29%|██▉       | 6673/23207 [00:03<00:08, 1949.23it/s]Condensing data:  30%|██▉       | 6880/23207 [00:03<00:08, 1985.01it/s]Condensing data:  31%|███       | 7079/23207 [00:03<00:08, 1982.35it/s]Condensing data:  32%|███▏      | 7316/23207 [00:03<00:07, 2096.20it/s]Condensing data:  33%|███▎      | 7549/23207 [00:04<00:07, 2164.17it/s]Condensing data:  34%|███▎      | 7801/23207 [00:04<00:06, 2268.70it/s]Condensing data:  35%|███▍      | 8039/23207 [00:04<00:06, 2301.09it/s]Condensing data:  36%|███▌      | 8270/23207 [00:04<00:06, 2275.49it/s]Condensing data:  37%|███▋      | 8498/23207 [00:04<00:06, 2121.66it/s]Condensing data:  38%|███▊      | 8713/23207 [00:04<00:06, 2115.65it/s]Condensing data:  38%|███▊      | 8930/23207 [00:04<00:06, 2129.97it/s]Condensing data:  40%|███▉      | 9170/23207 [00:04<00:06, 2207.72it/s]Condensing data:  40%|████      | 9392/23207 [00:04<00:06, 2139.16it/s]Condensing data:  41%|████▏     | 9607/23207 [00:04<00:06, 2092.88it/s]Condensing data:  42%|████▏     | 9818/23207 [00:05<00:06, 2061.19it/s]Condensing data:  43%|████▎     | 10025/23207 [00:05<00:06, 2039.11it/s]Condensing data:  44%|████▍     | 10230/23207 [00:05<00:06, 1949.62it/s]Condensing data:  45%|████▌     | 10460/23207 [00:05<00:06, 2046.84it/s]Condensing data:  46%|████▌     | 10681/23207 [00:05<00:05, 2093.31it/s]Condensing data:  47%|████▋     | 10892/23207 [00:05<00:05, 2097.12it/s]Condensing data:  48%|████▊     | 11103/23207 [00:05<00:05, 2079.27it/s]Condensing data:  49%|████▊     | 11312/23207 [00:05<00:05, 2054.35it/s]Condensing data:  50%|████▉     | 11529/23207 [00:05<00:05, 2084.61it/s]Condensing data:  51%|█████     | 11738/23207 [00:05<00:05, 2059.00it/s]Condensing data:  52%|█████▏    | 11961/23207 [00:06<00:05, 2108.87it/s]Condensing data:  53%|█████▎    | 12191/23207 [00:06<00:05, 2163.80it/s]Condensing data:  54%|█████▎    | 12421/23207 [00:06<00:04, 2202.61it/s]Condensing data:  54%|█████▍    | 12642/23207 [00:06<00:04, 2168.59it/s]Condensing data:  55%|█████▌    | 12860/23207 [00:06<00:04, 2122.46it/s]Condensing data:  56%|█████▋    | 13073/23207 [00:06<00:05, 1969.17it/s]Condensing data:  57%|█████▋    | 13280/23207 [00:06<00:04, 1996.52it/s]Condensing data:  58%|█████▊    | 13498/23207 [00:06<00:04, 2047.72it/s]Condensing data:  59%|█████▉    | 13712/23207 [00:06<00:04, 2074.02it/s]Condensing data:  60%|██████    | 13928/23207 [00:07<00:04, 2098.04it/s]Condensing data:  61%|██████    | 14146/23207 [00:07<00:04, 2121.10it/s]Condensing data:  62%|██████▏   | 14378/23207 [00:07<00:04, 2179.15it/s]Condensing data:  63%|██████▎   | 14603/23207 [00:07<00:03, 2199.85it/s]Condensing data:  64%|██████▍   | 14828/23207 [00:07<00:03, 2211.28it/s]Condensing data:  65%|██████▍   | 15062/23207 [00:07<00:03, 2249.16it/s]Condensing data:  66%|██████▌   | 15299/23207 [00:07<00:03, 2283.83it/s]Condensing data:  67%|██████▋   | 15528/23207 [00:07<00:03, 2254.75it/s]Condensing data:  68%|██████▊   | 15754/23207 [00:07<00:03, 2217.04it/s]Condensing data:  69%|██████▉   | 15998/23207 [00:07<00:03, 2279.45it/s]Condensing data:  70%|██████▉   | 16227/23207 [00:08<00:03, 2244.80it/s]Condensing data:  71%|███████   | 16452/23207 [00:08<00:03, 2212.05it/s]Condensing data:  72%|███████▏  | 16674/23207 [00:08<00:03, 2118.20it/s]Condensing data:  73%|███████▎  | 16888/23207 [00:08<00:02, 2123.85it/s]Condensing data:  74%|███████▎  | 17101/23207 [00:08<00:02, 2103.62it/s]Condensing data:  75%|███████▍  | 17314/23207 [00:08<00:02, 2110.44it/s]Condensing data:  76%|███████▌  | 17536/23207 [00:08<00:02, 2141.49it/s]Condensing data:  76%|███████▋  | 17751/23207 [00:08<00:02, 2059.81it/s]Condensing data:  77%|███████▋  | 17980/23207 [00:08<00:02, 2121.70it/s]Condensing data:  78%|███████▊  | 18196/23207 [00:08<00:02, 2127.97it/s]Condensing data:  79%|███████▉  | 18410/23207 [00:09<00:02, 2098.19it/s]Condensing data:  80%|████████  | 18652/23207 [00:09<00:02, 2189.77it/s]Condensing data:  81%|████████▏ | 18879/23207 [00:09<00:01, 2212.78it/s]Condensing data:  82%|████████▏ | 19108/23207 [00:09<00:01, 2234.96it/s]Condensing data:  83%|████████▎ | 19332/23207 [00:09<00:01, 2167.71it/s]Condensing data:  84%|████████▍ | 19556/23207 [00:09<00:01, 2186.60it/s]Condensing data:  85%|████████▌ | 19776/23207 [00:09<00:01, 2186.88it/s]Condensing data:  86%|████████▌ | 19996/23207 [00:09<00:01, 2141.17it/s]Condensing data:  87%|████████▋ | 20211/23207 [00:09<00:01, 2125.59it/s]Condensing data:  88%|████████▊ | 20424/23207 [00:10<00:01, 2107.63it/s]Condensing data:  89%|████████▉ | 20635/23207 [00:10<00:01, 1847.25it/s]Condensing data:  90%|████████▉ | 20826/23207 [00:10<00:01, 1785.25it/s]Condensing data:  91%|█████████ | 21040/23207 [00:10<00:01, 1876.99it/s]Condensing data:  91%|█████████▏| 21232/23207 [00:10<00:01, 1879.73it/s]Condensing data:  92%|█████████▏| 21432/23207 [00:10<00:00, 1912.01it/s]Condensing data:  93%|█████████▎| 21663/23207 [00:10<00:00, 2024.93it/s]Condensing data:  94%|█████████▍| 21868/23207 [00:10<00:00, 2011.35it/s]Condensing data:  95%|█████████▌| 22076/23207 [00:10<00:00, 2009.59it/s]Condensing data:  96%|█████████▌| 22296/23207 [00:11<00:00, 2063.03it/s]Condensing data:  97%|█████████▋| 22504/23207 [00:11<00:00, 2002.63it/s]Condensing data:  98%|█████████▊| 22706/23207 [00:11<00:00, 1892.78it/s]Condensing data:  99%|█████████▊| 22905/23207 [00:11<00:00, 1909.82it/s]Condensing data: 100%|█████████▉| 23098/23207 [00:11<00:00, 1894.95it/s]Condensing data: 100%|██████████| 23207/23207 [00:11<00:00, 2018.84it/s]
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+8915 samples found.
+
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 290, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 281, in main
+    y_test, preds = all_runner(data_dict, class_labs, ap.outdir)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 221, in all_runner
+    rf = train_rf_regressor(X_train_arr, y_train, "all", outdir)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 88, in train_rf_regressor
+    clf.fit(X_train, y_train)
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 1151, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 348, in fit
+    X, y = self._validate_data(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 621, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 1147, in check_X_y
+    X = check_array(
+        ^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 917, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/_array_api.py", line 380, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (8469,) + inhomogeneous part.
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+22771 samples found.
+
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 290, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 281, in main
+    y_test, preds = all_runner(data_dict, class_labs, ap.outdir)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 221, in all_runner
+    rf = train_rf_regressor(X_train_arr, y_train, "all", outdir)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 88, in train_rf_regressor
+    clf.fit(X_train, y_train)
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 1151, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 348, in fit
+    X, y = self._validate_data(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 621, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 1147, in check_X_y
+    X = check_array(
+        ^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 917, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/_array_api.py", line 380, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (21632,) + inhomogeneous part.
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 117, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 59, in main
+    with open(ap.model, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/work/users/a/d/adaigle/test_TEforest/full_model_no75bp/2L2R/svrf_all.pkl'
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 117, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 59, in main
+    with open(ap.model, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/work/users/a/d/adaigle/test_TEforest/full_model_no75bp/3L3RX/svrf_all.pkl'
+[Sun Apr 14 21:43:59 2024]
+Error in rule train_validate:
+    jobid: 32
+    input: feature_vectors_het/AKA-017_GIM-024
+    output: 2L2R/AKA-017_GIM-024.txt, 3L3RX/AKA-017_GIM-024.txt
+    shell:
+        bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s AKA-017_GIM-024 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Removing output files of failed job train_validate since they might be corrupted:
+2L2R/AKA-017_GIM-024.txt, 3L3RX/AKA-017_GIM-024.txt
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-04-14T212421.371381.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

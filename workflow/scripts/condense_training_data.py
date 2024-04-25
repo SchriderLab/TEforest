@@ -24,6 +24,7 @@ def parse_args():
         dest="indir",
         help="Top-level directory containing subdirs/npy files to condense.",
     )
+
     parser.add_argument(
         "-o",
         "--output-npz",

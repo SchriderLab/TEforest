@@ -1,0 +1,796 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:148: SyntaxWarning: invalid escape sequence '\/'
+  output:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:149: SyntaxWarning: invalid escape sequence '\/'
+  featvec_csv="featvec_csvs/{sample}.csv",
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:155: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:155: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:185: SyntaxWarning: invalid escape sequence '\/'
+  generate_synthetic_hets_script = workflow.basedir + "/scripts/generate_heterozygote_fqs.sh"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:186: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:194: SyntaxWarning: invalid escape sequence '\/'
+  het_reads_dir = directory("het_reads/{sample}"),
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:194: SyntaxWarning: invalid escape sequence '\/'
+  het_reads_dir = directory("het_reads/{sample}"),
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count
+---------  -------
+benchmark        6
+total            6
+
+Select jobs to execute...
+Execute 6 jobs...
+
+[Fri Apr  5 12:35:29 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/A2_A3.pdf
+    log: logs/A2_A3/bench.log
+    jobid: 27
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/A2_A3.pdf
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r A2 A3 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_4readlengths 2L_2R_plots
+
+[Fri Apr  5 12:35:33 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/B1_B2_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/B1_B2.pdf
+    log: logs/B1_B2/bench.log
+    jobid: 45
+    benchmark: benchmarks/B1_B2.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/B1_B2.pdf
+    wildcards: sample=B1_B2
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r B1 B2 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_4readlengths 2L_2R_plots
+
+[Fri Apr  5 12:35:33 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/A4_A5_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/A4_A5.pdf
+    log: logs/A4_A5/bench.log
+    jobid: 9
+    benchmark: benchmarks/A4_A5.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/A4_A5.pdf
+    wildcards: sample=A4_A5
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r A4 A5 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_4readlengths 2L_2R_plots
+
+[Fri Apr  5 12:35:33 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/A6_A7_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/A6_A7.pdf
+    log: logs/A6_A7/bench.log
+    jobid: 18
+    benchmark: benchmarks/A6_A7.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/A6_A7.pdf
+    wildcards: sample=A6_A7
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r A6 A7 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_4readlengths 2L_2R_plots
+
+[Fri Apr  5 12:35:33 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/B3_B4_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/B3_B4.pdf
+    log: logs/B3_B4/bench.log
+    jobid: 0
+    benchmark: benchmarks/B3_B4.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/B3_B4.pdf
+    wildcards: sample=B3_B4
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r B3 B4 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_4readlengths 2L_2R_plots
+
+[Fri Apr  5 12:35:33 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/B6_B8_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/B6_B8.pdf
+    log: logs/B6_B8/bench.log
+    jobid: 36
+    benchmark: benchmarks/B6_B8.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/B6_B8.pdf
+    wildcards: sample=B6_B8
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r B6 B8 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_4readlengths 2L_2R_plots
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: stats4
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: BiocGenerics
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: BiocGenerics
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: stats4
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: BiocGenerics
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+Loading required package: lattice
+Loading required package: lattice
+Loading required package: lattice
+Loading required package: lattice
+Loading required package: lattice
+Loading required package: lattice
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "B6"                                                              
+[2] "B8"                                                              
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_4readlengths"                                           
+[5] "2L_2R_plots"                                                     
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "A6"                                                              
+[2] "A7"                                                              
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_4readlengths"                                           
+[5] "2L_2R_plots"                                                     
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "B3"                                                              
+[2] "B4"                                                              
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_4readlengths"                                           
+[5] "2L_2R_plots"                                                     
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "A4"                                                              
+[2] "A5"                                                              
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_4readlengths"                                           
+[5] "2L_2R_plots"                                                     
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "A2"                                                              
+[2] "A3"                                                              
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_4readlengths"                                           
+[5] "2L_2R_plots"                                                     
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "B1"                                                              
+[2] "B2"                                                              
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_4readlengths"                                           
+[5] "2L_2R_plots"                                                     
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+             TRUE              TRUE              TRUE              TRUE 
+    freqpltnozero           freqplt 
+             TRUE             FALSE 
+Warning message:
+In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[1] "A4A5 done!"
+[Fri Apr  5 12:41:22 2024]
+Finished job 9.
+1 of 6 steps (17%) done
+Warning message:
+There was 1 warning in `filter()`.
+ℹ In argument: `caller != c("allseeingeye", "allseeingeye2", "allseeingeye3")`.
+Caused by warning in `caller != c("allseeingeye", "allseeingeye2", "allseeingeye3")`:
+! longer object length is not a multiple of shorter object length 
+Error in benchmark_mapping_results_summary$distance_vectors_df[num][[1]] : 
+  subscript out of bounds
+Calls: make_bp_plot -> ggplot
+Execution halted
+[Fri Apr  5 12:42:40 2024]
+Error in rule benchmark:
+    jobid: 36
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/B6_B8_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/B6_B8.pdf
+    log: logs/B6_B8/bench.log (check log file(s) for error details)
+    shell:
+        /nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r B6 B8 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_4readlengths 2L_2R_plots
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+Logfile logs/B6_B8/bench.log not found.
+
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+            FALSE             FALSE             FALSE             FALSE 
+    freqpltnozero           freqplt 
+            FALSE             FALSE 
+Warning messages:
+1: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/performance_plots' already exists
+2: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/breakpoints_plots' already exists
+3: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/hetplt' already exists
+4: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/homoplt' already exists
+5: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqpltnozero' already exists
+6: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[1] "A6A7 done!"
+[Fri Apr  5 12:44:48 2024]
+Finished job 18.
+2 of 6 steps (33%) done
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+            FALSE             FALSE             FALSE             FALSE 
+    freqpltnozero           freqplt 
+            FALSE             FALSE 
+Warning messages:
+1: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/performance_plots' already exists
+2: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/breakpoints_plots' already exists
+3: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/hetplt' already exists
+4: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/homoplt' already exists
+5: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqpltnozero' already exists
+6: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[1] "A2A3 done!"
+[Fri Apr  5 12:45:46 2024]
+Finished job 27.
+3 of 6 steps (50%) done
+Warning message:
+There was 1 warning in `filter()`.
+ℹ In argument: `caller != c("allseeingeye", "allseeingeye2", "allseeingeye3")`.
+Caused by warning in `caller != c("allseeingeye", "allseeingeye2", "allseeingeye3")`:
+! longer object length is not a multiple of shorter object length 
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+            FALSE             FALSE             FALSE             FALSE 
+    freqpltnozero           freqplt 
+            FALSE             FALSE 
+Warning messages:
+1: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/performance_plots' already exists
+2: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/breakpoints_plots' already exists
+3: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/hetplt' already exists
+4: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/homoplt' already exists
+5: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqpltnozero' already exists
+6: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[1] "B3B4 done!"
+[Fri Apr  5 12:46:41 2024]
+Finished job 0.
+4 of 6 steps (67%) done
+Warning message:
+There was 1 warning in `filter()`.
+ℹ In argument: `caller != c("allseeingeye", "allseeingeye2", "allseeingeye3")`.
+Caused by warning in `caller != c("allseeingeye", "allseeingeye2", "allseeingeye3")`:
+! longer object length is not a multiple of shorter object length 
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+            FALSE             FALSE             FALSE             FALSE 
+    freqpltnozero           freqplt 
+            FALSE             FALSE 
+Warning messages:
+1: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/performance_plots' already exists
+2: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/breakpoints_plots' already exists
+3: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/hetplt' already exists
+4: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/homoplt' already exists
+5: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqpltnozero' already exists
+6: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/het_experiments_full50bp_exp2/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[1] "B1B2 done!"
+[Fri Apr  5 12:46:56 2024]
+Finished job 45.
+5 of 6 steps (83%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-04-05T123526.172046.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

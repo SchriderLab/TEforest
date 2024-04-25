@@ -1,5 +1,5 @@
-# \<TEforest\>
+# \TEforest
 
-[![Actions Status](https://github.com/mrvollger/SmkTemplate/workflows/CI/badge.svg)](https://github.com/mrvollger/SmkTemplate/actions)
+[![Actions Status](https://github.com/austintdaigle/TEforest/workflows/CI/badge.svg)](https://github.com/austintdaigle/TEforest/actions)
 
 This is a Snakemake project. The `Snakefile` is under `workflow`.

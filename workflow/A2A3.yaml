@@ -1,0 +1,22 @@
+# config.yaml
+
+# Specify the input fastq files
+fq1: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/A2A3/A2A3_1.fq"
+fq2: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/A2A3/A2A3_2.fq"
+
+# Sample information
+sample: "A2A3"
+sample1: "A2"
+sample2: "A3"
+
+# Number of threads
+threads: 24
+
+# Paths to reference files
+consensusTEs: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/from_the_ashes/data/consensusTEs.fasta"
+ref_genome: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/te_first_tests/data/ISO1_GCF_000001215.4_Release_6_prepped.fasta"
+ref_te_locations: "/nas/longleaf/home/adaigle/Rech_updated_supplemental/DeNovoCoordinates/ISO1.bed"
+euchromatin: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+
+# Path to the model file
+model: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/outputs/feature_vectors/mixed_model/training/svrf_all.pkl"

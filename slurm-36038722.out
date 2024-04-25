@@ -1,0 +1,219 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:148: SyntaxWarning: invalid escape sequence '\/'
+  output:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:149: SyntaxWarning: invalid escape sequence '\/'
+  featvec_csv="featvec_csvs/{sample}.csv",
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:155: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:155: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:185: SyntaxWarning: invalid escape sequence '\/'
+  generate_synthetic_hets_script = workflow.basedir + "/scripts/generate_heterozygote_fqs.sh"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:186: SyntaxWarning: invalid escape sequence '\/'
+  
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:194: SyntaxWarning: invalid escape sequence '\/'
+  het_reads_dir = directory("het_reads/{sample}"),
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:194: SyntaxWarning: invalid escape sequence '\/'
+  het_reads_dir = directory("het_reads/{sample}"),
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                                      count
+-------------------------------------  -------
+align_reads_het                              3
+bam_to_fvec_het                              4
+benchmark                                    9
+candidate_regions_het                        3
+find_breakpoints_het                         7
+find_breakpoints_het_classifier              9
+generate_synthetic_hets                      3
+process_candidate_regions_hettraining        4
+split_data                                   7
+split_data_classifier                        9
+train_validate                               7
+train_validate_classifier                    9
+total                                       74
+
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Apr 14 20:57:54 2024]
+localrule generate_synthetic_hets:
+    input: /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data
+    output: het_reads/B6_B8, het_reads/B6_B8/B6_B8_1.fq, het_reads/B6_B8/B6_B8_2.fq
+    jobid: 30
+    reason: Missing output files: het_reads/B6_B8/B6_B8_1.fq, het_reads/B6_B8/B6_B8_2.fq
+    wildcards: sample=B6_B8
+    threads: 16
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/generate_heterozygote_fqs.sh /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B6_1.sorted.bam /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B8_1.sorted.bam 16 het_reads/B6_B8/ B6 B8 30
+Calculating average coverage by chromosome for /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B6_1.sorted.bam
+
+[Sun Apr 14 20:58:02 2024]
+localrule train_validate_classifier:
+    input: feature_vectors_het/A4_A5, 2L2R/A4_A5.txt, 3L3RX/A4_A5.txt
+    output: 2L2R_classifer/A4_A5.txt, 3L3RX_classifer/A4_A5.txt
+    jobid: 59
+    reason: Missing output files: 3L3RX_classifer/A4_A5.txt, 2L2R_classifer/A4_A5.txt
+    wildcards: sample=A4_A5
+    threads: 16
+    resources: tmpdir=/tmp
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes_classifier.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model_classifier.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s A4_A5 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_all50bp
+Output directory exists
+Output directory exists
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model_classifier.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.2s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.6s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.6s finished
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.0s finished
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.0s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+1428 samples found.
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model_classifier.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.4s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.9s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    1.0s finished
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.0s finished
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.0s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+2745 samples found.
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/17527 [00:00<?, ?it/s]  3%|▎         | 539/17527 [00:00<00:03, 5381.32it/s]  6%|▌         | 1078/17527 [00:00<00:03, 5275.58it/s]  9%|▉         | 1606/17527 [00:00<00:03, 5193.40it/s] 12%|█▏        | 2126/17527 [00:00<00:03, 5104.88it/s] 15%|█▌        | 2652/17527 [00:00<00:02, 5157.44it/s] 18%|█▊        | 3168/17527 [00:00<00:02, 5135.46it/s] 21%|██        | 3682/17527 [00:00<00:02, 4979.72it/s] 24%|██▍       | 4181/17527 [00:00<00:02, 4951.34it/s] 27%|██▋       | 4677/17527 [00:00<00:02, 4863.68it/s] 29%|██▉       | 5164/17527 [00:01<00:02, 4698.85it/s] 32%|███▏      | 5649/17527 [00:01<00:02, 4742.68it/s] 35%|███▍      | 6125/17527 [00:01<00:02, 4730.07it/s] 38%|███▊      | 6599/17527 [00:01<00:02, 4682.48it/s] 40%|████      | 7068/17527 [00:01<00:02, 4656.17it/s] 43%|████▎     | 7534/17527 [00:01<00:02, 4563.15it/s] 46%|████▌     | 7991/17527 [00:01<00:02, 4525.39it/s] 48%|████▊     | 8444/17527 [00:01<00:02, 4504.32it/s] 51%|█████     | 8895/17527 [00:01<00:01, 4433.92it/s] 53%|█████▎    | 9339/17527 [00:01<00:01, 4432.20it/s] 56%|█████▌    | 9783/17527 [00:02<00:01, 4349.69it/s] 58%|█████▊    | 10222/17527 [00:02<00:01, 4359.57it/s] 61%|██████    | 10659/17527 [00:02<00:01, 4346.80it/s] 63%|██████▎   | 11094/17527 [00:02<00:01, 4243.50it/s] 66%|██████▌   | 11519/17527 [00:02<00:01, 4212.97it/s] 68%|██████▊   | 11941/17527 [00:02<00:01, 4185.62it/s] 71%|███████   | 12360/17527 [00:02<00:01, 4125.97it/s] 73%|███████▎  | 12774/17527 [00:02<00:01, 4128.96it/s] 75%|███████▌  | 13188/17527 [00:02<00:01, 4117.56it/s] 78%|███████▊  | 13600/17527 [00:03<00:00, 4019.55it/s] 80%|███████▉  | 14003/17527 [00:03<00:00, 4008.12it/s] 82%|████████▏ | 14405/17527 [00:03<00:00, 3989.29it/s] 84%|████████▍ | 14805/17527 [00:03<00:00, 3884.95it/s] 87%|████████▋ | 15195/17527 [00:03<00:00, 3871.55it/s] 89%|████████▉ | 15583/17527 [00:03<00:00, 3847.08it/s] 91%|█████████ | 15968/17527 [00:03<00:00, 3770.53it/s] 93%|█████████▎| 16346/17527 [00:03<00:00, 3745.40it/s] 95%|█████████▌| 16721/17527 [00:03<00:00, 3724.30it/s] 98%|█████████▊| 17094/17527 [00:03<00:00, 3680.14it/s]100%|█████████▉| 17463/17527 [00:04<00:00, 3672.61it/s]100%|██████████| 17527/17527 [00:04<00:00, 4322.26it/s]
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 117, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 72, in main
+    preds = loaded_model.predict(samps["data"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 823, in predict
+    proba = self.predict_proba(X)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 865, in predict_proba
+    X = self._validate_X_predict(X)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 599, in _validate_X_predict
+    X = self._validate_data(X, dtype=DTYPE, accept_sparse="csr", reset=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 604, in _validate_data
+    out = check_array(X, input_name="X", **check_params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 917, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/_array_api.py", line 380, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (17527,) + inhomogeneous part.
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/6900 [00:00<?, ?it/s] 14%|█▍        | 990/6900 [00:00<00:00, 9898.95it/s] 29%|██▊       | 1980/6900 [00:00<00:00, 9810.27it/s] 43%|████▎     | 2962/6900 [00:00<00:00, 9154.67it/s] 56%|█████▋    | 3883/6900 [00:00<00:00, 8885.56it/s] 69%|██████▉   | 4775/6900 [00:00<00:00, 8370.67it/s] 81%|████████▏ | 5617/6900 [00:00<00:00, 8136.34it/s] 93%|█████████▎| 6434/6900 [00:00<00:00, 7934.71it/s]100%|██████████| 6900/6900 [00:00<00:00, 8345.38it/s]
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 117, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 72, in main
+    preds = loaded_model.predict(samps["data"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 823, in predict
+    proba = self.predict_proba(X)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 865, in predict_proba
+    X = self._validate_X_predict(X)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 599, in _validate_X_predict
+    X = self._validate_data(X, dtype=DTYPE, accept_sparse="csr", reset=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 604, in _validate_data
+    out = check_array(X, input_name="X", **check_params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 917, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/_array_api.py", line 380, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (6900,) + inhomogeneous part.
+/work/users/a/d/adaigle/test_TEforest/full_model_all50bp/feature_vectors_het/A2_A3 /work/users/a/d/adaigle/test_TEforest/full_model_all50bp/feature_vectors_het/A4_A5 /work/users/a/d/adaigle/test_TEforest/full_model_all50bp/feature_vectors_het/A6_A7 /work/users/a/d/adaigle/test_TEforest/full_model_all50bp/feature_vectors_het/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_all50bp/feature_vectors_het/JUT-008_MUN-009
+[Sun Apr 14 20:58:19 2024]
+Finished job 59.
+1 of 74 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Apr 14 20:58:19 2024]
+localrule generate_synthetic_hets:
+    input: /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data
+    output: het_reads/B1_B2, het_reads/B1_B2/B1_B2_1.fq, het_reads/B1_B2/B1_B2_2.fq
+    jobid: 90
+    reason: Missing output files: het_reads/B1_B2/B1_B2_1.fq, het_reads/B1_B2/B1_B2_2.fq
+    wildcards: sample=B1_B2
+    threads: 16
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/generate_heterozygote_fqs.sh /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B1_1.sorted.bam /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B2_1.sorted.bam 16 het_reads/B1_B2/ B1 B2 30
+Calculating average coverage by chromosome for /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B1_1.sorted.bam
+Calculating average coverage for /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B1_1.sorted.bam
+Calculating average coverage for /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B6_1.sorted.bam
+Average coverage 32.34
+Calculating average coverage for /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B2_1.sorted.bam
+Average coverage 36.2472
+Calculating average coverage for /nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/B8_1.sorted.bam
+slurmstepd: error: *** JOB 36038722 ON c151609 CANCELLED AT 2024-04-14T21:05:19 ***

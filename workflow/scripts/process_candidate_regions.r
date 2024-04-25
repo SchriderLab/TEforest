@@ -11,9 +11,10 @@ euchromatin_coordinates_path <- args[2]
 #basedir_outputs_path <- args[2]
 
 basedir_outputs_path <- getwd()
-#genome <- "COR-023"
-#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/rework_pipeline/outputs"
+#genome <- "RAL-177"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/RAL-177"
 output_path <- paste0(basedir_outputs_path, "/candidate_regions_data/", genome)
+#euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
 featvec_csv_path <- paste0(basedir_outputs_path, "/featvec_csvs")
 dir.create(file.path(featvec_csv_path))
 
@@ -129,6 +130,7 @@ mapping_results_filter <- mapping_results %>% mutate(
         ~ subsetByOverlaps(.x,.y,ignore.strand = TRUE, invert=T)),
     #euchromatin_calls_not_touching_called_refte = map2(euchromatin_calls_not_inrefte, euchromatin_calls_touching_called_refte, 
     #    ~ GenomicRanges::setdiff(.x,.y)),
+    #need to fix these two lines for different read types!!
     early_width_filter = map(euchromatin_calls_without_nested_reftes, 
         ~ subset(.x, width(.x) >= 155)), 
     expand = map(early_width_filter, # toggle numbers in ranges to change expansion
