@@ -70,7 +70,7 @@ def main():
         samps["files"].append(id)
 
     preds = loaded_model.predict(samps["data"])
-    #probs = loaded_model.predict_proba(samps["data"])
+    # probs = loaded_model.predict_proba(samps["data"])
     # pd.DataFrame(
     #    {
     #        "file": samps["files"],

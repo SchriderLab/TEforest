@@ -70,7 +70,7 @@ def main():
         samps["files"].append(id)
 
     preds = loaded_model.predict(samps["data"])
-    #probs = loaded_model.predict_proba(samps["data"])
+    # probs = loaded_model.predict_proba(samps["data"])
     # pd.DataFrame(
     #    {
     #        "file": samps["files"],
@@ -104,7 +104,7 @@ def main():
     # Save the group DataFrame to a CSV file
     full_df.to_csv(output_path, index=False)
     # Iterate over the groups and save each group to a CSV file
-    #for group_name, group_df in grouped:
+    # for group_name, group_df in grouped:
     #    # Define the full path to the output CSV file
     #    print(group_name)
     #    # output_path = os.path.join(output_directory, f"{group_name}.csv")

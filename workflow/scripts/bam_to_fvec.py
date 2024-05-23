@@ -325,7 +325,6 @@ class SVMaker:
         self._set_reg_str(region)
 
         try:
-
             bam_df = self._get_bam_data(
                 bamfile,
                 region["Chrom"],
@@ -383,7 +382,6 @@ class SVMaker:
         self._set_reg_str(region)
 
         try:
-
             bam_df = self._get_bam_data(
                 bamfile,
                 region["Chrom"],
@@ -678,7 +676,6 @@ def te_specific_region_generator(sub_regions, output_dir, te_bam_dir):
 
 
 def parse_arguments() -> argparse.ArgumentParser:
-
     parser = argparse.ArgumentParser()
 
     parser.add_argument(

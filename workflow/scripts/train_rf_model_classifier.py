@@ -10,7 +10,9 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 import logging
 from tqdm import tqdm
-#from plotting import ResultsPlotter
+
+# from plotting import ResultsPlotter
+
 
 # Utilities
 def load_data(infile, outdir, overwrite=False):
@@ -73,6 +75,7 @@ def train_rf(X_train, y_train, class_lab, outdir):
 
     return clf
 
+
 def train_rf_regressor(X_train, y_train, class_lab, outdir):
     """
     Fits a random forest classifier to data, dumps to disk.
@@ -80,7 +83,7 @@ def train_rf_regressor(X_train, y_train, class_lab, outdir):
     clf = RandomForestRegressor(
         n_estimators=500,
         random_state=42,
-        #class_weight="balanced",
+        # class_weight="balanced",
         n_jobs=-1,
         verbose=1,
     )
@@ -171,6 +174,7 @@ def pred_all_rf(rf, X_test, y_test, files_test, data_class_list, outdir):
 
     return y_test, preds
 
+
 def pred_all_rf_regressor(rf, X_test, y_test, files_test, data_class_list, outdir):
     """
     Uses trained regressor to predict on regression test data.
@@ -178,26 +182,26 @@ def pred_all_rf_regressor(rf, X_test, y_test, files_test, data_class_list, outdi
     # Predictions for the test set
     preds = rf.predict(X_test)
     print(preds)
-    #print(X_test)
+    # print(X_test)
     y_test = [float(value) for value in y_test]
     y_test = np.array(y_test)
     print(y_test)
-    #print("y_test dtype:", y_test.dtype)
-    #print("preds dtype:", preds.dtype)
+    # print("y_test dtype:", y_test.dtype)
+    # print("preds dtype:", preds.dtype)
     ## Calculate and print the mean squared error (or any other regression metric you prefer)
     mse = mean_squared_error(y_test, preds)
     print(f"Mean Squared Error on Test Set: {mse}")
     # Save the trained regressor
-    #dump_model(regressor, os.path.join(outdir, "regressor_model.pkl"))
+    # dump_model(regressor, os.path.join(outdir, "regressor_model.pkl"))
     # Save predictions to a CSV file
     res_dict = {
         "file": files_test,
         "true": y_test,
         "pred": preds,
-        "cntrl_score": preds  # Example, you can add more columns as needed
+        "cntrl_score": preds,  # Example, you can add more columns as needed
     }
     # Create a DataFrame and save it to a CSV file
-    #pd.DataFrame(res_dict).to_csv(os.path.join(outdir, "test_predictions_all_regressor.csv"))
+    # pd.DataFrame(res_dict).to_csv(os.path.join(outdir, "test_predictions_all_regressor.csv"))
 
     return y_test, preds
 
@@ -216,15 +220,15 @@ def all_runner(samps, data_classes, outdir):
         y_train,
         y_test,
     ) = split_data(samps["data"], samps["labs"], samps["files"])
-    
+
     rf = train_rf(X_train_arr, y_train, "all", outdir)
-    #rf = train_rf_regressor(X_train_arr, y_train, "all", outdir)
+    # rf = train_rf_regressor(X_train_arr, y_train, "all", outdir)
     y_test, preds = pred_all_rf(
         rf, X_test_arr, y_test, files_test, data_classes, outdir
     )
-    #y_test, preds = pred_all_rf_regressor(
+    # y_test, preds = pred_all_rf_regressor(
     #    rf, X_test_arr, y_test, files_test, data_classes, outdir
-    #)
+    # )
     return y_test, preds
 
 
@@ -258,32 +262,32 @@ def main():
     data_dict = load_data(ap.infile, ap.outdir)
     print("[info] Data loaded")
     class_labs = ["nonrefte"]
-#"del", "ins", "cnv", "inv",
+    # "del", "ins", "cnv", "inv",
     pairwise = False
     if pairwise:
         # Pairwise
 
         print("[info] Starting Control vs Single Class Training")
-        #for ilab, slab in enumerate(class_labs, 1):
+        # for ilab, slab in enumerate(class_labs, 1):
         #    y_test, preds = pairwise_runner(data_dict, slab, ilab, ap.outdir)
-#
-        #    pltr = ResultsPlotter(
-        #        y_test, preds, target_names=["cntrl", slab], working_dir=ap.outdir
-        #    )
-        #    pltr.plot_confusion_matrix(
-        #        title=f"Genotype_RF_{slab.upper()}", normalize=True
-        #    )
-        #    pltr.print_classification_report()
+    #
+    #    pltr = ResultsPlotter(
+    #        y_test, preds, target_names=["cntrl", slab], working_dir=ap.outdir
+    #    )
+    #    pltr.plot_confusion_matrix(
+    #        title=f"Genotype_RF_{slab.upper()}", normalize=True
+    #    )
+    #    pltr.print_classification_report()
 
     multi = True
     if multi:
         # Multiclass
         y_test, preds = all_runner(data_dict, class_labs, ap.outdir)
-        #pltr = ResultsPlotter(
+        # pltr = ResultsPlotter(
         #    y_test, preds, target_names=["cntrl"] + class_labs, working_dir=ap.outdir
-        #)
-        #pltr.plot_confusion_matrix(title=f"Genotype_RF_Multiclass", normalize=True)
-        #pltr.print_classification_report()
+        # )
+        # pltr.plot_confusion_matrix(title=f"Genotype_RF_Multiclass", normalize=True)
+        # pltr.print_classification_report()
 
 
 if __name__ == "__main__":
