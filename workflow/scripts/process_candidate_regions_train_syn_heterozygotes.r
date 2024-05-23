@@ -14,10 +14,11 @@ euchromatin_coordinates_path <- args[3]
 
 basedir_outputs_path <- getwd()
 
-genome1 <- "A2"
-genome2 <- "A3"
+#genome1 <- "A2"
+#genome2 <- "A3"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/A2_improved_consensus_revertedfiltering"
+
 combine_id <- paste0(genome1,"_", genome2)
-basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_no75bpredo"
 output_path <- paste0(basedir_outputs_path, "/candidate_regions_data_het/", combine_id)
 featvec_csv_path <- paste0(basedir_outputs_path, "/featvec_csvs_hettrain")
 
@@ -182,20 +183,21 @@ mapping_results_filter <- mapping_results %>% mutate(
     reference_seqs_granges = map(reference_seqs_df, ~ GRanges(seqnames = .x$V1,
                                  ranges = IRanges(start = .x$V2, end = .x$V3),
                                  ignore.strand = TRUE)),
-    euchromatin_calls = map(regions_with_split_reads, ~ subsetByOverlaps(.x, euchromatin_coordinates, ignore.strand = TRUE)),
-    euchromatin_calls_inrefte = map(euchromatin_calls, 
-        ~ subsetByOverlaps(.x,ISO1_og_gr,type="within",ignore.strand = TRUE)),
-    euchromatin_calls_not_inrefte = map2(euchromatin_calls, euchromatin_calls_inrefte, 
-        ~ GenomicRanges::setdiff(.x,.y)),
-    euchromatin_calls_not_inrefte_expand = map(euchromatin_calls_not_inrefte, # toggle numbers in ranges to change expansion
+    euchromatin_calls = map(granges, ~ subsetByOverlaps(.x, euchromatin_coordinates, ignore.strand = TRUE)),
+    euchromatin_calls_not_inrefte_expand = map(euchromatin_calls, # toggle numbers in ranges to change expansion
         ~ GenomicRanges::reduce(GRanges(seqnames = seqnames(.x), 
             ranges = IRanges(start = start(.x) - 200, end = end(.x) + 200)))), #expand to capture deleted ref tes
     #euchromatin_calls_touching_called_refte = map2(euchromatin_calls_not_inrefte, reference_seqs_granges, 
     #    ~ subsetByOverlaps(.x,.y,type="within",ignore.strand = TRUE)),
+    euchromatin_calls_wsplitreads = map(regions_with_split_reads, ~ subsetByOverlaps(.x, euchromatin_coordinates, ignore.strand = TRUE)),
     ref_tes_sametype_within_candidate_regions = map2(reference_seqs_granges, euchromatin_calls_not_inrefte_expand,  
         ~ subsetByOverlaps(.x,.y,type="within",ignore.strand = TRUE)),
-    euchromatin_calls_without_nested_reftes = map2(euchromatin_calls_not_inrefte, ref_tes_sametype_within_candidate_regions,  
+    euchromatin_calls_without_nested_reftes = map2(euchromatin_calls_wsplitreads, ref_tes_sametype_within_candidate_regions,  
         ~ subsetByOverlaps(.x,.y,ignore.strand = TRUE, invert=T)),
+    euchromatin_calls_inrefte = map(euchromatin_calls_without_nested_reftes, 
+        ~ subsetByOverlaps(.x,ISO1_og_gr,type="within",ignore.strand = TRUE)),
+    euchromatin_calls_not_inrefte = map2(euchromatin_calls_without_nested_reftes, euchromatin_calls_inrefte, 
+        ~ GenomicRanges::setdiff(.x,.y)),
     #euchromatin_calls_not_touching_called_refte = map2(euchromatin_calls_not_inrefte, euchromatin_calls_touching_called_refte, 
     #    ~ GenomicRanges::setdiff(.x,.y)),
     #euchromatin_calls_without_nested_reftes_shrunk = map(euchromatin_calls_without_nested_reftes, # toggle numbers in ranges to change expansion
@@ -287,6 +289,12 @@ tp_hets_2R3R <- tp_hets %>% filter(seqnames %in% c("2R", "3R"))
 table(tp_hets_2R3R$heterozygosity)
 table(tp_hets_2R3R$grange1)
 table(tp_hets_2R3R$grange2)
+
+# filter preds > 2k bp from data
+
+true_positives_het <- true_positives_het[width(true_positives_het)<2000]
+true_positives_nohet <- true_positives_nohet[width(true_positives_nohet)<2000]
+false_positives <- false_positives[width(false_positives)<2000]
 
 #Here I make csv's for neural net training
 # I also subtract 1 from beginning to make coordinates 0 based

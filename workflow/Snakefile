@@ -18,6 +18,18 @@ rule all:
 
 #bug: I think fastp assumes files are phred 33. Need to swap places with previous rule. 
 #fq_path = config["fq_base_path"]
+
+filter_ref_script = workflow.basedir + "/scripts/remove_overlapping_reference.r"
+
+rule filter_reference:
+    input:
+        ref_te_locations = config["ref_te_locations"],
+    output:
+        "ref_genome/filtered_ISO1.bed",
+    shell:
+        "{filter_ref_script} {input.ref_te_locations}"
+
+
 rule fastp:
     input:
         fq1 = config["fq_base_path"]+"{sample}/{sample}_1.fq",
@@ -107,7 +119,7 @@ rule candidate_regions:
         fq2_qc="fastp/{sample}.R2.fq",
         consensusTEs = config["consensusTEs"],
         ref_genome = config["ref_genome"],
-        ref_te_locations = config["ref_te_locations"],
+        ref_te_locations = "ref_genome/filtered_ISO1.bed",
     output:
         directory("candidate_regions_data/{sample}"),
         "candidate_regions_data/{sample}/completed.txt",
@@ -126,7 +138,7 @@ rule candidate_regions_het:
         #fq2_qc="fastp_het/{sample}.R2.fq",
         consensusTEs = config["consensusTEs"],
         ref_genome = config["ref_genome"],
-        ref_te_locations = config["ref_te_locations"],
+        ref_te_locations = "ref_genome/filtered_ISO1.bed",
     output:
         directory("candidate_regions_data_het/{sample}"),
         "candidate_regions_data_het/{sample}/completed.txt",
@@ -424,8 +436,8 @@ rule benchmark:
     params:
         sample1=lambda wildcards: split_sample(wildcards)[0],
         sample2=lambda wildcards: split_sample(wildcards)[1],
-        regressor_name= "TEforest_regressor",
-        classifier_name= "TEforest_classifier",
+        regressor_name= "TEforest_regressor_filter",
+        classifier_name= "TEforest_classifier_filter",
     log: "logs/{sample}/bench.log"
     shell:
         "{benchmark_script} {params.sample1} {params.sample2} {input.euchromatin} {params.regressor_name} {params.classifier_name} 2L_2R_plots"

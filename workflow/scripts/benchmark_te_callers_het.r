@@ -23,12 +23,13 @@ if (!dir.exists(plt_dir)) {
   # Create the directory
   dir.create(plt_dir)
 }
-#genome1 <- "AKA-017"
-#genome2 <- "GIM-024"
+#genome1 <- "A2"
+#genome2 <- "A3"
 #euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
-#caller_name <- "TEforest_4readlengths"
-#plt_dir <- "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_generate_hetdata/2L_2R_plots"
-#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_new"
+#caller_name <- "newest_variant_regress"
+#caller_name2 <- "newest_variant_class"
+#plt_dir <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_consensusonly_revertedfiltering/2L_2R_plots"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_consensusonly_revertedfiltering"
 read_mcclintock_het_format <- function(path) {
   #this function reads in the alternative format of mcclintock files. 
   #it needs to be a separate funciton so it outputs a df to a tibble (readLines is tricky)
@@ -345,6 +346,12 @@ benchmark_mapping_results <- mcclintock_results %>% mutate(
     f1_score = 2 * (precision * recall) / (precision + recall)
 )
 
+benchmark_mapping_results_newcaller <- benchmark_mapping_results %>% filter(caller=='TEforest_classifier_filter')
+benchmark_mapping_results_oldcaller <- benchmark_mapping_results %>% filter(caller=='TEforest_classifier_old')
+
+newnof <- benchmark_mapping_results_newcaller |> filter(TE=="NOF")
+
+
 
 benchmark_mapping_results2 <- benchmark_mapping_results %>%
   mutate(
@@ -576,7 +583,8 @@ het_conf_matrix <- benchmark_mapping_results_summary %>%
 het_stats_plot <- het_conf_matrix %>% select(caller, het_stats) %>%
   tidyr::unnest_wider(het_stats) %>%
   gather(metric, value, precision:f1) %>%
-  group_by(caller)
+  group_by(caller) %>%
+  arrange(desc(f1_score))
 
 # Create the bar plot
 hetplt <- ggplot(het_stats_plot, aes(x = caller, y = value, fill = metric)) +
@@ -598,7 +606,8 @@ hetplt <- ggplot(het_stats_plot, aes(x = caller, y = value, fill = metric)) +
 homo_stats_plot <- het_conf_matrix %>% select(caller, homo_stats) %>%
   tidyr::unnest_wider(homo_stats) %>%
   gather(metric, value, precision:f1) %>%
-  group_by(caller)
+  group_by(caller) %>%
+  arrange(desc(f1_score))
 
 # Create the bar plot
 homoplt <- ggplot(homo_stats_plot, aes(x = caller, y = value, fill = metric)) +
@@ -689,7 +698,7 @@ retroseq_bp_plot <- make_bp_plot("retroseq")
 teflon_bp_plot <- make_bp_plot("teflon")
 #popoolationte_bp_plot <- make_bp_plot("popoolationte")
 #popoolationte2_bp_plot <- make_bp_plot("popoolationte2")
-teforest_bp_plot <- make_bp_plot(caller_name2)
+teforest_bp_plot <- make_bp_plot(paste0(caller_name2, "_bps"))
 #make_bp_plot("2L_test_bps")
 
 p2 <- ggarrange(teforest_bp_plot, temp2_bp_plot, teflon_bp_plot, retroseq_bp_plot,
