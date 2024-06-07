@@ -14,12 +14,12 @@ do
 done
 
 echo "Current directory: $(pwd)"
-featvec_dir="$(pwd)/feature_vectors_het"
-training_folder=$(pwd)/2L2R
-validation_folder=$(pwd)/3L3RX
-training_folder_classifer=$(pwd)/2L2R_classifer
-validation_folder_classifer=$(pwd)/3L3RX_classifer
-file_path="$training_folder_classifer/svrf_all.pkl"
+featvec_dir="$(pwd)/feature_vectors_het_reference"
+training_folder=$(pwd)/2L2R_reference
+validation_folder=$(pwd)/3L3RX_reference
+training_folder_classifer=$(pwd)/2L2R_classifer_reference
+validation_folder_classifer=$(pwd)/3L3RX_classifer_reference
+file_path="$validation_folder_classifer/svrf_all.pkl"
 
 for dir in "$featvec_dir/*" #[a-z][0-9][a-z][0-9]
     do echo $dir

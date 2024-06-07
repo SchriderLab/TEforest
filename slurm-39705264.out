@@ -1,0 +1,62 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:183: SyntaxWarning: invalid escape sequence '\/'
+  process_regions_hettraining_script = (
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:184: SyntaxWarning: invalid escape sequence '\/'
+  workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:222: SyntaxWarning: invalid escape sequence '\/'
+  sample2=lambda wildcards: split_sample(wildcards)[1],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:223: SyntaxWarning: invalid escape sequence '\/'
+  input:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  shell:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  shell:
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                                count
+-------------------------------  -------
+benchmark                              3
+find_breakpoints_het                   3
+find_breakpoints_het_classifier        3
+organize_training_data                 2
+split_data                             3
+split_data_classifier                  3
+train_validate                         3
+train_validate_classifier              2
+total                                 22
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun May 26 11:31:23 2024]
+localcheckpoint train_validate:
+    input: 2L2R/A2_A3.txt, 3L3RX/A2_A3.txt
+    output: 2L2R/A2_A3.txt_2, 3L3RX/A2_A3.txt_2
+    jobid: 7
+    reason: Missing output files: 3L3RX/A2_A3.txt_2, 2L2R/A2_A3.txt_2; Updated input files: 2L2R/A2_A3.txt, 3L3RX/A2_A3.txt
+    wildcards: sample=A2_A3
+    threads: 32
+    resources: tmpdir=/tmp
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s A2_A3 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2
+File /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R/svrf_all.pkl exists. Ending script.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in rule train_validate in file /nas/longleaf/home/adaigle/TEforest/workflow/Snakefile, line 375:
+Job 7  completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+2L2R/A2_A3.txt_2
+3L3RX/A2_A3.txt_2
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-05-26T113122.959494.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

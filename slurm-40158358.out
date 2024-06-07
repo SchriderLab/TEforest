@@ -1,0 +1,18 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:183: SyntaxWarning: invalid escape sequence '\/'
+  process_regions_hettraining_script = (
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:184: SyntaxWarning: invalid escape sequence '\/'
+  workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:222: SyntaxWarning: invalid escape sequence '\/'
+  sample1=lambda wildcards: split_sample(wildcards)[0],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:223: SyntaxWarning: invalid escape sequence '\/'
+  sample2=lambda wildcards: split_sample(wildcards)[1],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  threads: config["threads"]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  threads: config["threads"]
+slurmstepd: error: *** JOB 40158358 ON g1416schr01 CANCELLED AT 2024-05-31T12:42:58 ***

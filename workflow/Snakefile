@@ -4,26 +4,31 @@ min_version("8.0")
 
 
 include: "rules/common.smk"
-#configfile: "config.yaml"
+
+
+# configfile: "config.yaml"
 
 
 # Define the parameters using the --config option
 
-#sample = config["sample"]
-#threads = config["threads"]
-#threads = min(threads, cores)
+
+# sample = config["sample"]
+# threads = config["threads"]
+# threads = min(threads, cores)
 rule all:
     input:
         [],
 
-#bug: I think fastp assumes files are phred 33. Need to swap places with previous rule. 
-#fq_path = config["fq_base_path"]
+
+# bug: I think fastp assumes files are phred 33. Need to swap places with previous rule.
+# fq_path = config["fq_base_path"]
 
 filter_ref_script = workflow.basedir + "/scripts/remove_overlapping_reference.r"
 
+
 rule filter_reference:
     input:
-        ref_te_locations = config["ref_te_locations"],
+        ref_te_locations=config["ref_te_locations"],
     output:
         "ref_genome/filtered_ISO1.bed",
     shell:
@@ -32,38 +37,41 @@ rule filter_reference:
 
 rule fastp:
     input:
-        fq1 = config["fq_base_path"]+"{sample}/{sample}_1.fq",
-        fq2 = config["fq_base_path"]+"{sample}/{sample}_2.fq",
+        fq1=config["fq_base_path"] + "{sample}/{sample}_1.fq",
+        fq2=config["fq_base_path"] + "{sample}/{sample}_2.fq",
     output:
         fq1_gz="fastp/{sample}.R1.fq.gz",
         fq2_gz="fastp/{sample}.R2.fq.gz",
         html="fastp/{sample}.html",
         json="fastp/{sample}.json",
     threads: config["threads"]
-    log: "logs/{sample}/fastp.log"
+    log:
+        "logs/{sample}/fastp.log",
     benchmark:
         "benchmarks/{sample}.fastp.benchmark.txt"
     shell:
         "fastp -w {threads} --detect_adapter_for_pe -i {input.fq1} -I {input.fq2} -o fastp/{wildcards.sample}.R1.fq.gz -O fastp/{wildcards.sample}.R2.fq.gz -h fastp/{wildcards.sample}.html -j fastp/{wildcards.sample}.json -z 4"
 
+
 rule fastp_het:
     input:
-        fq1 = "het_reads/{sample}/{sample}_1.fq",
-        fq2 = "het_reads/{sample}/{sample}_2.fq",
+        fq1="het_reads/{sample}/{sample}_1.fq",
+        fq2="het_reads/{sample}/{sample}_2.fq",
     output:
         fq1_gz="fastp_het/{sample}.R1.fq.gz",
         fq2_gz="fastp_het/{sample}.R2.fq.gz",
         html="fastp_het/{sample}.html",
         json="fastp_het/{sample}.json",
     threads: config["threads"]
-    log: "logs/{sample}/fastp.log"
+    log:
+        "logs/{sample}/fastp.log",
     benchmark:
         "benchmarks/{sample}.fastp.benchmark.txt"
     shell:
         "fastp -w {threads} --detect_adapter_for_pe -i {input.fq1} -I {input.fq2} -o fastp_het/{wildcards.sample}.R1.fq.gz -O fastp_het/{wildcards.sample}.R2.fq.gz -h fastp_het/{wildcards.sample}.html -j fastp_het/{wildcards.sample}.json -z 4"
 
 
-#rule decompress:
+# rule decompress:
 #    input:
 #        fq1_gz="fastp/{sample}.R1.fq.gz",
 #        fq2_gz="fastp/{sample}.R2.fq.gz",
@@ -77,6 +85,7 @@ rule fastp_het:
 #        "gunzip -c {input.fq1_gz} > {output.fq1_qc}; "
 #        "gunzip -c {input.fq2_gz} > {output.fq2_qc}"
 
+
 rule decompress:
     input:
         fq1_gz="fastp/{sample}.R1.fq.gz",
@@ -87,10 +96,12 @@ rule decompress:
     threads: config["threads"]
     benchmark:
         "benchmarks/{sample}.decompress.benchmark.txt"
-    log: "logs/{sample}/decompress.log"
+    log:
+        "logs/{sample}/decompress.log",
     shell:
         "seqkit convert {input.fq1_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq1_qc}; "
         "seqkit convert {input.fq2_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq2_qc}"
+
 
 rule decompress_het:
     input:
@@ -102,50 +113,52 @@ rule decompress_het:
     threads: config["threads"]
     benchmark:
         "benchmarks/{sample}.decompress.benchmark.txt"
-    log: "logs/{sample}/decompress.log"
+    log:
+        "logs/{sample}/decompress.log",
     shell:
         "seqkit convert {input.fq1_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq1_qc}; "
         "seqkit convert {input.fq2_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq2_qc}"
 
 
-
 candidate_regions_script = workflow.basedir + "/scripts/find_candidate_regions.sh"
-
 
 
 rule candidate_regions:
     input:
         fq1_qc="fastp/{sample}.R1.fq",
         fq2_qc="fastp/{sample}.R2.fq",
-        consensusTEs = config["consensusTEs"],
-        ref_genome = config["ref_genome"],
-        ref_te_locations = "ref_genome/filtered_ISO1.bed",
+        consensusTEs=config["consensusTEs"],
+        ref_genome=config["ref_genome"],
+        ref_te_locations="ref_genome/filtered_ISO1.bed",
     output:
         directory("candidate_regions_data/{sample}"),
         "candidate_regions_data/{sample}/completed.txt",
     threads: config["threads"]
     benchmark:
         "benchmarks/{sample}.candidate_regions.benchmark.txt"
-    log: "logs/{sample}/candidate_regions.log"
+    log:
+        "logs/{sample}/candidate_regions.log",
     shell:
         "{candidate_regions_script} -o candidate_regions_data/{wildcards.sample} -c {input.consensusTEs} -r {input.ref_te_locations} -@ {threads} -g {input.ref_genome} -1 {input.fq1_qc} -2 {input.fq2_qc} -n {wildcards.sample}"
 
+
 rule candidate_regions_het:
     input:
-        fq1_qc = "het_reads/{sample}/{sample}_1.fq",
-        fq2_qc = "het_reads/{sample}/{sample}_2.fq",
+        fq1_qc="het_reads/{sample}/{sample}_1.fq",
+        fq2_qc="het_reads/{sample}/{sample}_2.fq",
         #fq1_qc="fastp_het/{sample}.R1.fq",
         #fq2_qc="fastp_het/{sample}.R2.fq",
-        consensusTEs = config["consensusTEs"],
-        ref_genome = config["ref_genome"],
-        ref_te_locations = "ref_genome/filtered_ISO1.bed",
+        consensusTEs=config["consensusTEs"],
+        ref_genome=config["ref_genome"],
+        ref_te_locations="ref_genome/filtered_ISO1.bed",
     output:
         directory("candidate_regions_data_het/{sample}"),
         "candidate_regions_data_het/{sample}/completed.txt",
     threads: 8
     benchmark:
         "benchmarks/{sample}.candidate_regions.benchmark.txt"
-    log: "logs/{sample}/candidate_regions.log"
+    log:
+        "logs/{sample}/candidate_regions.log",
     shell:
         "{candidate_regions_script} -o candidate_regions_data_het/{wildcards.sample} -c {input.consensusTEs} -r {input.ref_te_locations} -@ {threads} -g {input.ref_genome} -1 {input.fq1_qc} -2 {input.fq2_qc} -n {wildcards.sample}"
 
@@ -156,24 +169,27 @@ process_regions_script = workflow.basedir + "/scripts/process_candidate_regions.
 rule process_candidate_regions:
     input:
         "candidate_regions_data/{sample}",
-        euchromatin = config["euchromatin"],
+        euchromatin=config["euchromatin"],
     output:
         featvec_csv="featvec_csvs/{sample}.csv",
     benchmark:
         "benchmarks/{sample}.process_candidate_regions.benchmark.txt"
-    log: "logs/{sample}/process_candidate_regions.log"
+    log:
+        "logs/{sample}/process_candidate_regions.log",
     shell:
         "{process_regions_script} {wildcards.sample} {input.euchromatin}"
 
 
-
-process_regions_hettraining_script = workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+process_regions_hettraining_script = (
+    workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+)
 
 
 def split_sample(wildcards):
-    # split sample into sample1 and sample2 using 
+    # split sample into sample1 and sample2 using
     sample_parts = wildcards.sample.split("_")
     return sample_parts[0], sample_parts[1]
+
 
 rule process_candidate_regions_hettraining:
     input:
@@ -181,31 +197,36 @@ rule process_candidate_regions_hettraining:
         #sample=config["sample"],
         #sample1 = config["sample1"],
         #sample2 = config["sample2"],
-        euchromatin = config["euchromatin"],
+        euchromatin=config["euchromatin"],
     output:
         featvec_csv="featvec_csvs_hettrain/{sample}.csv",
+        featvec_csv_ref="featvec_csvs_hettrain/{sample}_reference.csv"
     params:
         sample1=lambda wildcards: split_sample(wildcards)[0],
         sample2=lambda wildcards: split_sample(wildcards)[1],
     benchmark:
         "benchmarks/{sample}.process_candidate_regions_hettraining.benchmark.txt"
-    log: "logs/{sample}/process_candidate_regions_hettraining.log"
+    log:
+        "logs/{sample}/process_candidate_regions_hettraining.log",
     shell:
         "{process_regions_hettraining_script} {params.sample1} {params.sample2} {input.euchromatin}"
 
 
-generate_synthetic_hets_script = workflow.basedir + "/scripts/generate_heterozygote_fqs.sh"
+generate_synthetic_hets_script = (
+    workflow.basedir + "/scripts/generate_heterozygote_fqs.sh"
+)
+
 
 rule generate_synthetic_hets:
     params:
         sample1=lambda wildcards: split_sample(wildcards)[0],
         sample2=lambda wildcards: split_sample(wildcards)[1],
     input:
-        bam = config["bam_path"]
-    output: 
-        het_reads_dir = directory("het_reads/{sample}"),
-        fq1 = "het_reads/{sample}/{sample}_1.fq",
-        fq2 = "het_reads/{sample}/{sample}_2.fq",
+        bam=config["bam_path"],
+    output:
+        het_reads_dir=directory("het_reads/{sample}"),
+        fq1="het_reads/{sample}/{sample}_1.fq",
+        fq2="het_reads/{sample}/{sample}_2.fq",
     threads: config["threads"]
     shell:
         "{generate_synthetic_hets_script} {input.bam}/{params.sample1}_1.sorted.bam {input.bam}/{params.sample2}_1.sorted.bam {threads} {output.het_reads_dir}/ {params.sample1} {params.sample2} 30"
@@ -215,64 +236,84 @@ rule align_reads:
     input:
         fq1_qc="fastp/{sample}.R1.fq",
         fq2_qc="fastp/{sample}.R2.fq",
-        ref_genome = config["ref_genome"],
+        ref_genome=config["ref_genome"],
     output:
         bam="aligned/{sample}.bam",
     threads: config["threads"]
     benchmark:
         "benchmarks/{sample}.align_reads.benchmark.txt"
-    log: "logs/{sample}/align_reads.log"
+    log:
+        "logs/{sample}/align_reads.log",
     shell:
         """
         bwa-mem2 mem -t {threads} {input.ref_genome} {input.fq1_qc} {input.fq2_qc} | samtools sort -@ {threads} -o {output.bam} -
         samtools index {output.bam}
         """
 
+
 rule align_reads_het:
     input:
         #fq1_qc="fastp_het/{sample}.R1.fq",
         #fq2_qc="fastp_het/{sample}.R2.fq",
-        fq1_qc = "het_reads/{sample}/{sample}_1.fq",
-        fq2_qc = "het_reads/{sample}/{sample}_2.fq",
-        ref_genome = config["ref_genome"],
+        fq1_qc="het_reads/{sample}/{sample}_1.fq",
+        fq2_qc="het_reads/{sample}/{sample}_2.fq",
+        ref_genome=config["ref_genome"],
     output:
         bam="aligned_het/{sample}.bam",
     threads: 8
     benchmark:
         "benchmarks/{sample}.align_reads.benchmark.txt"
-    log: "logs/{sample}/align_reads.log"
+    log:
+        "logs/{sample}/align_reads.log",
     shell:
         """
         bwa-mem2 mem -t {threads} {input.ref_genome} {input.fq1_qc} {input.fq2_qc} | samtools sort -@ {threads} -o {output.bam} -
         samtools index {output.bam}
         """
+
 
 bam_to_fvec_script = workflow.basedir + "/scripts/bam_to_fvec.py"
 
 
 rule bam_to_fvec:
     input:
-        featvec_csv="featvec_csvs/{sample}.csv", #+ "featvec_csvs_hettrain/{sample}.csv",
+        featvec_csv="featvec_csvs/{sample}.csv",  #+ "featvec_csvs_hettrain/{sample}.csv",
         bam="aligned/{sample}.bam",
     output:
-        feat_vec_dir = directory("feature_vectors/{sample}"),
+        feat_vec_dir=directory("feature_vectors/{sample}"),
     benchmark:
         "benchmarks/{sample}.bam_to_fvec.benchmark.txt"
-    log: "logs/{sample}/bam_to_fvec.log"
+    log:
+        "logs/{sample}/bam_to_fvec.log",
     shell:
         "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors -bd aligned -tebd candidate_regions_data"
 
+
 rule bam_to_fvec_het:
     input:
-        featvec_csv="featvec_csvs_hettrain/{sample}.csv", #+ "featvec_csvs_hettrain/{sample}.csv",
+        featvec_csv="featvec_csvs_hettrain/{sample}.csv",  #+ "featvec_csvs_hettrain/{sample}.csv",
         bam="aligned_het/{sample}.bam",
     output:
-        feat_vec_dir = directory("feature_vectors_het/{sample}"),
+        feat_vec_dir=directory("feature_vectors_het/{sample}"),
     benchmark:
         "benchmarks/{sample}.bam_to_fvec.benchmark.txt"
-    log: "logs/{sample}/bam_to_fvec.log"
+    log:
+        "logs/{sample}/bam_to_fvec.log",
     shell:
         "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors_het -bd aligned_het -tebd candidate_regions_data_het"
+
+rule bam_to_fvec_reference_het:
+    input:
+        featvec_csv="featvec_csvs_hettrain/{sample}_reference.csv",  #+ "featvec_csvs_hettrain/{sample}.csv",
+        bam="aligned_het/{sample}.bam",
+    output:
+        feat_vec_dir=directory("feature_vectors_het_reference/{sample}"),
+    benchmark:
+        "benchmarks/{sample}.bam_to_fvec.benchmark.txt"
+    log:
+        "logs/{sample}/bam_to_fvec.log",
+    shell:
+        "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors_het_reference -bd aligned_het -tebd candidate_regions_data_het"
 
 
 condense_data_script = workflow.basedir + "/scripts/condense_training_data.py"
@@ -280,23 +321,26 @@ condense_data_script = workflow.basedir + "/scripts/condense_training_data.py"
 
 rule condense_data:
     input:
-        feat_vec_dir = "feature_vectors/{sample}",
+        feat_vec_dir="feature_vectors/{sample}",
     output:
-        npz = "condensed_feature_vectors/{sample}/{sample}_condense.npz",
+        npz="condensed_feature_vectors/{sample}/{sample}_condense.npz",
     benchmark:
         "benchmarks/{sample}.condense_data.benchmark.txt"
-    log: "logs/{sample}/condense_data.log"
+    log:
+        "logs/{sample}/condense_data.log",
     shell:
         "python {condense_data_script} -i {input.feat_vec_dir} -o {output.npz}"
 
+
 rule condense_data_het:
     input:
-        feat_vec_dir = "feature_vectors_het/{sample}",
+        feat_vec_dir="feature_vectors_het/{sample}",
     output:
-        npz = "condensed_feature_vectors/{sample}/{sample}_condense_het.npz",
+        npz="condensed_feature_vectors/{sample}/{sample}_condense_het.npz",
     benchmark:
         "benchmarks/{sample}.condense_data.benchmark.txt"
-    log: "logs/{sample}/condense_data.log"
+    log:
+        "logs/{sample}/condense_data.log",
     shell:
         "python {condense_data_script} -i {input.feat_vec_dir} -o {output.npz}"
 
@@ -308,68 +352,186 @@ use_model_script = workflow.basedir + "/scripts/use_model.py"
 rule use_model:
     input:
         #featvec_csv="featvec_csvs/{sample}.csv",
-        npz = "condensed_feature_vectors/{sample}/{sample}_condense.npz",
-        model = config["model"],
+        npz="condensed_feature_vectors/{sample}/{sample}_condense.npz",
+        model=config["model"],
     output:
-        predictions = "output/{sample}/predictions.csv"
+        predictions="output/{sample}/predictions.csv",
     threads: config["threads"]
     benchmark:
         "benchmarks/{sample}.use_model.benchmark.txt"
-    log: "logs/{sample}/use_model.log"
+    log:
+        "logs/{sample}/use_model.log",
     shell:
         "python {use_model_script} -n {input.npz} -m {input.model} -o output/{wildcards.sample}"
 
-train_model_script = workflow.basedir + "/scripts/train_rf_model.py"
-train_val_script = workflow.basedir + "/scripts/featvec_training_validation_heterozygotes.sh"
 
-checkpoint train_validate:
+organize_training_data_script = (
+    workflow.basedir + "/scripts/organize_training_data.sh"
+)
+organize_training_data_ref_script = (
+    workflow.basedir + "/scripts/organize_training_data_reference.sh"
+)
+
+
+checkpoint organize_training_data:
     input:
-        feat_vec_dir = "feature_vectors_het/{sample}",
+        feat_vec_dir="feature_vectors_het/{sample}",
     output:
-        "2L2R/{sample}.txt", # these are dummy .txt files
+        "2L2R/{sample}.txt",  # these are dummy .txt files
         "3L3RX/{sample}.txt",
     threads: config["threads"]
     shell:
-       "bash {train_val_script} -t {train_model_script} -c {condense_data_script} -s {wildcards.sample} -v {use_model_script}"
+        "bash {organize_training_data_script} -s {wildcards.sample}"
 
-train_model_script_classifer = workflow.basedir + "/scripts/train_rf_model_classifier.py"
-train_val_script_classifier = workflow.basedir + "/scripts/featvec_training_validation_heterozygotes_classifier.sh"
+
+checkpoint organize_training_data_reference:
+    input:
+        feat_vec_dir="feature_vectors_het_reference/{sample}",
+    output:
+        "2L2R_reference/{sample}.txt",  # these are dummy .txt files
+        "3L3RX_reference/{sample}.txt",
+    threads: config["threads"]
+    shell:
+        "bash {organize_training_data_ref_script} -s {wildcards.sample}"
+
+
+train_model_script = workflow.basedir + "/scripts/train_rf_model.py"
+train_val_script = (
+    workflow.basedir + "/scripts/featvec_training_validation_heterozygotes.sh"
+)
+train_val_ref_script = (
+    workflow.basedir + "/scripts/featvec_training_validation_heterozygotes_reference.sh"
+)
+
+# Aggregate rule that ensures all samples have been processed by organize_training_data
+rule aggregate_organized:
+    input:
+        expand("2L2R/{sample}.txt", sample=glob_wildcards("2L2R/{sample}.txt").sample),
+        #expand("3L3RX/{sample}.txt", glob_wildcards("2L2R/{sample}.txt").sample),
+    output:
+        touch("all_samples_organized.txt")
+
+
+rule aggregate_organized_reference:
+    input:
+        expand("2L2R_reference/{sample}.txt", sample=glob_wildcards("2L2R_reference/{sample}.txt").sample),
+        #expand("3L3RX/{sample}.txt", glob_wildcards("2L2R/{sample}.txt").sample),
+    output:
+        touch("all_ref_samples_organized.txt")
+
+
+rule train_validate:
+    input:
+        "2L2R/{sample}.txt",  # these are dummy .txt files
+        "3L3RX/{sample}.txt",
+        organized="all_samples_organized.txt",
+    output:
+        "2L2R/{sample}.txt_2",  # these are dummy .txt files
+        "3L3RX/{sample}.txt_2",
+    threads: config["threads"]
+    shell:
+        "bash {train_val_script} -t {train_model_script} -c {condense_data_script} -s {wildcards.sample} -v {use_model_script}"
+
+
+rule train_validate_reference:
+    input:
+        "2L2R_reference/{sample}.txt",  # these are dummy .txt files
+        "3L3RX_reference/{sample}.txt",
+        organized="all_ref_samples_organized.txt",
+    output:
+        "2L2R_reference/{sample}.txt_2",  # these are dummy .txt files
+        "3L3RX_reference/{sample}.txt_2",
+    threads: config["threads"]
+    shell:
+        "bash {train_val_ref_script} -t {train_model_script} -c {condense_data_script} -s {wildcards.sample} -v {use_model_script}"
+
+
+train_model_script_classifer = (
+    workflow.basedir + "/scripts/train_rf_model_classifier.py"
+)
+train_val_script_classifier = (
+    workflow.basedir
+    + "/scripts/featvec_training_validation_heterozygotes_classifier.sh"
+)
+train_val_script_classifier_ref = (
+    workflow.basedir
+    + "/scripts/featvec_training_validation_heterozygotes_classifier_reference.sh"
+)
 
 rule train_validate_classifier:
     input:
-        feat_vec_dir = "feature_vectors_het/{sample}",
-        t = "2L2R/{sample}.txt",
-        t2 = "3L3RX/{sample}.txt",
+        "2L2R/{sample}.txt_2",  # these are dummy .txt files
+        t="2L2R/{sample}.txt",
+        t2="3L3RX/{sample}.txt",
+        organized="all_samples_organized.txt",
     output:
         "2L2R_classifer/{sample}.txt",
         "3L3RX_classifer/{sample}.txt",
     threads: config["threads"]
     shell:
-       "bash {train_val_script_classifier} -t {train_model_script_classifer} -c {condense_data_script} -s {wildcards.sample} -v {use_model_script}"
+        "bash {train_val_script_classifier} -t {train_model_script_classifer} -c {condense_data_script} -s {wildcards.sample} -v {use_model_script}"
+
+
+rule train_validate_classifier_reference:
+    input:
+        "2L2R_reference/{sample}.txt_2",  # these are dummy .txt files
+        t="2L2R_reference/{sample}.txt",
+        t2="3L3RX_reference/{sample}.txt",
+        organized="all_ref_samples_organized.txt",
+    output:
+        "2L2R_classifer_reference/{sample}.txt",
+        "3L3RX_classifer_reference/{sample}.txt",
+    threads: config["threads"]
+    shell:
+        "bash {train_val_script_classifier_ref} -t {train_model_script_classifer} -c {condense_data_script} -s {wildcards.sample} -v {use_model_script}"
 
 
 rule split_data:
     input:
-        feat_vec_dir = "feature_vectors_het/{sample}",
-        t="2L2R/{sample}.txt",
-        t2="3L3RX/{sample}.txt",
+        feat_vec_dir="feature_vectors_het/{sample}",
+        t="2L2R/{sample}.txt_2",
+        t2="3L3RX/{sample}.txt_2",
     output:
-        csv1 = "2L2R/{sample}.csv",
-        csv2 = "3L3RX/{sample}.csv",
+        csv1="2L2R/{sample}.csv",
+        csv2="3L3RX/{sample}.csv",
     shell:
-       "echo 'file,true,pred,cntrl_score' > {output.csv1}; cat 2L2R/predictions.csv | grep ^{wildcards.sample} >> {output.csv1}; echo 'file,true,pred,cntrl_score'> {output.csv2}; cat 3L3RX/predictions.csv | grep ^{wildcards.sample} >> {output.csv2}"
+        "echo 'file,true,pred,cntrl_score' > {output.csv1}; cat 2L2R/predictions.csv | grep ^{wildcards.sample} >> {output.csv1}; echo 'file,true,pred,cntrl_score'> {output.csv2}; cat 3L3RX/predictions.csv | grep ^{wildcards.sample} >> {output.csv2}"
+
 
 rule split_data_classifier:
     input:
-        feat_vec_dir = "feature_vectors_het/{sample}",
-        t= "2L2R_classifer/{sample}.txt",
-        t2= "3L3RX_classifer/{sample}.txt",
+        feat_vec_dir="feature_vectors_het/{sample}",
+        t="2L2R_classifer/{sample}.txt",
+        t2="3L3RX_classifer/{sample}.txt",
     output:
-        csv1 = "2L2R_classifer/{sample}.csv",
-        csv2 = "3L3RX_classifer/{sample}.csv",
+        csv1="2L2R_classifer/{sample}.csv",
+        csv2="3L3RX_classifer/{sample}.csv",
     shell:
-       "echo 'file,true,pred,cntrl_score' > {output.csv1}; cat 2L2R_classifer/predictions.csv | grep ^{wildcards.sample} >> {output.csv1}; echo 'file,true,pred,cntrl_score'> {output.csv2}; cat 3L3RX_classifer/predictions.csv | grep ^{wildcards.sample} >> {output.csv2}"
+        "echo 'file,true,pred,cntrl_score' > {output.csv1}; cat 2L2R_classifer/predictions.csv | grep ^{wildcards.sample} >> {output.csv1}; echo 'file,true,pred,cntrl_score'> {output.csv2}; cat 3L3RX_classifer/predictions.csv | grep ^{wildcards.sample} >> {output.csv2}"
 
+
+rule split_data_reference:
+    input:
+        feat_vec_dir="feature_vectors_het_reference/{sample}",
+        t="2L2R_reference/{sample}.txt_2",
+        t2="3L3RX_reference/{sample}.txt_2",
+    output:
+        csv1="2L2R_reference/{sample}.csv",
+        csv2="3L3RX_reference/{sample}.csv",
+    shell:
+        "echo 'file,true,pred,cntrl_score' > {output.csv1}; cat 2L2R_reference/predictions.csv | grep ^{wildcards.sample} >> {output.csv1}; echo 'file,true,pred,cntrl_score'> {output.csv2}; cat 3L3RX_reference/predictions.csv | grep ^{wildcards.sample} >> {output.csv2}"
+
+
+rule split_data_classifier_reference:
+    input:
+        feat_vec_dir="feature_vectors_het_reference/{sample}",
+        t="2L2R_classifer_reference/{sample}.txt",
+        t2="3L3RX_classifer_reference/{sample}.txt",
+    output:
+        csv1="2L2R_classifer_reference/{sample}.csv",
+        csv2="3L3RX_classifer_reference/{sample}.csv",
+    shell:
+        "echo 'file,true,pred,cntrl_score' > {output.csv1}; cat 2L2R_classifer_reference/predictions.csv | grep ^{wildcards.sample} >> {output.csv1}; echo 'file,true,pred,cntrl_score'> {output.csv2}; cat 3L3RX_classifer_reference/predictions.csv | grep ^{wildcards.sample} >> {output.csv2}"
 
 
 find_breakpoints_script = workflow.basedir + "/scripts/find_breakpoints.r"
@@ -377,22 +539,24 @@ find_breakpoints_script = workflow.basedir + "/scripts/find_breakpoints.r"
 
 rule find_breakpoints:
     input:
-        predictions = "output/{sample}/predictions.csv",
+        predictions="output/{sample}/predictions.csv",
     output:
         bed="output/{sample}_TEforest_nonredundant.bed",
         bps="output/{sample}_TEforest_bps_nonredundant.bed",
     benchmark:
         "benchmarks/{sample}.find_breakpoints.benchmark.txt"
-    log: "logs/{sample}/find_breakpoints.log"
+    log:
+        "logs/{sample}/find_breakpoints.log",
     shell:
         "{find_breakpoints_script} {wildcards.sample} {input.predictions} output/ aligned/"
 
 
-
 rule find_breakpoints_het:
     input:
-        predictions1 = "2L2R/{sample}.csv",
-        predictions2 = "3L3RX/{sample}.csv",
+        predictions1="2L2R/{sample}.csv",
+        predictions2="3L3RX/{sample}.csv",
+        predictions1_ref="2L2R_reference/{sample}.csv",
+        predictions2_ref="3L3RX_reference/{sample}.csv",
     output:
         bed1="2L2R_model_validation_output/{sample}_TEforest_nonredundant.bed",
         bps1="2L2R_model_validation_output/{sample}_TEforest_bps_nonredundant.bed",
@@ -400,14 +564,18 @@ rule find_breakpoints_het:
         bps2="3L3RX_model_validation_output/{sample}_TEforest_bps_nonredundant.bed",
     benchmark:
         "benchmarks/{sample}.find_breakpoints.benchmark.txt"
-    log: "logs/{sample}/find_breakpoints.log"
+    log:
+        "logs/{sample}/find_breakpoints.log",
     shell:
-        "{find_breakpoints_script} {wildcards.sample} {input.predictions1} 2L2R_model_validation_output/ aligned_het/; {find_breakpoints_script} {wildcards.sample} {input.predictions2} 3L3RX_model_validation_output/ aligned_het/"
+        "{find_breakpoints_script} {wildcards.sample} {input.predictions1} 2L2R_model_validation_output/ aligned_het/ {input.predictions1_ref}; {find_breakpoints_script} {wildcards.sample} {input.predictions2} 3L3RX_model_validation_output/ aligned_het/ {input.predictions2_ref}"
+
 
 rule find_breakpoints_het_classifier:
     input:
-        predictions1 = "2L2R_classifer/{sample}.csv",
-        predictions2 = "3L3RX_classifer/{sample}.csv",
+        predictions1="2L2R_classifer/{sample}.csv",
+        predictions2="3L3RX_classifer/{sample}.csv",
+        predictions1_ref="2L2R_classifer_reference/{sample}.csv",
+        predictions2_ref="3L3RX_classifer_reference/{sample}.csv",
     output:
         bed1="2L2R_model_validation_output_classifier/{sample}_TEforest_nonredundant.bed",
         bps1="2L2R_model_validation_output_classifier/{sample}_TEforest_bps_nonredundant.bed",
@@ -415,10 +583,10 @@ rule find_breakpoints_het_classifier:
         bps2="3L3RX_model_validation_output_classifier/{sample}_TEforest_bps_nonredundant.bed",
     benchmark:
         "benchmarks/{sample}.find_breakpoints.benchmark.txt"
-    log: "logs/{sample}/find_breakpoints.log"
+    log:
+        "logs/{sample}/find_breakpoints.log",
     shell:
-        "{find_breakpoints_script} {wildcards.sample} {input.predictions1} 2L2R_model_validation_output_classifier/ aligned_het/; {find_breakpoints_script} {wildcards.sample} {input.predictions2} 3L3RX_model_validation_output_classifier/ aligned_het/"
-
+        "{find_breakpoints_script} {wildcards.sample} {input.predictions1} 2L2R_model_validation_output_classifier/ aligned_het/ {input.predictions1_ref}; {find_breakpoints_script} {wildcards.sample} {input.predictions2} 3L3RX_model_validation_output_classifier/ aligned_het/ {input.predictions2_ref}"
 
 
 benchmark_script = workflow.basedir + "/scripts/benchmark_te_callers_het.r"
@@ -426,7 +594,7 @@ benchmark_script = workflow.basedir + "/scripts/benchmark_te_callers_het.r"
 
 rule benchmark:
     input:
-        euchromatin = config["euchromatin"],
+        euchromatin=config["euchromatin"],
         bed1="2L2R_model_validation_output/{sample}_TEforest_nonredundant.bed",
         bed1_classifier="2L2R_model_validation_output_classifier/{sample}_TEforest_nonredundant.bed",
     output:
@@ -436,17 +604,15 @@ rule benchmark:
     params:
         sample1=lambda wildcards: split_sample(wildcards)[0],
         sample2=lambda wildcards: split_sample(wildcards)[1],
-        regressor_name= "TEforest_regressor_filter",
-        classifier_name= "TEforest_classifier_filter",
-    log: "logs/{sample}/bench.log"
+        regressor_name="TEforest_regressor_filter",
+        classifier_name="TEforest_classifier_filter",
+    log:
+        "logs/{sample}/bench.log",
     shell:
         "{benchmark_script} {params.sample1} {params.sample2} {input.euchromatin} {params.regressor_name} {params.classifier_name} 2L_2R_plots"
 
 
-
-
-
-#rule use_regressor_model:
+# rule use_regressor_model:
 #    input:
 #        #featvec_csv="featvec_csvs/{sample}.csv",
 #        npz = "condensed_feature_vectors/{sample}/{sample}_condense.npz",
@@ -458,9 +624,8 @@ rule benchmark:
 #        "benchmarks/{sample}.use_model.benchmark.txt"
 #    shell:
 #        "python {use_model_script} -n {input.npz} -m {input.model} -o output/{sample}"
-
-#need to add model input before using this
-#rule find_breakpoints_regressor:
+# need to add model input before using this
+# rule find_breakpoints_regressor:
 #    input:
 #        predictions = "output/{sample}/regressor_predictions.csv",
 #    output:

@@ -1,0 +1,515 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:183: SyntaxWarning: invalid escape sequence '\/'
+  process_regions_hettraining_script = (
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:184: SyntaxWarning: invalid escape sequence '\/'
+  workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:222: SyntaxWarning: invalid escape sequence '\/'
+  sample2=lambda wildcards: split_sample(wildcards)[1],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:223: SyntaxWarning: invalid escape sequence '\/'
+  input:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  shell:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  shell:
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count
+---------  -------
+benchmark        3
+total            3
+
+Select jobs to execute...
+Execute 3 jobs...
+
+[Sun May 26 16:07:25 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/JUT-008_MUN-009.pdf
+    log: logs/JUT-008_MUN-009/bench.log
+    jobid: 29
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/JUT-008_MUN-009.pdf
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r JUT-008 MUN-009 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+
+[Sun May 26 16:07:27 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/A2_A3.pdf
+    log: logs/A2_A3/bench.log
+    jobid: 36
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/A2_A3.pdf
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r A2 A3 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+
+[Sun May 26 16:07:27 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/AKA-017_GIM-024.pdf
+    log: logs/AKA-017_GIM-024/bench.log
+    jobid: 22
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L_2R_plots/freqplt/AKA-017_GIM-024.pdf
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r AKA-017 GIM-024 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: stats4
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: BiocGenerics
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: S4Vectors
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+Loading required package: IRanges
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+Loading required package: lattice
+Loading required package: lattice
+Loading required package: lattice
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+
+Attaching package: ‘caret’
+
+[1]
+Attaching package: ‘caret’
+
+ "AKA-017"                                                         
+[2] "GIM-024"                                                         
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_regressor_filter"                                       
+[5] "TEforest_classifier_filter"                                      
+[6] "2L_2R_plots"                                                     
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1][1] "A2"                                                              
+ "JUT-008"                                                         [2]
+ "A3"                                                              [2]
+ "MUN-009"                                                         [3]
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+ "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"[4]
+ "TEforest_regressor_filter"                                       [4]
+ "TEforest_regressor_filter"                                       [5]
+ "TEforest_classifier_filter"                                      [5]
+ "TEforest_classifier_filter"                                      [6]
+ "2L_2R_plots"                                                     [6]
+ "2L_2R_plots"                                                     
+Warning message:
+In dir.create(destination_folder) :
+  '/nas/longleaf/home/adaigle/work/mcclintock_stuff/synthetic_hets_mcclintock/A2A3_1/results/newest_variant_regress' already exists
+[1] TRUE
+[1] TRUE
+[1] TRUE
+Warning message:
+In dir.create(destination_folder) :
+  '/nas/longleaf/home/adaigle/work/mcclintock_stuff/synthetic_hets_mcclintock/A2A3_1/results/newest_variant_regress_bps' already exists
+Warning message:
+In dir.create(destination_folder) :
+  '/nas/longleaf/home/adaigle/work/mcclintock_stuff/synthetic_hets_mcclintock/A2A3_1/results/newest_variant_regress_bps' already exists
+[1] TRUE
+[1] TRUE
+Warning message:
+In dir.create(destination_folder) :
+  '/nas/longleaf/home/adaigle/work/mcclintock_stuff/synthetic_hets_mcclintock/A2A3_1/results/newest_variant_class' already exists
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+Warning message:
+In dir.create(destination_folder) :
+  '/nas/longleaf/home/adaigle/work/mcclintock_stuff/synthetic_hets_mcclintock/A2A3_1/results/newest_variant_class_bps' already exists
+Warning message:
+In dir.create(destination_folder) :
+  '/nas/longleaf/home/adaigle/work/mcclintock_stuff/synthetic_hets_mcclintock/A2A3_1/results/newest_variant_class_bps' already exists
+[1] TRUE
+[1] TRUE
+[1] TRUE
+Warning messages:
+1: In rbind(...) :
+  number of columns of result is not a multiple of vector length (arg 1)
+2: In rbind(...) :
+  number of columns of result is not a multiple of vector length (arg 1)
+Warning messages:
+1: In rbind(...) :
+  number of columns of result is not a multiple of vector length (arg 1)
+2: In rbind(...) :
+  number of columns of result is not a multiple of vector length (arg 1)
+Warning messages:
+1: In rbind(...) :
+  number of columns of result is not a multiple of vector length (arg 1)
+2: In rbind(...) :
+  number of columns of result is not a multiple of vector length (arg 1)
+Error in `mutate()`:
+ℹ In argument: `conf_matrix_summary = map(conf_matrix,
+  ~confusionMatrix(.x))`.
+Caused by error in `map()`:
+ℹ In index: 15.
+Caused by error in `mcnemar.test()`:
+! all entries of 'x' must be nonnegative and finite
+Backtrace:
+     ▆
+  1. ├─... %>% ...
+  2. ├─dplyr::mutate(...)
+  3. ├─dplyr:::mutate.data.frame(...)
+  4. │ └─dplyr:::mutate_cols(.data, dplyr_quosures(...), by)
+  5. │   ├─base::withCallingHandlers(...)
+  6. │   └─dplyr:::mutate_col(dots[[i]], data, mask, new_columns)
+  7. │     └─mask$eval_all_mutate(quo)
+  8. │       └─dplyr (local) eval()
+  9. ├─purrr::map(conf_matrix, ~confusionMatrix(.x))
+ 10. │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
+ 11. │   ├─purrr:::with_indexed_errors(...)
+ 12. │   │ └─base::withCallingHandlers(...)
+ 13. │   ├─purrr:::call_with_cleanup(...)
+ 14. │   └─.f(.x[[i]], ...)
+ 15. │     ├─caret::confusionMatrix(.x)
+ 16. │     └─caret:::confusionMatrix.matrix(.x)
+ 17. │       ├─caret::confusionMatrix(...)
+ 18. │       └─caret:::confusionMatrix.table(...)
+ 19. │         └─stats::mcnemar.test(data)
+ 20. │           └─base::stop("all entries of 'x' must be nonnegative and finite")
+ 21. └─base::.handleSimpleError(...)
+ 22.   └─purrr (local) h(simpleError(msg, call))
+ 23.     └─cli::cli_abort(...)
+ 24.       └─rlang::abort(...)
+Execution halted
+[Sun May 26 16:13:52 2024]
+Error in rule benchmark:
+    jobid: 29
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/JUT-008_MUN-009.pdf
+    log: logs/JUT-008_MUN-009/bench.log (check log file(s) for error details)
+    shell:
+        /nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r JUT-008 MUN-009 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+Logfile logs/JUT-008_MUN-009/bench.log not found.
+
+Error in `mutate()`:
+ℹ In argument: `conf_matrix_summary = map(conf_matrix,
+  ~confusionMatrix(.x))`.
+Caused by error in `map()`:
+ℹ In index: 15.
+Caused by error in `mcnemar.test()`:
+! all entries of 'x' must be nonnegative and finite
+Backtrace:
+     ▆
+  1. ├─... %>% ...
+  2. ├─dplyr::mutate(...)
+  3. ├─dplyr:::mutate.data.frame(...)
+  4. │ └─dplyr:::mutate_cols(.data, dplyr_quosures(...), by)
+  5. │   ├─base::withCallingHandlers(...)
+  6. │   └─dplyr:::mutate_col(dots[[i]], data, mask, new_columns)
+  7. │     └─mask$eval_all_mutate(quo)
+  8. │       └─dplyr (local) eval()
+  9. ├─purrr::map(conf_matrix, ~confusionMatrix(.x))
+ 10. │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
+ 11. │   ├─purrr:::with_indexed_errors(...)
+ 12. │   │ └─base::withCallingHandlers(...)
+ 13. │   ├─purrr:::call_with_cleanup(...)
+ 14. │   └─.f(.x[[i]], ...)
+ 15. │     ├─caret::confusionMatrix(.x)
+ 16. │     └─caret:::confusionMatrix.matrix(.x)
+ 17. │       ├─caret::confusionMatrix(...)
+ 18. │       └─caret:::confusionMatrix.table(...)
+ 19. │         └─stats::mcnemar.test(data)
+ 20. │           └─base::stop("all entries of 'x' must be nonnegative and finite")
+ 21. └─base::.handleSimpleError(...)
+ 22.   └─purrr (local) h(simpleError(msg, call))
+ 23.     └─cli::cli_abort(...)
+ 24.       └─rlang::abort(...)
+Execution halted
+[Sun May 26 16:13:54 2024]
+Error in rule benchmark:
+    jobid: 36
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/A2_A3.pdf
+    log: logs/A2_A3/bench.log (check log file(s) for error details)
+    shell:
+        /nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r A2 A3 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+Logfile logs/A2_A3/bench.log not found.
+
+Error in `mutate()`:
+ℹ In argument: `conf_matrix_summary = map(conf_matrix,
+  ~confusionMatrix(.x))`.
+Caused by error in `map()`:
+ℹ In index: 15.
+Caused by error in `mcnemar.test()`:
+! all entries of 'x' must be nonnegative and finite
+Backtrace:
+     ▆
+  1. ├─... %>% ...
+  2. ├─dplyr::mutate(...)
+  3. ├─dplyr:::mutate.data.frame(...)
+  4. │ └─dplyr:::mutate_cols(.data, dplyr_quosures(...), by)
+  5. │   ├─base::withCallingHandlers(...)
+  6. │   └─dplyr:::mutate_col(dots[[i]], data, mask, new_columns)
+  7. │     └─mask$eval_all_mutate(quo)
+  8. │       └─dplyr (local) eval()
+  9. ├─purrr::map(conf_matrix, ~confusionMatrix(.x))
+ 10. │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
+ 11. │   ├─purrr:::with_indexed_errors(...)
+ 12. │   │ └─base::withCallingHandlers(...)
+ 13. │   ├─purrr:::call_with_cleanup(...)
+ 14. │   └─.f(.x[[i]], ...)
+ 15. │     ├─caret::confusionMatrix(.x)
+ 16. │     └─caret:::confusionMatrix.matrix(.x)
+ 17. │       ├─caret::confusionMatrix(...)
+ 18. │       └─caret:::confusionMatrix.table(...)
+ 19. │         └─stats::mcnemar.test(data)
+ 20. │           └─base::stop("all entries of 'x' must be nonnegative and finite")
+ 21. └─base::.handleSimpleError(...)
+ 22.   └─purrr (local) h(simpleError(msg, call))
+ 23.     └─cli::cli_abort(...)
+ 24.       └─rlang::abort(...)
+Execution halted
+[Sun May 26 16:13:58 2024]
+Error in rule benchmark:
+    jobid: 22
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/AKA-017_GIM-024.pdf
+    log: logs/AKA-017_GIM-024/bench.log (check log file(s) for error details)
+    shell:
+        /nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r AKA-017 GIM-024 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+Logfile logs/AKA-017_GIM-024/bench.log not found.
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-05-26T160725.398984.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

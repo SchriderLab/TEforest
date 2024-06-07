@@ -1,0 +1,2288 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:183: SyntaxWarning: invalid escape sequence '\/'
+  process_regions_hettraining_script = (
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:184: SyntaxWarning: invalid escape sequence '\/'
+  workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:222: SyntaxWarning: invalid escape sequence '\/'
+  sample1=lambda wildcards: split_sample(wildcards)[0],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:223: SyntaxWarning: invalid escape sequence '\/'
+  sample2=lambda wildcards: split_sample(wildcards)[1],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  threads: config["threads"]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  threads: config["threads"]
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                                count
+-------------------------------  -------
+benchmark                              3
+find_breakpoints_het                   3
+find_breakpoints_het_classifier        3
+total                                  9
+
+Select jobs to execute...
+Execute 6 jobs...
+
+[Fri May 31 15:59:41 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/JUT-008_MUN-009.csv, 3L3RX/JUT-008_MUN-009.csv, 2L2R_reference/JUT-008_MUN-009.csv, 3L3RX_reference/JUT-008_MUN-009.csv
+    output: 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 3L3RX_model_validation_output/JUT-008_MUN-009_TEforest_bps_nonredundant.bed
+    log: logs/JUT-008_MUN-009/find_breakpoints.log
+    jobid: 56
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 2L2R/JUT-008_MUN-009.csv 2L2R_model_validation_output/ aligned_het/ 2L2R_reference/JUT-008_MUN-009.csv; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 3L3RX/JUT-008_MUN-009.csv 3L3RX_model_validation_output/ aligned_het/ 3L3RX_reference/JUT-008_MUN-009.csv
+
+[Fri May 31 15:59:42 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/A2_A3.csv, 3L3RX_classifer/A2_A3.csv, 2L2R_classifer_reference/A2_A3.csv, 3L3RX_classifer_reference/A2_A3.csv
+    output: 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/A2_A3_TEforest_bps_nonredundant.bed
+    log: logs/A2_A3/find_breakpoints.log
+    jobid: 33
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 2L2R_classifer/A2_A3.csv 2L2R_model_validation_output_classifier/ aligned_het/ 2L2R_classifer_reference/A2_A3.csv; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 3L3RX_classifer/A2_A3.csv 3L3RX_model_validation_output_classifier/ aligned_het/ 3L3RX_classifer_reference/A2_A3.csv
+
+[Fri May 31 15:59:43 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/AKA-017_GIM-024.csv, 3L3RX_classifer/AKA-017_GIM-024.csv, 2L2R_classifer_reference/AKA-017_GIM-024.csv, 3L3RX_classifer_reference/AKA-017_GIM-024.csv
+    output: 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/AKA-017_GIM-024_TEforest_bps_nonredundant.bed
+    log: logs/AKA-017_GIM-024/find_breakpoints.log
+    jobid: 44
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 2L2R_classifer/AKA-017_GIM-024.csv 2L2R_model_validation_output_classifier/ aligned_het/ 2L2R_classifer_reference/AKA-017_GIM-024.csv; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 3L3RX_classifer/AKA-017_GIM-024.csv 3L3RX_model_validation_output_classifier/ aligned_het/ 3L3RX_classifer_reference/AKA-017_GIM-024.csv
+
+[Fri May 31 15:59:43 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/JUT-008_MUN-009.csv, 3L3RX_classifer/JUT-008_MUN-009.csv, 2L2R_classifer_reference/JUT-008_MUN-009.csv, 3L3RX_classifer_reference/JUT-008_MUN-009.csv
+    output: 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/JUT-008_MUN-009_TEforest_bps_nonredundant.bed
+    log: logs/JUT-008_MUN-009/find_breakpoints.log
+    jobid: 49
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 2L2R_classifer/JUT-008_MUN-009.csv 2L2R_model_validation_output_classifier/ aligned_het/ 2L2R_classifer_reference/JUT-008_MUN-009.csv; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 3L3RX_classifer/JUT-008_MUN-009.csv 3L3RX_model_validation_output_classifier/ aligned_het/ 3L3RX_classifer_reference/JUT-008_MUN-009.csv
+
+[Fri May 31 15:59:43 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/A2_A3.csv, 3L3RX/A2_A3.csv, 2L2R_reference/A2_A3.csv, 3L3RX_reference/A2_A3.csv
+    output: 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output/A2_A3_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/A2_A3_TEforest_nonredundant.bed, 3L3RX_model_validation_output/A2_A3_TEforest_bps_nonredundant.bed
+    log: logs/A2_A3/find_breakpoints.log
+    jobid: 1
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 2L2R/A2_A3.csv 2L2R_model_validation_output/ aligned_het/ 2L2R_reference/A2_A3.csv; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 3L3RX/A2_A3.csv 3L3RX_model_validation_output/ aligned_het/ 3L3RX_reference/A2_A3.csv
+
+[Fri May 31 15:59:43 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/AKA-017_GIM-024.csv, 3L3RX/AKA-017_GIM-024.csv, 2L2R_reference/AKA-017_GIM-024.csv, 3L3RX_reference/AKA-017_GIM-024.csv
+    output: 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 3L3RX_model_validation_output/AKA-017_GIM-024_TEforest_bps_nonredundant.bed
+    log: logs/AKA-017_GIM-024/find_breakpoints.log
+    jobid: 39
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 2L2R/AKA-017_GIM-024.csv 2L2R_model_validation_output/ aligned_het/ 2L2R_reference/AKA-017_GIM-024.csv; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 3L3RX/AKA-017_GIM-024.csv 3L3RX_model_validation_output/ aligned_het/ 3L3RX_reference/AKA-017_GIM-024.csv
+Loading required package: stats4
+Loading required package: stats4
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: BiocGenerics
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: BiocGenerics
+Loading required package: S4Vectors
+Loading required package: S4Vectors
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: SummarizedExperiment
+Loading required package: SummarizedExperiment
+Loading required package: SummarizedExperiment
+Loading required package: SummarizedExperiment
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: MatrixGenerics
+Loading required package: MatrixGenerics
+Loading required package: MatrixGenerics
+Loading required package: MatrixGenerics
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+Loading required package: matrixStats
+Loading required package: matrixStats
+Loading required package: matrixStats
+Loading required package: matrixStats
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+
+Attaching package: ‘MatrixGenerics’
+
+
+Attaching package: ‘MatrixGenerics’
+
+
+Attaching package: ‘MatrixGenerics’
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Loading required package: Biobase
+Loading required package: Biobase
+Loading required package: Biobase
+Loading required package: Biobase
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+Loading required package: Biostrings
+Loading required package: Biostrings
+Loading required package: XVector
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+Loading required package: Biostrings
+Loading required package: Biostrings
+Loading required package: XVector
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+Loading required package: Rsamtools
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+Loading required package: Rsamtools
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "A2_A3"                         "2L2R/A2_A3.csv"               
+[3] "2L2R_model_validation_output/" "aligned_het/"                 
+[5] "2L2R_reference/A2_A3.csv"     
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R/A2_A3.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_reference/A2_A3.csv"
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "A2_A3"                                   
+[2] "2L2R_classifer/A2_A3.csv"                
+[3] "2L2R_model_validation_output_classifier/"
+[4] "aligned_het/"                            
+[5] "2L2R_classifer_reference/A2_A3.csv"      
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_classifer/A2_A3.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_classifer_reference/A2_A3.csv"
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "AKA-017_GIM-024"                    "2L2R/AKA-017_GIM-024.csv"          
+[3] "2L2R_model_validation_output/"      "aligned_het/"                      
+[5] "2L2R_reference/AKA-017_GIM-024.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R/AKA-017_GIM-024.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_reference/AKA-017_GIM-024.csv"
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "AKA-017_GIM-024"                             
+[2] "2L2R_classifer/AKA-017_GIM-024.csv"          
+[3] "2L2R_model_validation_output_classifier/"    
+[4] "aligned_het/"                                
+[5] "2L2R_classifer_reference/AKA-017_GIM-024.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_classifer/AKA-017_GIM-024.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_classifer_reference/AKA-017_GIM-024.csv"
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "JUT-008_MUN-009"                             
+[2] "2L2R_classifer/JUT-008_MUN-009.csv"          
+[3] "2L2R_model_validation_output_classifier/"    
+[4] "aligned_het/"                                
+[5] "2L2R_classifer_reference/JUT-008_MUN-009.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_classifer/JUT-008_MUN-009.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_classifer_reference/JUT-008_MUN-009.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output_classifier' already exists
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output' already exists
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "JUT-008_MUN-009"                    "2L2R/JUT-008_MUN-009.csv"          
+[3] "2L2R_model_validation_output/"      "aligned_het/"                      
+[5] "2L2R_reference/JUT-008_MUN-009.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R/JUT-008_MUN-009.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_reference/JUT-008_MUN-009.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output' already exists
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output_classifier' already exists
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output_classifier' already exists
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '2L2R_model_validation_output' already exists
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+[1] "breakpoint finding complete!"
+[1] "breakpoint finding complete!"
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "AKA-017_GIM-024"                              
+[2] "3L3RX_classifer/AKA-017_GIM-024.csv"          
+[3] "3L3RX_model_validation_output_classifier/"    
+[4] "aligned_het/"                                 
+[5] "3L3RX_classifer_reference/AKA-017_GIM-024.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_classifer/AKA-017_GIM-024.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_classifer_reference/AKA-017_GIM-024.csv"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output_classifier' already exists
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Loading required package: GenomeInfoDb
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "A2_A3"                                    
+[2] "3L3RX_classifer/A2_A3.csv"                
+[3] "3L3RX_model_validation_output_classifier/"
+[4] "aligned_het/"                             
+[5] "3L3RX_classifer_reference/A2_A3.csv"      
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_classifer/A2_A3.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_classifer_reference/A2_A3.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output_classifier' already exists
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "JUT-008_MUN-009"                              
+[2] "3L3RX_classifer/JUT-008_MUN-009.csv"          
+[3] "3L3RX_model_validation_output_classifier/"    
+[4] "aligned_het/"                                 
+[5] "3L3RX_classifer_reference/JUT-008_MUN-009.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_classifer/JUT-008_MUN-009.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_classifer_reference/JUT-008_MUN-009.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output_classifier' already exists
+[1] "breakpoint finding complete!"
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Fri May 31 16:01:02 2024]
+Finished job 44.
+1 of 9 steps (11%) done
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "A2_A3"                          "3L3RX/A2_A3.csv"               
+[3] "3L3RX_model_validation_output/" "aligned_het/"                  
+[5] "3L3RX_reference/A2_A3.csv"     
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX/A2_A3.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_reference/A2_A3.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output' already exists
+[1] "breakpoint finding complete!"
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Fri May 31 16:01:16 2024]
+Finished job 49.
+2 of 9 steps (22%) done
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Fri May 31 16:01:17 2024]
+Finished job 33.
+3 of 9 steps (33%) done
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+[1] "breakpoint finding complete!"
+Loading required package: GenomeInfoDb
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+[1] "breakpoint finding complete!"
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "AKA-017_GIM-024"                     "3L3RX/AKA-017_GIM-024.csv"          
+[3] "3L3RX_model_validation_output/"      "aligned_het/"                       
+[5] "3L3RX_reference/AKA-017_GIM-024.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX/AKA-017_GIM-024.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_reference/AKA-017_GIM-024.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output' already exists
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Fri May 31 16:01:52 2024]
+Finished job 1.
+4 of 9 steps (44%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri May 31 16:01:52 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/A2_A3.pdf
+    log: logs/A2_A3/bench.log
+    jobid: 0
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed
+    wildcards: sample=A2_A3
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r A2 A3 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: lattice
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ lubridate::%within%() masks IRanges::%within%()
+✖ dplyr::collapse()     masks IRanges::collapse()
+✖ dplyr::combine()      masks BiocGenerics::combine()
+✖ dplyr::desc()         masks IRanges::desc()
+✖ tidyr::expand()       masks S4Vectors::expand()
+✖ dplyr::filter()       masks stats::filter()
+✖ dplyr::first()        masks S4Vectors::first()
+✖ dplyr::lag()          masks stats::lag()
+✖ ggplot2::Position()   masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()       masks GenomicRanges::reduce(), IRanges::reduce()
+✖ dplyr::rename()       masks S4Vectors::rename()
+✖ lubridate::second()   masks S4Vectors::second()
+✖ lubridate::second<-() masks S4Vectors::second<-()
+✖ dplyr::slice()        masks IRanges::slice()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "A2"                                                              
+[2] "A3"                                                              
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_regressor_filter"                                       
+[5] "TEforest_classifier_filter"                                      
+[6] "2L_2R_plots"                                                     
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+
+Attaching package: ‘GenomicAlignments’
+
+The following object is masked from ‘package:dplyr’:
+
+    last
+
+[1] "JUT-008_MUN-009"                     "3L3RX/JUT-008_MUN-009.csv"          
+[3] "3L3RX_model_validation_output/"      "aligned_het/"                       
+[5] "3L3RX_reference/JUT-008_MUN-009.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX/JUT-008_MUN-009.csv"
+[1] "/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_reference/JUT-008_MUN-009.csv"
+[[1]]
+NULL
+
+Warning message:
+In dir.create(file.path(results_path)) :
+  '3L3RX_model_validation_output' already exists
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Fri May 31 16:02:59 2024]
+Finished job 39.
+5 of 9 steps (56%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri May 31 16:02:59 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/AKA-017_GIM-024.pdf
+    log: logs/AKA-017_GIM-024/bench.log
+    jobid: 38
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r AKA-017 GIM-024 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+Loading required package: lattice
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "AKA-017"                                                         
+[2] "GIM-024"                                                         
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_regressor_filter"                                       
+[5] "TEforest_classifier_filter"                                      
+[6] "2L_2R_plots"                                                     
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] "breakpoint finding complete!"
+[[1]]
+NULL
+
+There were 50 or more warnings (use warnings() to see the first 50)
+[Fri May 31 16:03:14 2024]
+Finished job 56.
+6 of 9 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri May 31 16:03:14 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/JUT-008_MUN-009.pdf
+    log: logs/JUT-008_MUN-009/bench.log
+    jobid: 59
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=/tmp
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r JUT-008 MUN-009 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following object is masked from ‘package:utils’:
+
+    findMatches
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+Loading required package: lattice
+
+Attaching package: ‘caret’
+
+The following object is masked from ‘package:purrr’:
+
+    lift
+
+[1] "JUT-008"                                                         
+[2] "MUN-009"                                                         
+[3] "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+[4] "TEforest_regressor_filter"                                       
+[5] "TEforest_classifier_filter"                                      
+[6] "2L_2R_plots"                                                     
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+             TRUE              TRUE              TRUE              TRUE 
+    freqpltnozero           freqplt 
+             TRUE             FALSE 
+Warning message:
+In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[1] "A2A3 done!"
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+            FALSE             FALSE             FALSE             FALSE 
+    freqpltnozero           freqplt 
+            FALSE             FALSE 
+Warning messages:
+1: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/performance_plots' already exists
+2: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/breakpoints_plots' already exists
+3: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/hetplt' already exists
+4: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/homoplt' already exists
+5: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/freqpltnozero' already exists
+6: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Warning messages:
+1: Removed 1 rows containing missing values (`geom_bar()`). 
+2: Removed 1 rows containing missing values (`geom_text()`). 
+[1] "AKA-017GIM-024 done!"
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Warning messages:
+1: Removed 9 rows containing missing values (`geom_bar()`). 
+2: Removed 9 rows containing missing values (`geom_text()`). 
+Saving 14 x 7 in image
+Warning messages:
+1: Removed 3 rows containing missing values (`geom_bar()`). 
+2: Removed 3 rows containing missing values (`geom_text()`). 
+[Fri May 31 16:10:54 2024]
+Finished job 0.
+7 of 9 steps (78%) done
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Warning messages:
+1: Removed 15 rows containing missing values (`geom_bar()`). 
+2: Removed 15 rows containing missing values (`geom_text()`). 
+Saving 14 x 7 in image
+Warning message:
+The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead. 
+performance_plots breakpoints_plots            hetplt           homoplt 
+            FALSE             FALSE             FALSE             FALSE 
+    freqpltnozero           freqplt 
+            FALSE             FALSE 
+Warning messages:
+1: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/performance_plots' already exists
+2: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/breakpoints_plots' already exists
+3: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/hetplt' already exists
+4: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/homoplt' already exists
+5: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/freqpltnozero' already exists
+6: In dir.create(paste0(plt_dir, "/", dir, "/")) :
+  '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots/freqplt' already exists
+Saving 14 x 7 in image
+Warning messages:
+1: Removed 11 rows containing missing values (`geom_bar()`). 
+2: Removed 11 rows containing missing values (`geom_text()`). 
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+[Fri May 31 16:10:57 2024]
+Finished job 38.
+8 of 9 steps (89%) done
+[1] "JUT-008MUN-009 done!"
+Saving 14 x 7 in image
+Saving 14 x 7 in image
+Warning messages:
+1: Removed 27 rows containing missing values (`geom_bar()`). 
+2: Removed 27 rows containing missing values (`geom_text()`). 
+Saving 14 x 7 in image
+Warning messages:
+1: Removed 23 rows containing missing values (`geom_bar()`). 
+2: Removed 23 rows containing missing values (`geom_text()`). 
+[Fri May 31 16:13:41 2024]
+Finished job 59.
+9 of 9 steps (100%) done
+Complete log: .snakemake/log/2024-05-31T155940.991217.snakemake.log

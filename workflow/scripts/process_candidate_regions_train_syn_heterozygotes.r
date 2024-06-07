@@ -91,6 +91,48 @@ nonreference_genome_truth <- truth %>% select(seqnames, start, end, ID, length, 
 heterozygosity_2R3R_onlyhets <- truth %>% filter(heterozygosity==0.5) %>% select(seqnames, start, end, ID, length, strand, TE)
 heterozygosity_2R3R_nohets <- truth %>% filter(heterozygosity==1.0) %>% select(seqnames, start, end, ID, length, strand, TE)
 
+# working on defining true and false positives for TEs in the reference genome.
+ISO1_og_gr <- GRanges(
+    seqnames = ISO1_og$V1,
+    ranges = IRanges(start = ISO1_og$V2, end = ISO1_og$V3),
+    mcols=ISO1_og$V7
+    )
+
+
+ref_IDs <- ISO1_og$V4
+nonreference_genome1_truth
+genome1_reference_TPs <- nonreference_genome1_truth %>% filter(ID %in% ref_IDs)
+genome1_reference_TNs <- nonreference_genome1_truth %>% filter(!(ID %in% ref_IDs))
+genome2_reference_TPs <- nonreference_genome2_truth %>% filter(ID %in% ref_IDs)
+genome2_reference_TNs <- nonreference_genome2_truth %>% filter(!(ID %in% ref_IDs))
+
+reference_df <- ISO1_og
+reference_df$ID <- ISO1_og$V4
+reference_df$V4 <- NULL
+reference_df$heterozygosity <- 0
+
+reference_df_R <- reference_df  %>% filter(V1 %in% c("2R","3R"))
+reference_df_notR <- reference_df  %>% filter(!(V1 %in% c("2R","3R")))
+
+reference_df_R_genome1 <- reference_df_R %>%
+  mutate(heterozygosity = heterozygosity + ifelse(ID %in% nonreference_genome1_truth$ID, 1, 0))
+
+reference_df_R_genome2 <- reference_df_R %>%
+  mutate(heterozygosity = heterozygosity + ifelse(ID %in% nonreference_genome2_truth$ID, 1, 0))
+
+reference_df_R$heterozygosity <- reference_df_R_genome1$heterozygosity + reference_df_R_genome2$heterozygosity
+
+reference_df_notR <- reference_df_notR %>%
+  mutate(heterozygosity = heterozygosity + ifelse(ID %in% nonreference_genome1_truth$ID, 2, 0))
+
+reference_df_labled <- rbind(reference_df_notR, reference_df_R) %>% arrange(V1) %>%
+  rename(Chrom = V1, Ref_begin = V2, Ref_end = V3, TE= V7, Class=heterozygosity) %>%
+  #expand candidate region 50 bp, convert from 1-based to 0-based
+  mutate(Sample = combine_id, Ref_begin = Ref_begin - 51, Ref_end = Ref_end + 50) %>% 
+  select(Sample, Chrom, Ref_begin, Ref_end, Class, TE)
+
+
+
 #functions
 confusion_matrix_plus  <- function(calls_Granges_file, truth_Granges_file) {
     # Plots a confusion matrix, creates the matches file for you. 
@@ -170,11 +212,7 @@ print("mapping results loaded")
 
 
 #ISO1_filtered <- read.table("/nas/longleaf/home/adaigle/Rech_updated_supplemental/DeNovoCoordinates/ISO1.bed")
-ISO1_og_gr <- GRanges(
-    seqnames = ISO1_og$V1,
-    ranges = IRanges(start = ISO1_og$V2, end = ISO1_og$V3),
-    mcols=ISO1_og$V7
-    )
+
 
 #family specific reference TEs
 
@@ -336,7 +374,8 @@ fp_df <- false_positives %>%
 
 featvec_csv <- rbind(tp_df_het, tp_df_nohet, fp_df)
 write.csv(featvec_csv, file = paste0(featvec_csv_path, "/", combine_id, ".csv"), quote = FALSE, row.names = FALSE)
-print(paste(combine_id, "csv written!"))
+write.csv(reference_df_labled, file = paste0(featvec_csv_path, "/", combine_id, "_reference.csv"), quote = FALSE, row.names = FALSE)
+print(paste(combine_id, "csvs written!"))
 
 
 #telabel_df <- rbind(as.data.frame(true_positives), as.data.frame(false_positives)) %>%

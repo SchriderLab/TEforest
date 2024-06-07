@@ -1,0 +1,184 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:183: SyntaxWarning: invalid escape sequence '\/'
+  process_regions_hettraining_script = (
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:184: SyntaxWarning: invalid escape sequence '\/'
+  workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:222: SyntaxWarning: invalid escape sequence '\/'
+  sample1=lambda wildcards: split_sample(wildcards)[0],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:223: SyntaxWarning: invalid escape sequence '\/'
+  sample2=lambda wildcards: split_sample(wildcards)[1],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  threads: config["threads"]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  threads: config["threads"]
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                                    count
+-----------------------------------  -------
+train_validate_classifier_reference        3
+train_validate_reference                   3
+total                                      6
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed May 29 14:08:42 2024]
+localrule train_validate_reference:
+    input: 2L2R_reference/JUT-008_MUN-009.txt, 3L3RX_reference/JUT-008_MUN-009.txt, all_ref_samples_organized.txt
+    output: 2L2R_reference/JUT-008_MUN-009.txt_2, 3L3RX_reference/JUT-008_MUN-009.txt_2
+    jobid: 23
+    reason: Missing output files: 2L2R_reference/JUT-008_MUN-009.txt_2
+    wildcards: sample=JUT-008_MUN-009
+    threads: 32
+    resources: tmpdir=/tmp
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes_reference.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s JUT-008_MUN-009 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2
+/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het_reference/A2_A3 /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het_reference/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het_reference/JUT-008_MUN-009
+File /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_reference/svrf_all.pkl does not exist. Continuing script.
+Condensing data:   0%|          | 0/2214 [00:00<?, ?it/s]Condensing data:   9%|▉         | 197/2214 [00:00<00:01, 1962.70it/s]Condensing data:  18%|█▊        | 395/2214 [00:00<00:00, 1967.72it/s]Condensing data:  27%|██▋       | 592/2214 [00:00<00:00, 1966.00it/s]Condensing data:  36%|███▌      | 789/2214 [00:00<00:00, 1955.33it/s]Condensing data:  44%|████▍     | 985/2214 [00:00<00:00, 1941.03it/s]Condensing data:  53%|█████▎    | 1180/2214 [00:00<00:00, 1919.99it/s]Condensing data:  62%|██████▏   | 1373/2214 [00:00<00:00, 1908.74it/s]Condensing data:  71%|███████   | 1564/2214 [00:00<00:00, 1815.32it/s]Condensing data:  79%|███████▉  | 1751/2214 [00:00<00:00, 1830.09it/s]Condensing data:  87%|████████▋ | 1936/2214 [00:01<00:00, 1836.01it/s]Condensing data:  96%|█████████▌| 2121/2214 [00:01<00:00, 1838.20it/s]Condensing data: 100%|██████████| 2214/2214 [00:01<00:00, 1880.19it/s]
+Condensing data:   0%|          | 0/4449 [00:00<?, ?it/s]Condensing data:   4%|▍         | 182/4449 [00:00<00:02, 1818.22it/s]Condensing data:   8%|▊         | 377/4449 [00:00<00:02, 1891.41it/s]Condensing data:  13%|█▎        | 572/4449 [00:00<00:02, 1913.76it/s]Condensing data:  17%|█▋        | 768/4449 [00:00<00:01, 1929.84it/s]Condensing data:  22%|██▏       | 961/4449 [00:00<00:01, 1897.88it/s]Condensing data:  26%|██▌       | 1151/4449 [00:00<00:01, 1871.33it/s]Condensing data:  30%|███       | 1339/4449 [00:00<00:01, 1863.80it/s]Condensing data:  35%|███▍      | 1542/4449 [00:00<00:01, 1914.71it/s]Condensing data:  39%|███▉      | 1734/4449 [00:00<00:01, 1892.06it/s]Condensing data:  44%|████▎     | 1944/4449 [00:01<00:01, 1954.76it/s]Condensing data:  48%|████▊     | 2150/4449 [00:01<00:01, 1984.81it/s]Condensing data:  53%|█████▎    | 2349/4449 [00:01<00:01, 1944.89it/s]Condensing data:  57%|█████▋    | 2544/4449 [00:01<00:01, 1649.14it/s]Condensing data:  61%|██████    | 2717/4449 [00:01<00:01, 1625.14it/s]Condensing data:  65%|██████▌   | 2913/4449 [00:01<00:00, 1714.59it/s]Condensing data:  70%|██████▉   | 3107/4449 [00:01<00:00, 1776.08it/s]Condensing data:  74%|███████▍  | 3307/4449 [00:01<00:00, 1837.47it/s]Condensing data:  79%|███████▊  | 3501/4449 [00:01<00:00, 1866.28it/s]Condensing data:  83%|████████▎ | 3690/4449 [00:02<00:00, 1836.10it/s]Condensing data:  87%|████████▋ | 3882/4449 [00:02<00:00, 1859.99it/s]Condensing data:  91%|█████████▏| 4070/4449 [00:02<00:00, 1839.91it/s]Condensing data:  96%|█████████▌| 4259/4449 [00:02<00:00, 1853.82it/s]Condensing data: 100%|██████████| 4449/4449 [00:02<00:00, 1864.94it/s]Condensing data: 100%|██████████| 4449/4449 [00:02<00:00, 1847.21it/s]
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[info] Loading data
+{'data': [], 'labs': [], 'files': []}
+  0%|          | 0/2214 [00:00<?, ?it/s] 39%|███▉      | 868/2214 [00:00<00:00, 8679.76it/s] 85%|████████▌ | 1885/2214 [00:00<00:00, 9552.50it/s]100%|██████████| 2214/2214 [00:00<00:00, 9465.42it/s]
+[info] Data loaded
+Size of samps 3
+2214 samples found.
+
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 294, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 285, in main
+    y_test, preds = all_runner(data_dict, class_labs, ap.outdir)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 225, in all_runner
+    rf = train_rf_regressor(X_train_arr, y_train, "all", outdir)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 91, in train_rf_regressor
+    clf.fit(X_train, y_train)
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 1151, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 348, in fit
+    X, y = self._validate_data(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 621, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 1147, in check_X_y
+    X = check_array(
+        ^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 917, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/_array_api.py", line 380, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2103,) + inhomogeneous part.
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[info] Loading data
+{'data': [], 'labs': [], 'files': []}
+  0%|          | 0/4449 [00:00<?, ?it/s] 17%|█▋        | 743/4449 [00:00<00:00, 7423.95it/s] 37%|███▋      | 1642/4449 [00:00<00:00, 8340.67it/s] 56%|█████▌    | 2493/4449 [00:00<00:00, 8417.47it/s] 75%|███████▍  | 3335/4449 [00:00<00:00, 8302.81it/s] 94%|█████████▎| 4166/4449 [00:00<00:00, 7998.47it/s]100%|██████████| 4449/4449 [00:00<00:00, 8060.59it/s]
+[info] Data loaded
+Size of samps 3
+4449 samples found.
+
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 294, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 285, in main
+    y_test, preds = all_runner(data_dict, class_labs, ap.outdir)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 225, in all_runner
+    rf = train_rf_regressor(X_train_arr, y_train, "all", outdir)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py", line 91, in train_rf_regressor
+    clf.fit(X_train, y_train)
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 1151, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/ensemble/_forest.py", line 348, in fit
+    X, y = self._validate_data(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/base.py", line 621, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 1147, in check_X_y
+    X = check_array(
+        ^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/validation.py", line 917, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/sklearn/utils/_array_api.py", line 380, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (4226,) + inhomogeneous part.
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 117, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 59, in main
+    with open(ap.model, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R_reference/svrf_all.pkl'
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+Traceback (most recent call last):
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 117, in <module>
+    main()
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py", line 59, in main
+    with open(ap.model, "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_reference/svrf_all.pkl'
+[Wed May 29 14:08:55 2024]
+Error in rule train_validate_reference:
+    jobid: 23
+    input: 2L2R_reference/JUT-008_MUN-009.txt, 3L3RX_reference/JUT-008_MUN-009.txt, all_ref_samples_organized.txt
+    output: 2L2R_reference/JUT-008_MUN-009.txt_2, 3L3RX_reference/JUT-008_MUN-009.txt_2
+    shell:
+        bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes_reference.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s JUT-008_MUN-009 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Removing output files of failed job train_validate_reference since they might be corrupted:
+2L2R_reference/JUT-008_MUN-009.txt_2, 3L3RX_reference/JUT-008_MUN-009.txt_2
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-05-29T140842.358218.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

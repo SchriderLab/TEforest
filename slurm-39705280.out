@@ -1,0 +1,308 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:183: SyntaxWarning: invalid escape sequence '\/'
+  process_regions_hettraining_script = (
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:184: SyntaxWarning: invalid escape sequence '\/'
+  workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:222: SyntaxWarning: invalid escape sequence '\/'
+  sample2=lambda wildcards: split_sample(wildcards)[1],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:223: SyntaxWarning: invalid escape sequence '\/'
+  input:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  shell:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  shell:
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                                count
+-------------------------------  -------
+benchmark                              3
+find_breakpoints_het                   3
+find_breakpoints_het_classifier        3
+organize_training_data                 2
+split_data                             3
+split_data_classifier                  3
+train_validate                         3
+train_validate_classifier              2
+total                                 22
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun May 26 11:33:01 2024]
+localcheckpoint organize_training_data:
+    input: feature_vectors_het/AKA-017_GIM-024
+    output: 2L2R/AKA-017_GIM-024.txt, 3L3RX/AKA-017_GIM-024.txt
+    jobid: 8
+    reason: Missing output files: 2L2R/AKA-017_GIM-024.txt, 3L3RX/AKA-017_GIM-024.txt
+    wildcards: sample=AKA-017_GIM-024
+    threads: 32
+    resources: tmpdir=/tmp
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/organize_training_data.sh -s AKA-017_GIM-024 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/organize_training_data.sh: illegal option -- v
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2
+Output directory exists
+Output directory exists
+/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/A2_A3 /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/JUT-008_MUN-009
+[Sun May 26 11:36:17 2024]
+Finished job 8.
+1 of 22 steps (5%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun May 26 11:36:17 2024]
+localcheckpoint train_validate:
+    input: 2L2R/A2_A3.txt, 3L3RX/A2_A3.txt
+    output: 2L2R/A2_A3.txt_2, 3L3RX/A2_A3.txt_2
+    jobid: 17
+    reason: Missing output files: 3L3RX/A2_A3.txt_2, 2L2R/A2_A3.txt_2; Updated input files: 3L3RX/A2_A3.txt, 2L2R/A2_A3.txt
+    wildcards: sample=A2_A3
+    threads: 32
+    resources: tmpdir=/tmp
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s A2_A3 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2
+File /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R/svrf_all.pkl does not exist. Continuing script.
+Condensing data:   0%|          | 0/9580 [00:00<?, ?it/s]Condensing data:   4%|▍         | 386/9580 [00:00<00:02, 3853.26it/s]Condensing data:   8%|▊         | 772/9580 [00:00<00:02, 3757.08it/s]Condensing data:  12%|█▏        | 1152/9580 [00:00<00:02, 3773.12it/s]Condensing data:  16%|█▌        | 1530/9580 [00:00<00:02, 3743.08it/s]Condensing data:  20%|█▉        | 1905/9580 [00:00<00:02, 3649.18it/s]Condensing data:  24%|██▍       | 2276/9580 [00:00<00:01, 3666.73it/s]Condensing data:  28%|██▊       | 2658/9580 [00:00<00:01, 3715.25it/s]Condensing data:  32%|███▏      | 3035/9580 [00:00<00:01, 3729.84it/s]Condensing data:  36%|███▌      | 3409/9580 [00:00<00:01, 3708.41it/s]Condensing data:  40%|███▉      | 3788/9580 [00:01<00:01, 3731.33it/s]Condensing data:  43%|████▎     | 4162/9580 [00:01<00:01, 3731.10it/s]Condensing data:  47%|████▋     | 4536/9580 [00:01<00:01, 3719.88it/s]Condensing data:  51%|█████     | 4909/9580 [00:01<00:01, 3647.92it/s]Condensing data:  55%|█████▌    | 5275/9580 [00:01<00:01, 3599.21it/s]Condensing data:  59%|█████▉    | 5636/9580 [00:01<00:01, 3599.65it/s]Condensing data:  63%|██████▎   | 5997/9580 [00:01<00:01, 3581.37it/s]Condensing data:  66%|██████▋   | 6356/9580 [00:01<00:00, 3551.57it/s]Condensing data:  70%|███████   | 6737/9580 [00:01<00:00, 3626.20it/s]Condensing data:  74%|███████▍  | 7100/9580 [00:01<00:00, 3615.88it/s]Condensing data:  78%|███████▊  | 7462/9580 [00:02<00:00, 3589.91it/s]Condensing data:  82%|████████▏ | 7835/9580 [00:02<00:00, 3630.38it/s]Condensing data:  86%|████████▌ | 8205/9580 [00:02<00:00, 3651.05it/s]Condensing data:  90%|████████▉ | 8584/9580 [00:02<00:00, 3689.74it/s]Condensing data:  93%|█████████▎| 8954/9580 [00:02<00:00, 3683.04it/s]Condensing data:  97%|█████████▋| 9333/9580 [00:02<00:00, 3712.55it/s]Condensing data: 100%|██████████| 9580/9580 [00:02<00:00, 3675.89it/s]
+Condensing data:   0%|          | 0/23109 [00:00<?, ?it/s]Condensing data:   2%|▏         | 350/23109 [00:00<00:06, 3498.51it/s]Condensing data:   3%|▎         | 722/23109 [00:00<00:06, 3624.61it/s]Condensing data:   5%|▍         | 1089/23109 [00:00<00:06, 3645.19it/s]Condensing data:   6%|▋         | 1454/23109 [00:00<00:06, 3602.71it/s]Condensing data:   8%|▊         | 1815/23109 [00:00<00:06, 3468.96it/s]Condensing data:   9%|▉         | 2188/23109 [00:00<00:05, 3553.75it/s]Condensing data:  11%|█         | 2558/23109 [00:00<00:05, 3595.77it/s]Condensing data:  13%|█▎        | 2938/23109 [00:00<00:05, 3657.31it/s]Condensing data:  14%|█▍        | 3319/23109 [00:00<00:05, 3702.90it/s]Condensing data:  16%|█▌        | 3704/23109 [00:01<00:05, 3747.61it/s]Condensing data:  18%|█▊        | 4080/23109 [00:01<00:05, 3745.56it/s]Condensing data:  19%|█▉        | 4455/23109 [00:01<00:05, 3607.51it/s]Condensing data:  21%|██        | 4817/23109 [00:01<00:05, 3443.51it/s]Condensing data:  22%|██▏       | 5164/23109 [00:01<00:07, 2531.64it/s]Condensing data:  24%|██▎       | 5453/23109 [00:01<00:06, 2613.32it/s]Condensing data:  25%|██▌       | 5827/23109 [00:01<00:05, 2890.76it/s]Condensing data:  27%|██▋       | 6172/23109 [00:01<00:05, 3035.81it/s]Condensing data:  28%|██▊       | 6523/23109 [00:01<00:05, 3163.64it/s]Condensing data:  30%|██▉       | 6855/23109 [00:02<00:07, 2125.11it/s]Condensing data:  31%|███       | 7126/23109 [00:02<00:07, 2246.36it/s]Condensing data:  32%|███▏      | 7395/23109 [00:02<00:06, 2277.18it/s]Condensing data:  33%|███▎      | 7707/23109 [00:02<00:06, 2478.72it/s]Condensing data:  35%|███▍      | 7982/23109 [00:02<00:07, 2132.76it/s]Condensing data:  36%|███▌      | 8306/23109 [00:02<00:06, 2392.13it/s]Condensing data:  37%|███▋      | 8609/23109 [00:02<00:05, 2550.71it/s]Condensing data:  39%|███▉      | 8973/23109 [00:03<00:04, 2836.50it/s]Condensing data:  40%|████      | 9350/23109 [00:03<00:04, 3091.23it/s]Condensing data:  42%|████▏     | 9675/23109 [00:03<00:05, 2243.91it/s]Condensing data:  43%|████▎     | 9943/23109 [00:03<00:05, 2326.11it/s]Condensing data:  44%|████▍     | 10244/23109 [00:03<00:05, 2487.09it/s]Condensing data:  46%|████▌     | 10520/23109 [00:03<00:04, 2538.86it/s]Condensing data:  47%|████▋     | 10794/23109 [00:03<00:05, 2458.44it/s]Condensing data:  48%|████▊     | 11054/23109 [00:03<00:04, 2445.95it/s]Condensing data:  49%|████▉     | 11309/23109 [00:04<00:04, 2396.43it/s]Condensing data:  50%|█████     | 11664/23109 [00:04<00:04, 2709.02it/s]Condensing data:  52%|█████▏    | 12022/23109 [00:04<00:03, 2952.40it/s]Condensing data:  54%|█████▎    | 12401/23109 [00:04<00:03, 3189.59it/s]Condensing data:  55%|█████▌    | 12783/23109 [00:04<00:03, 3370.06it/s]Condensing data:  57%|█████▋    | 13151/23109 [00:04<00:02, 3458.84it/s]Condensing data:  59%|█████▊    | 13527/23109 [00:04<00:02, 3547.16it/s]Condensing data:  60%|██████    | 13887/23109 [00:04<00:02, 3557.97it/s]Condensing data:  62%|██████▏   | 14264/23109 [00:04<00:02, 3619.20it/s]Condensing data:  63%|██████▎   | 14642/23109 [00:04<00:02, 3666.58it/s]Condensing data:  65%|██████▌   | 15024/23109 [00:05<00:02, 3709.27it/s]Condensing data:  67%|██████▋   | 15408/23109 [00:05<00:02, 3745.44it/s]Condensing data:  68%|██████▊   | 15784/23109 [00:05<00:01, 3719.67it/s]Condensing data:  70%|██████▉   | 16165/23109 [00:05<00:01, 3744.40it/s]Condensing data:  72%|███████▏  | 16546/23109 [00:05<00:01, 3763.40it/s]Condensing data:  73%|███████▎  | 16927/23109 [00:05<00:01, 3774.31it/s]Condensing data:  75%|███████▍  | 17308/23109 [00:05<00:01, 3784.25it/s]Condensing data:  77%|███████▋  | 17699/23109 [00:05<00:01, 3820.64it/s]Condensing data:  78%|███████▊  | 18082/23109 [00:05<00:01, 3801.48it/s]Condensing data:  80%|███████▉  | 18463/23109 [00:05<00:01, 3756.59it/s]Condensing data:  82%|████████▏ | 18846/23109 [00:06<00:01, 3777.22it/s]Condensing data:  83%|████████▎ | 19229/23109 [00:06<00:01, 3791.42it/s]Condensing data:  85%|████████▍ | 19609/23109 [00:06<00:00, 3764.66it/s]Condensing data:  86%|████████▋ | 19986/23109 [00:06<00:00, 3763.76it/s]Condensing data:  88%|████████▊ | 20363/23109 [00:06<00:00, 3736.79it/s]Condensing data:  90%|████████▉ | 20737/23109 [00:06<00:00, 3692.56it/s]Condensing data:  91%|█████████▏| 21107/23109 [00:06<00:00, 3661.57it/s]Condensing data:  93%|█████████▎| 21474/23109 [00:06<00:00, 3531.89it/s]Condensing data:  94%|█████████▍| 21829/23109 [00:06<00:00, 3396.46it/s]Condensing data:  96%|█████████▌| 22170/23109 [00:07<00:00, 2993.88it/s]Condensing data:  97%|█████████▋| 22478/23109 [00:07<00:00, 3002.65it/s]Condensing data:  99%|█████████▉| 22821/23109 [00:07<00:00, 3117.07it/s]Condensing data: 100%|██████████| 23109/23109 [00:07<00:00, 3158.91it/s]
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=-1)]: Done  34 tasks      | elapsed:    2.1s
+[Parallel(n_jobs=-1)]: Done 184 tasks      | elapsed:   10.7s
+[Parallel(n_jobs=-1)]: Done 434 tasks      | elapsed:   24.4s
+[Parallel(n_jobs=-1)]: Done 500 out of 500 | elapsed:   27.9s finished
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.0s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+9580 samples found.
+
+[0.         0.         0.         1.084      0.         0.
+ 1.818      0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.958      0.         0.         0.
+ 1.78933333 0.         0.17       1.064      0.         0.
+ 0.01       0.         0.         0.         0.         0.002
+ 0.998      0.         0.         0.028      0.         0.918
+ 0.         0.         0.736      0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.734      0.
+ 0.         0.         1.012      0.136      0.         0.
+ 0.         0.         0.         0.         0.         0.054
+ 0.         0.         0.266      0.41       0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.002      0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.568      0.         0.         0.         0.         0.
+ 0.         0.         0.         0.002      0.         0.
+ 0.         0.67       0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         1.188      0.         0.
+ 0.132      0.         0.         0.         0.         0.
+ 0.         0.         1.002      0.         0.         0.
+ 0.         0.         0.         0.         1.928      0.
+ 0.         0.         0.         0.         0.         0.
+ 1.092      0.         0.         0.         0.         0.008
+ 0.         0.         0.         0.         0.998      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         1.118      0.         0.
+ 1.86       0.008      0.         0.         0.         0.
+ 0.         0.         0.536      0.078      0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         1.124      0.         0.         0.
+ 0.         0.         1.67933333 0.026      0.         0.
+ 0.01       0.         0.         0.         0.         0.
+ 0.036      0.         0.         0.036      0.         0.936
+ 0.         0.         0.014      0.         1.044      0.
+ 0.         0.         0.         0.834      0.         0.
+ 0.         1.         0.02       0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 1.468      0.         0.         0.         0.         0.
+ 0.         0.         1.13       0.         0.01       0.
+ 0.692      0.         0.         0.         1.8653     1.004
+ 0.         0.97466667 0.         0.006      0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.998      1.834      0.         0.
+ 1.978      0.         0.         0.         0.         0.
+ 0.         0.         0.         0.002      0.         0.
+ 1.72       0.         0.         0.002      0.006      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.002      0.03       0.036      0.         0.982      0.
+ 0.         0.         0.         0.         0.         1.336
+ 0.         1.086      0.         0.         0.         0.
+ 0.         0.         1.874      0.         0.002      1.652
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         1.066      0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         1.844      0.         0.         0.
+ 0.         0.         0.         0.         0.138      0.
+ 0.         0.         1.702      0.         0.         0.
+ 0.         0.         0.         0.002      0.         1.
+ 0.         0.         0.         0.012      0.         0.
+ 0.         0.         0.01       0.002      0.         0.
+ 0.         1.904      0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 0.         0.         0.         0.         0.         0.
+ 1.96266667 0.         0.         0.         0.216      0.
+ 0.         0.         0.         0.         0.002      0.002
+ 0.         0.         1.7944     0.         0.        ]
+[0. 0. 0. 1. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 1. 0. 0. 0. 2. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 1.
+ 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 1. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0.
+ 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 2. 0. 0. 0. 0. 0.
+ 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 2. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 1. 0. 0. 0. 0. 1. 0. 0.
+ 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.
+ 1. 0. 0. 0. 2. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 1. 0. 0.
+ 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 2. 0. 1. 0. 0. 0. 0. 0. 0. 2. 0. 0. 2.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 1.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 2. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 2. 0. 0.]
+Mean Squared Error on Test Set: 0.01261425447691951
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+[Parallel(n_jobs=-1)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=-1)]: Done  34 tasks      | elapsed:    7.4s
+[Parallel(n_jobs=-1)]: Done 184 tasks      | elapsed:   37.5s
+[Parallel(n_jobs=-1)]: Done 434 tasks      | elapsed:  1.4min
+[Parallel(n_jobs=-1)]: Done 500 out of 500 | elapsed:  1.6min finished
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.0s finished
+[info] Loading data
+[info] Data loaded
+Size of samps 3
+23109 samples found.
+
+[0. 0. 0. ... 0. 0. 0.]
+[0. 0. 0. ... 0. 0. 0.]
+Mean Squared Error on Test Set: 0.02528238062283737
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/23109 [00:00<?, ?it/s]  2%|▏         | 429/23109 [00:00<00:05, 4285.03it/s]  4%|▎         | 858/23109 [00:00<00:05, 4165.79it/s]  6%|▌         | 1275/23109 [00:00<00:05, 4083.26it/s]  7%|▋         | 1684/23109 [00:00<00:05, 4045.68it/s]  9%|▉         | 2089/23109 [00:00<00:05, 3974.59it/s] 11%|█         | 2487/23109 [00:00<00:05, 3964.94it/s] 12%|█▏        | 2884/23109 [00:00<00:05, 3938.03it/s] 14%|█▍        | 3278/23109 [00:00<00:05, 3908.75it/s] 16%|█▌        | 3669/23109 [00:00<00:05, 3855.77it/s] 18%|█▊        | 4055/23109 [00:01<00:04, 3849.74it/s] 19%|█▉        | 4441/23109 [00:01<00:04, 3843.37it/s] 21%|██        | 4826/23109 [00:01<00:04, 3782.30it/s] 23%|██▎       | 5205/23109 [00:01<00:04, 3770.90it/s] 24%|██▍       | 5583/23109 [00:01<00:04, 3718.06it/s] 26%|██▌       | 5955/23109 [00:01<00:04, 3686.16it/s] 27%|██▋       | 6324/23109 [00:01<00:04, 3626.32it/s] 29%|██▉       | 6687/23109 [00:01<00:04, 3573.00it/s] 30%|███       | 7045/23109 [00:01<00:04, 3550.22it/s] 32%|███▏      | 7401/23109 [00:01<00:04, 3496.84it/s] 34%|███▎      | 7751/23109 [00:02<00:04, 3478.73it/s] 35%|███▌      | 8099/23109 [00:02<00:04, 3433.37it/s] 37%|███▋      | 8443/23109 [00:02<00:04, 3413.33it/s] 38%|███▊      | 8785/23109 [00:02<00:04, 3334.79it/s] 39%|███▉      | 9119/23109 [00:02<00:04, 3327.25it/s] 41%|████      | 9452/23109 [00:02<00:04, 3298.67it/s] 42%|████▏     | 9782/23109 [00:02<00:04, 3292.03it/s] 44%|████▍     | 10112/23109 [00:02<00:03, 3264.49it/s] 45%|████▌     | 10443/23109 [00:02<00:03, 3277.78it/s] 47%|████▋     | 10771/23109 [00:02<00:03, 3260.80it/s] 48%|████▊     | 11098/23109 [00:03<00:03, 3258.38it/s] 49%|████▉     | 11424/23109 [00:03<00:03, 3219.92it/s] 51%|█████     | 11747/23109 [00:03<00:03, 3209.56it/s] 52%|█████▏    | 12069/23109 [00:03<00:03, 3172.32it/s] 54%|█████▎    | 12387/23109 [00:03<00:03, 3165.34it/s] 55%|█████▍    | 12704/23109 [00:03<00:03, 3130.98it/s] 56%|█████▋    | 13018/23109 [00:03<00:03, 3122.12it/s] 58%|█████▊    | 13331/23109 [00:03<00:03, 3110.38it/s] 59%|█████▉    | 13643/23109 [00:03<00:03, 3079.04it/s] 60%|██████    | 13951/23109 [00:04<00:02, 3071.18it/s] 62%|██████▏   | 14259/23109 [00:04<00:02, 3041.99it/s] 63%|██████▎   | 14564/23109 [00:04<00:02, 3029.35it/s] 64%|██████▍   | 14867/23109 [00:04<00:02, 2995.68it/s] 66%|██████▌   | 15167/23109 [00:04<00:02, 2987.54it/s] 67%|██████▋   | 15466/23109 [00:04<00:02, 2960.61it/s] 68%|██████▊   | 15763/23109 [00:04<00:02, 2950.80it/s] 69%|██████▉   | 16059/23109 [00:04<00:02, 2936.55it/s] 71%|███████   | 16356/23109 [00:04<00:02, 2945.59it/s] 72%|███████▏  | 16651/23109 [00:04<00:02, 2941.34it/s] 73%|███████▎  | 16946/23109 [00:05<00:02, 2915.59it/s] 75%|███████▍  | 17238/23109 [00:05<00:02, 2910.50it/s] 76%|███████▌  | 17530/23109 [00:05<00:01, 2875.21it/s] 77%|███████▋  | 17818/23109 [00:05<00:01, 2876.03it/s] 78%|███████▊  | 18106/23109 [00:05<00:01, 2846.90it/s] 80%|███████▉  | 18391/23109 [00:05<00:01, 2843.97it/s] 81%|████████  | 18676/23109 [00:05<00:01, 2833.78it/s] 82%|████████▏ | 18960/23109 [00:05<00:01, 2809.55it/s] 83%|████████▎ | 19242/23109 [00:05<00:01, 2804.10it/s] 84%|████████▍ | 19523/23109 [00:05<00:01, 2774.13it/s] 86%|████████▌ | 19801/23109 [00:06<00:01, 2768.25it/s] 87%|████████▋ | 20078/23109 [00:06<00:01, 2704.11it/s] 88%|████████▊ | 20349/23109 [00:06<00:01, 2701.36it/s] 89%|████████▉ | 20620/23109 [00:06<00:00, 2694.15it/s] 90%|█████████ | 20890/23109 [00:06<00:00, 2641.20it/s] 92%|█████████▏| 21155/23109 [00:06<00:00, 2636.29it/s] 93%|█████████▎| 21419/23109 [00:06<00:00, 2614.22it/s] 94%|█████████▍| 21682/23109 [00:06<00:00, 2616.80it/s] 95%|█████████▍| 21944/23109 [00:06<00:00, 2615.09it/s] 96%|█████████▌| 22206/23109 [00:06<00:00, 2586.44it/s] 97%|█████████▋| 22465/23109 [00:07<00:00, 2584.19it/s] 98%|█████████▊| 22726/23109 [00:07<00:00, 2588.95it/s] 99%|█████████▉| 22987/23109 [00:07<00:00, 2592.82it/s]100%|██████████| 23109/23109 [00:07<00:00, 3154.43it/s]
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.1s finished
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py:7: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+  0%|          | 0/9580 [00:00<?, ?it/s]  7%|▋         | 672/9580 [00:00<00:01, 6685.81it/s] 14%|█▍        | 1341/9580 [00:00<00:01, 6658.97it/s] 21%|██        | 2007/9580 [00:00<00:01, 6495.44it/s] 28%|██▊       | 2657/9580 [00:00<00:01, 6327.83it/s] 34%|███▍      | 3291/9580 [00:00<00:01, 6277.07it/s] 41%|████      | 3920/9580 [00:00<00:00, 6141.25it/s] 47%|████▋     | 4535/9580 [00:00<00:00, 6024.05it/s] 54%|█████▎    | 5138/9580 [00:00<00:00, 5890.72it/s] 60%|█████▉    | 5728/9580 [00:00<00:00, 5758.63it/s] 66%|██████▌   | 6305/9580 [00:01<00:00, 5622.22it/s] 72%|███████▏  | 6868/9580 [00:01<00:00, 5480.66it/s] 77%|███████▋  | 7417/9580 [00:01<00:00, 5356.79it/s] 83%|████████▎ | 7954/9580 [00:01<00:00, 5298.45it/s] 89%|████████▊ | 8484/9580 [00:01<00:00, 5199.42it/s] 94%|█████████▍| 9005/9580 [00:01<00:00, 5092.60it/s] 99%|█████████▉| 9515/9580 [00:01<00:00, 5018.68it/s]100%|██████████| 9580/9580 [00:01<00:00, 5611.47it/s]
+[Parallel(n_jobs=8)]: Using backend ThreadingBackend with 8 concurrent workers.
+[Parallel(n_jobs=8)]: Done  34 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 184 tasks      | elapsed:    0.0s
+[Parallel(n_jobs=8)]: Done 434 tasks      | elapsed:    0.1s
+[Parallel(n_jobs=8)]: Done 500 out of 500 | elapsed:    0.1s finished
+/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/A2_A3 /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/JUT-008_MUN-009
+[Sun May 26 11:38:55 2024]
+Finished job 17.
+2 of 22 steps (9%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun May 26 11:38:55 2024]
+localcheckpoint organize_training_data:
+    input: feature_vectors_het/JUT-008_MUN-009
+    output: 2L2R/JUT-008_MUN-009.txt, 3L3RX/JUT-008_MUN-009.txt
+    jobid: 29
+    reason: Missing output files: 3L3RX/JUT-008_MUN-009.txt, 2L2R/JUT-008_MUN-009.txt
+    wildcards: sample=JUT-008_MUN-009
+    threads: 32
+    resources: tmpdir=/tmp
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/organize_training_data.sh -s JUT-008_MUN-009 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/organize_training_data.sh: illegal option -- v
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2
+Output directory exists
+Output directory exists
+/work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/A2_A3 /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/AKA-017_GIM-024 /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/feature_vectors_het/JUT-008_MUN-009
+[Sun May 26 11:42:00 2024]
+Finished job 29.
+3 of 22 steps (14%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun May 26 11:42:00 2024]
+localrule train_validate_classifier:
+    input: feature_vectors_het/JUT-008_MUN-009, 2L2R/JUT-008_MUN-009.txt, 3L3RX/JUT-008_MUN-009.txt
+    output: 2L2R_classifer/JUT-008_MUN-009.txt, 3L3RX_classifer/JUT-008_MUN-009.txt
+    jobid: 39
+    reason: Missing output files: 3L3RX_classifer/JUT-008_MUN-009.txt, 2L2R_classifer/JUT-008_MUN-009.txt
+    wildcards: sample=JUT-008_MUN-009
+    threads: 32
+    resources: tmpdir=/tmp
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes_classifier.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model_classifier.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s JUT-008_MUN-009 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Current directory: /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2
+File /work/users/a/d/adaigle/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L2R/svrf_all.pkl exists. Ending script.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in rule train_validate_classifier in file /nas/longleaf/home/adaigle/TEforest/workflow/Snakefile, line 396:
+Job 39  completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+2L2R_classifer/JUT-008_MUN-009.txt
+3L3RX_classifer/JUT-008_MUN-009.txt
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-05-26T113301.613259.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

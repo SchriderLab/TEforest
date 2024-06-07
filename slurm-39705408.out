@@ -1,0 +1,339 @@
+Using profile workflow/profiles/default and workflow specific profile workflow/profiles/default for setting default command line arguments.
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:183: SyntaxWarning: invalid escape sequence '\/'
+  process_regions_hettraining_script = (
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:184: SyntaxWarning: invalid escape sequence '\/'
+  workflow.basedir + "/scripts/process_candidate_regions_train_syn_heterozygotes.r"
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:191: SyntaxWarning: invalid escape sequence '\/'
+  return sample_parts[0], sample_parts[1]
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:222: SyntaxWarning: invalid escape sequence '\/'
+  sample2=lambda wildcards: split_sample(wildcards)[1],
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:223: SyntaxWarning: invalid escape sequence '\/'
+  input:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  shell:
+/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile:230: SyntaxWarning: invalid escape sequence '\/'
+  shell:
+Building DAG of jobs...
+Job stats:
+job                                count
+-------------------------------  -------
+aggregate_organized                    1
+benchmark                              3
+find_breakpoints_het                   3
+find_breakpoints_het_classifier        3
+organize_training_data                 1
+split_data                             3
+split_data_classifier                  3
+train_validate                         3
+train_validate_classifier              3
+total                                 23
+
+Execute 2 jobs...
+
+[Sun May 26 12:21:10 2024]
+localrule aggregate_organized:
+    input: 2L2R/A2_A3.txt, 2L2R/AKA-017_GIM-024.txt
+    output: all_samples_organized.txt
+    jobid: 9
+    reason: Missing output files: all_samples_organized.txt; Updated input files: 2L2R/AKA-017_GIM-024.txt, 2L2R/A2_A3.txt
+    resources: tmpdir=<TBD>
+
+
+[Sun May 26 12:21:10 2024]
+localcheckpoint organize_training_data:
+    input: feature_vectors_het/JUT-008_MUN-009
+    output: 2L2R/JUT-008_MUN-009.txt, 3L3RX/JUT-008_MUN-009.txt
+    jobid: 37
+    reason: Missing output files: 2L2R/JUT-008_MUN-009.txt
+    wildcards: sample=JUT-008_MUN-009
+    threads: 32
+    resources: tmpdir=<TBD>
+DAG of jobs will be updated after completion.
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/organize_training_data.sh -s JUT-008_MUN-009
+Execute 6 jobs...
+
+[Sun May 26 12:21:10 2024]
+localrule train_validate:
+    input: 2L2R/JUT-008_MUN-009.txt, 3L3RX/JUT-008_MUN-009.txt, all_samples_organized.txt
+    output: 2L2R/JUT-008_MUN-009.txt_2, 3L3RX/JUT-008_MUN-009.txt_2
+    jobid: 36
+    reason: Missing output files: 3L3RX/JUT-008_MUN-009.txt_2, 2L2R/JUT-008_MUN-009.txt_2; Input files updated by another job: 3L3RX/JUT-008_MUN-009.txt, 2L2R/JUT-008_MUN-009.txt, all_samples_organized.txt
+    wildcards: sample=JUT-008_MUN-009
+    threads: 32
+    resources: tmpdir=<TBD>
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s JUT-008_MUN-009 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+
+[Sun May 26 12:21:10 2024]
+localrule train_validate:
+    input: 2L2R/AKA-017_GIM-024.txt, 3L3RX/AKA-017_GIM-024.txt, all_samples_organized.txt
+    output: 2L2R/AKA-017_GIM-024.txt_2, 3L3RX/AKA-017_GIM-024.txt_2
+    jobid: 24
+    reason: Missing output files: 3L3RX/AKA-017_GIM-024.txt_2, 2L2R/AKA-017_GIM-024.txt_2; Input files updated by another job: all_samples_organized.txt
+    wildcards: sample=AKA-017_GIM-024
+    threads: 32
+    resources: tmpdir=<TBD>
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s AKA-017_GIM-024 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+
+[Sun May 26 12:21:10 2024]
+localrule train_validate_classifier:
+    input: 2L2R/JUT-008_MUN-009.txt, 3L3RX/JUT-008_MUN-009.txt, all_samples_organized.txt
+    output: 2L2R_classifer/JUT-008_MUN-009.txt, 3L3RX_classifer/JUT-008_MUN-009.txt
+    jobid: 40
+    reason: Missing output files: 2L2R_classifer/JUT-008_MUN-009.txt, 3L3RX_classifer/JUT-008_MUN-009.txt; Input files updated by another job: 3L3RX/JUT-008_MUN-009.txt, 2L2R/JUT-008_MUN-009.txt, all_samples_organized.txt
+    wildcards: sample=JUT-008_MUN-009
+    threads: 32
+    resources: tmpdir=<TBD>
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes_classifier.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model_classifier.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s JUT-008_MUN-009 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+
+[Sun May 26 12:21:10 2024]
+localrule train_validate:
+    input: 2L2R/A2_A3.txt, 3L3RX/A2_A3.txt, all_samples_organized.txt
+    output: 2L2R/A2_A3.txt_2, 3L3RX/A2_A3.txt_2
+    jobid: 7
+    reason: Missing output files: 2L2R/A2_A3.txt_2; Input files updated by another job: all_samples_organized.txt
+    wildcards: sample=A2_A3
+    threads: 32
+    resources: tmpdir=<TBD>
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s A2_A3 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+
+[Sun May 26 12:21:10 2024]
+localrule train_validate_classifier:
+    input: 2L2R/AKA-017_GIM-024.txt, 3L3RX/AKA-017_GIM-024.txt, all_samples_organized.txt
+    output: 2L2R_classifer/AKA-017_GIM-024.txt, 3L3RX_classifer/AKA-017_GIM-024.txt
+    jobid: 27
+    reason: Missing output files: 3L3RX_classifer/AKA-017_GIM-024.txt, 2L2R_classifer/AKA-017_GIM-024.txt; Input files updated by another job: all_samples_organized.txt
+    wildcards: sample=AKA-017_GIM-024
+    threads: 32
+    resources: tmpdir=<TBD>
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes_classifier.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model_classifier.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s AKA-017_GIM-024 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+
+[Sun May 26 12:21:10 2024]
+localrule train_validate_classifier:
+    input: 2L2R/A2_A3.txt, 3L3RX/A2_A3.txt, all_samples_organized.txt
+    output: 2L2R_classifer/A2_A3.txt, 3L3RX_classifer/A2_A3.txt
+    jobid: 20
+    reason: Missing output files: 2L2R_classifer/A2_A3.txt; Input files updated by another job: all_samples_organized.txt
+    wildcards: sample=A2_A3
+    threads: 32
+    resources: tmpdir=<TBD>
+
+bash /nas/longleaf/home/adaigle/TEforest/workflow/scripts/featvec_training_validation_heterozygotes_classifier.sh -t /nas/longleaf/home/adaigle/TEforest/workflow/scripts/train_rf_model_classifier.py -c /nas/longleaf/home/adaigle/TEforest/workflow/scripts/condense_training_data.py -s A2_A3 -v /nas/longleaf/home/adaigle/TEforest/workflow/scripts/use_model.py
+Execute 6 jobs...
+
+[Sun May 26 12:21:10 2024]
+localrule split_data:
+    input: feature_vectors_het/JUT-008_MUN-009, 2L2R/JUT-008_MUN-009.txt_2, 3L3RX/JUT-008_MUN-009.txt_2
+    output: 2L2R/JUT-008_MUN-009.csv, 3L3RX/JUT-008_MUN-009.csv
+    jobid: 30
+    reason: Missing output files: 3L3RX/JUT-008_MUN-009.csv, 2L2R/JUT-008_MUN-009.csv; Input files updated by another job: 3L3RX/JUT-008_MUN-009.txt_2, 2L2R/JUT-008_MUN-009.txt_2
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=<TBD>
+
+echo 'file,true,pred,cntrl_score' > 2L2R/JUT-008_MUN-009.csv; cat 2L2R/predictions.csv | grep ^JUT-008_MUN-009 >> 2L2R/JUT-008_MUN-009.csv; echo 'file,true,pred,cntrl_score'> 3L3RX/JUT-008_MUN-009.csv; cat 3L3RX/predictions.csv | grep ^JUT-008_MUN-009 >> 3L3RX/JUT-008_MUN-009.csv
+
+[Sun May 26 12:21:10 2024]
+localrule split_data_classifier:
+    input: feature_vectors_het/AKA-017_GIM-024, 2L2R_classifer/AKA-017_GIM-024.txt, 3L3RX_classifer/AKA-017_GIM-024.txt
+    output: 2L2R_classifer/AKA-017_GIM-024.csv, 3L3RX_classifer/AKA-017_GIM-024.csv
+    jobid: 26
+    reason: Missing output files: 2L2R_classifer/AKA-017_GIM-024.csv, 3L3RX_classifer/AKA-017_GIM-024.csv; Input files updated by another job: 3L3RX_classifer/AKA-017_GIM-024.txt, 2L2R_classifer/AKA-017_GIM-024.txt
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=<TBD>
+
+echo 'file,true,pred,cntrl_score' > 2L2R_classifer/AKA-017_GIM-024.csv; cat 2L2R_classifer/predictions.csv | grep ^AKA-017_GIM-024 >> 2L2R_classifer/AKA-017_GIM-024.csv; echo 'file,true,pred,cntrl_score'> 3L3RX_classifer/AKA-017_GIM-024.csv; cat 3L3RX_classifer/predictions.csv | grep ^AKA-017_GIM-024 >> 3L3RX_classifer/AKA-017_GIM-024.csv
+
+[Sun May 26 12:21:10 2024]
+localrule split_data:
+    input: feature_vectors_het/A2_A3, 2L2R/A2_A3.txt_2, 3L3RX/A2_A3.txt_2
+    output: 2L2R/A2_A3.csv, 3L3RX/A2_A3.csv
+    jobid: 0
+    reason: Missing output files: 3L3RX/A2_A3.csv, 2L2R/A2_A3.csv; Input files updated by another job: 3L3RX/A2_A3.txt_2, 2L2R/A2_A3.txt_2
+    wildcards: sample=A2_A3
+    resources: tmpdir=<TBD>
+
+echo 'file,true,pred,cntrl_score' > 2L2R/A2_A3.csv; cat 2L2R/predictions.csv | grep ^A2_A3 >> 2L2R/A2_A3.csv; echo 'file,true,pred,cntrl_score'> 3L3RX/A2_A3.csv; cat 3L3RX/predictions.csv | grep ^A2_A3 >> 3L3RX/A2_A3.csv
+
+[Sun May 26 12:21:10 2024]
+localrule split_data_classifier:
+    input: feature_vectors_het/JUT-008_MUN-009, 2L2R_classifer/JUT-008_MUN-009.txt, 3L3RX_classifer/JUT-008_MUN-009.txt
+    output: 2L2R_classifer/JUT-008_MUN-009.csv, 3L3RX_classifer/JUT-008_MUN-009.csv
+    jobid: 39
+    reason: Missing output files: 3L3RX_classifer/JUT-008_MUN-009.csv, 2L2R_classifer/JUT-008_MUN-009.csv; Input files updated by another job: 2L2R_classifer/JUT-008_MUN-009.txt, 3L3RX_classifer/JUT-008_MUN-009.txt
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=<TBD>
+
+echo 'file,true,pred,cntrl_score' > 2L2R_classifer/JUT-008_MUN-009.csv; cat 2L2R_classifer/predictions.csv | grep ^JUT-008_MUN-009 >> 2L2R_classifer/JUT-008_MUN-009.csv; echo 'file,true,pred,cntrl_score'> 3L3RX_classifer/JUT-008_MUN-009.csv; cat 3L3RX_classifer/predictions.csv | grep ^JUT-008_MUN-009 >> 3L3RX_classifer/JUT-008_MUN-009.csv
+
+[Sun May 26 12:21:10 2024]
+localrule split_data:
+    input: feature_vectors_het/AKA-017_GIM-024, 2L2R/AKA-017_GIM-024.txt_2, 3L3RX/AKA-017_GIM-024.txt_2
+    output: 2L2R/AKA-017_GIM-024.csv, 3L3RX/AKA-017_GIM-024.csv
+    jobid: 23
+    reason: Missing output files: 2L2R/AKA-017_GIM-024.csv, 3L3RX/AKA-017_GIM-024.csv; Input files updated by another job: 3L3RX/AKA-017_GIM-024.txt_2, 2L2R/AKA-017_GIM-024.txt_2
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=<TBD>
+
+echo 'file,true,pred,cntrl_score' > 2L2R/AKA-017_GIM-024.csv; cat 2L2R/predictions.csv | grep ^AKA-017_GIM-024 >> 2L2R/AKA-017_GIM-024.csv; echo 'file,true,pred,cntrl_score'> 3L3RX/AKA-017_GIM-024.csv; cat 3L3RX/predictions.csv | grep ^AKA-017_GIM-024 >> 3L3RX/AKA-017_GIM-024.csv
+
+[Sun May 26 12:21:10 2024]
+localrule split_data_classifier:
+    input: feature_vectors_het/A2_A3, 2L2R_classifer/A2_A3.txt, 3L3RX_classifer/A2_A3.txt
+    output: 2L2R_classifer/A2_A3.csv, 3L3RX_classifer/A2_A3.csv
+    jobid: 19
+    reason: Missing output files: 3L3RX_classifer/A2_A3.csv, 2L2R_classifer/A2_A3.csv; Input files updated by another job: 2L2R_classifer/A2_A3.txt, 3L3RX_classifer/A2_A3.txt
+    wildcards: sample=A2_A3
+    resources: tmpdir=<TBD>
+
+echo 'file,true,pred,cntrl_score' > 2L2R_classifer/A2_A3.csv; cat 2L2R_classifer/predictions.csv | grep ^A2_A3 >> 2L2R_classifer/A2_A3.csv; echo 'file,true,pred,cntrl_score'> 3L3RX_classifer/A2_A3.csv; cat 3L3RX_classifer/predictions.csv | grep ^A2_A3 >> 3L3RX_classifer/A2_A3.csv
+Execute 6 jobs...
+
+[Sun May 26 12:21:10 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/JUT-008_MUN-009.csv, 3L3RX_classifer/JUT-008_MUN-009.csv
+    output: 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/JUT-008_MUN-009_TEforest_bps_nonredundant.bed
+    log: logs/JUT-008_MUN-009/find_breakpoints.log
+    jobid: 38
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed; Input files updated by another job: 3L3RX_classifer/JUT-008_MUN-009.csv, 2L2R_classifer/JUT-008_MUN-009.csv
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 2L2R_classifer/JUT-008_MUN-009.csv 2L2R_model_validation_output_classifier/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 3L3RX_classifer/JUT-008_MUN-009.csv 3L3RX_model_validation_output_classifier/ aligned_het/
+
+[Sun May 26 12:21:10 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/A2_A3.csv, 3L3RX_classifer/A2_A3.csv
+    output: 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/A2_A3_TEforest_bps_nonredundant.bed
+    log: logs/A2_A3/find_breakpoints.log
+    jobid: 18
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed; Input files updated by another job: 3L3RX_classifer/A2_A3.csv, 2L2R_classifer/A2_A3.csv
+    wildcards: sample=A2_A3
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 2L2R_classifer/A2_A3.csv 2L2R_model_validation_output_classifier/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 3L3RX_classifer/A2_A3.csv 3L3RX_model_validation_output_classifier/ aligned_het/
+
+[Sun May 26 12:21:10 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/AKA-017_GIM-024.csv, 3L3RX/AKA-017_GIM-024.csv
+    output: 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 3L3RX_model_validation_output/AKA-017_GIM-024_TEforest_bps_nonredundant.bed
+    log: logs/AKA-017_GIM-024/find_breakpoints.log
+    jobid: 22
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed; Input files updated by another job: 3L3RX/AKA-017_GIM-024.csv, 2L2R/AKA-017_GIM-024.csv
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 2L2R/AKA-017_GIM-024.csv 2L2R_model_validation_output/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 3L3RX/AKA-017_GIM-024.csv 3L3RX_model_validation_output/ aligned_het/
+
+[Sun May 26 12:21:10 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/A2_A3.csv, 3L3RX/A2_A3.csv
+    output: 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output/A2_A3_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/A2_A3_TEforest_nonredundant.bed, 3L3RX_model_validation_output/A2_A3_TEforest_bps_nonredundant.bed
+    log: logs/A2_A3/find_breakpoints.log
+    jobid: 17
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed; Input files updated by another job: 3L3RX/A2_A3.csv, 2L2R/A2_A3.csv
+    wildcards: sample=A2_A3
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 2L2R/A2_A3.csv 2L2R_model_validation_output/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r A2_A3 3L3RX/A2_A3.csv 3L3RX_model_validation_output/ aligned_het/
+
+[Sun May 26 12:21:10 2024]
+localrule find_breakpoints_het_classifier:
+    input: 2L2R_classifer/AKA-017_GIM-024.csv, 3L3RX_classifer/AKA-017_GIM-024.csv
+    output: 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed, 3L3RX_model_validation_output_classifier/AKA-017_GIM-024_TEforest_bps_nonredundant.bed
+    log: logs/AKA-017_GIM-024/find_breakpoints.log
+    jobid: 25
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed; Input files updated by another job: 2L2R_classifer/AKA-017_GIM-024.csv, 3L3RX_classifer/AKA-017_GIM-024.csv
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 2L2R_classifer/AKA-017_GIM-024.csv 2L2R_model_validation_output_classifier/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r AKA-017_GIM-024 3L3RX_classifer/AKA-017_GIM-024.csv 3L3RX_model_validation_output_classifier/ aligned_het/
+
+[Sun May 26 12:21:10 2024]
+localrule find_breakpoints_het:
+    input: 2L2R/JUT-008_MUN-009.csv, 3L3RX/JUT-008_MUN-009.csv
+    output: 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_bps_nonredundant.bed, 3L3RX_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 3L3RX_model_validation_output/JUT-008_MUN-009_TEforest_bps_nonredundant.bed
+    log: logs/JUT-008_MUN-009/find_breakpoints.log
+    jobid: 29
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Missing output files: 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed; Input files updated by another job: 3L3RX/JUT-008_MUN-009.csv, 2L2R/JUT-008_MUN-009.csv
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 2L2R/JUT-008_MUN-009.csv 2L2R_model_validation_output/ aligned_het/; /nas/longleaf/home/adaigle/TEforest/workflow/scripts/find_breakpoints.r JUT-008_MUN-009 3L3RX/JUT-008_MUN-009.csv 3L3RX_model_validation_output/ aligned_het/
+Execute 3 jobs...
+
+[Sun May 26 12:21:10 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/A2_A3.pdf
+    log: logs/A2_A3/bench.log
+    jobid: 16
+    benchmark: benchmarks/A2_A3.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output/A2_A3_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/A2_A3_TEforest_nonredundant.bed
+    wildcards: sample=A2_A3
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r A2 A3 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+
+[Sun May 26 12:21:10 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/AKA-017_GIM-024.pdf
+    log: logs/AKA-017_GIM-024/bench.log
+    jobid: 21
+    benchmark: benchmarks/AKA-017_GIM-024.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output_classifier/AKA-017_GIM-024_TEforest_nonredundant.bed, 2L2R_model_validation_output/AKA-017_GIM-024_TEforest_nonredundant.bed
+    wildcards: sample=AKA-017_GIM-024
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r AKA-017 GIM-024 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+
+[Sun May 26 12:21:10 2024]
+localrule benchmark:
+    input: /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt, 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed
+    output: 2L_2R_plots/freqplt/JUT-008_MUN-009.pdf
+    log: logs/JUT-008_MUN-009/bench.log
+    jobid: 28
+    benchmark: benchmarks/JUT-008_MUN-009.find_breakpoints.benchmark.txt
+    reason: Input files updated by another job: 2L2R_model_validation_output/JUT-008_MUN-009_TEforest_nonredundant.bed, 2L2R_model_validation_output_classifier/JUT-008_MUN-009_TEforest_nonredundant.bed
+    wildcards: sample=JUT-008_MUN-009
+    resources: tmpdir=<TBD>
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/benchmark_te_callers_het.r JUT-008 MUN-009 /nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt TEforest_regressor_filter TEforest_classifier_filter 2L_2R_plots
+Job stats:
+job                                count
+-------------------------------  -------
+aggregate_organized                    1
+benchmark                              3
+find_breakpoints_het                   3
+find_breakpoints_het_classifier        3
+organize_training_data                 1
+split_data                             3
+split_data_classifier                  3
+train_validate                         3
+train_validate_classifier              3
+total                                 23
+
+Reasons:
+    (check individual jobs above for details)
+    input files updated by another job:
+        benchmark, find_breakpoints_het, find_breakpoints_het_classifier, split_data, split_data_classifier, train_validate, train_validate_classifier
+    missing output files:
+        aggregate_organized, find_breakpoints_het, find_breakpoints_het_classifier, organize_training_data, split_data, split_data_classifier, train_validate, train_validate_classifier
+    updated input files:
+        aggregate_organized
+
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+The run involves checkpoint jobs, which will result in alteration of the DAG of jobs (e.g. adding more jobs) after their completion.
