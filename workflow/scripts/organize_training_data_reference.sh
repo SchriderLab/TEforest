@@ -17,6 +17,8 @@ validation_folder=$(pwd)/3L3RX_reference
 
 for dir in "$featvec_dir/*" #[a-z][0-9][a-z][0-9]
     do echo $dir
+    # Remove files with size 800 bytes. This means they have no data.
+    find $dir -type f -size 800c -exec rm -f {} +
     find $dir -type f -name "*2L*" -exec cp {} $training_folder/ \; 
     find $dir -type f -name "*2R*" -exec cp {} $training_folder/ \; 
     touch $training_folder/$sample.txt
