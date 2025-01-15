@@ -1,0 +1,40 @@
+# config.yaml
+
+
+# Sample information
+#sample: 
+#  - "A2A3"
+#  - "JUT-008MUN-009"
+#sample1:
+#  - "A2"
+#  - "JUT-008"
+#sample2: 
+#  - "A3"
+#  - "MUN-009"
+
+# Number of threads
+threads: 32
+
+# Paths to reference files
+consensusTEs: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/from_the_ashes/data/consensusTEs.fasta"
+ref_genome: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/african_sfs/data/ISO1_GCF_000001215.4_Release_6_prepped.fasta"
+ref_te_locations: "/nas/longleaf/home/adaigle/Rech_updated_supplemental/DeNovoCoordinates/ISO1.bed"
+euchromatin: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+
+# Path to the model file
+model: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/outputs/feature_vectors/mixed_model/training/svrf_all.pkl"
+ref_model: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/outputs/feature_vectors/mixed_model/training/svrf_all.pkl"
+
+#path to bam files that will be combined into synthetic bams
+bam_path: "/nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data"
+
+# Specify the input fastq files
+fq_base_path: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/"
+
+target_coverage: "20"
+#fq1: 
+#  - "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/{sample}/{sample}_1.fq"
+#  - "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/JUT-008MUN-009/JUT-008MUN-009_1.fq"
+#fq2: 
+#  - "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/{sample}/{sample}_2.fq"
+#  - "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/JUT-008MUN-009/JUT-008MUN-009_2.fq"

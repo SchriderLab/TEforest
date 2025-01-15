@@ -781,7 +781,9 @@ def parse_arguments() -> argparse.ArgumentParser:
 def main() -> None:
     ua = parse_arguments()
 
-    N = mp.cpu_count() - 1 or 1
+    #N = mp.cpu_count() - 1 or 1
+    N = 1
+
     print("Using ", N, "processes")
 
     regions = pd.read_csv(ua.input_file, header=None)  # , sep="\t")

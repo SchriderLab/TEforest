@@ -16,7 +16,7 @@ basedir_outputs_path <- getwd()
 
 #genome1 <- "A2"
 #genome2 <- "A3"
-#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/A2_improved_consensus_revertedfiltering"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/basenorm_feats_50X"
 
 combine_id <- paste0(genome1,"_", genome2)
 output_path <- paste0(basedir_outputs_path, "/candidate_regions_data_het/", combine_id)
@@ -250,6 +250,7 @@ mapping_results_filter <- mapping_results %>% mutate(
         ~ GRanges(seqnames = seqnames(.x), 
             ranges = IRanges(start = start(.x) + 200, end = end(.x) - 200)))
 )
+
 print("filtering complete")
 
 benchmark_mapping_results <- mapping_results_filter %>% mutate(
@@ -354,6 +355,14 @@ fp_df <- false_positives %>%
   select(Sample, seqnames, start, end, Class, TE) %>%
   rename(Chrom = seqnames, Ref_begin = start, Ref_end = end)
 
+#fn_unique <- false_negatives %>% group_by(TE) %>% unique() 
+
+df_unique <- false_negatives %>% 
+    as.data.frame %>% 
+    select(seqnames, start, end, TE) %>%
+    group_by(TE) %>%
+    distinct(seqnames, start, end, .keep_all = TRUE) %>% # Ensure only exact same ranges are removed
+    filter(seqnames %in% c("2L", "2R")) %>% nrow
 #use this code to do quick tests with tremolo outputs
 #read.table("/nas/longleaf/home/adaigle/work/tremolo_output3/POS_TE_OUTSIDER_ON_REF.bed")
 #tremolo_outsider <- makeGRangesFromDataFrame(read.table("/nas/longleaf/home/adaigle/work/tremolo_output3/POS_TE_OUTSIDER_ON_REF.bed"), seqnames.field="V1", start.field="V2", end.field="V3", keep.extra.columns = T)

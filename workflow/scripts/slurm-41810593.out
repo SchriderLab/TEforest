@@ -1,0 +1,110 @@
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:lubridate’:
+
+    second, second<-
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following object is masked from ‘package:lubridate’:
+
+    %within%
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: GenomeInfoDb
+Loading required package: viridisLite
+# A tibble: 7 × 2
+  counts frequency
+   <int>     <int>
+1      1      1111
+2      2        80
+3      3        15
+4      4        16
+5      5         5
+6      7         7
+7      8         8
+Error in `map()`:
+ℹ In index: 12.
+Caused by error in `tibble()`:
+! Tibble columns must have compatible sizes.
+• Size 12: Existing data.
+• Size 11: Column `result_file`.
+ℹ Only values of size one are recycled.
+Backtrace:
+     ▆
+  1. ├─purrr::map_dfr(...)
+  2. │ └─purrr::map(.x, .f, ...)
+  3. │   └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
+  4. │     ├─purrr:::with_indexed_errors(...)
+  5. │     │ └─base::withCallingHandlers(...)
+  6. │     ├─purrr:::call_with_cleanup(...)
+  7. │     └─global .f(.x[[i]], ...)
+  8. │       ├─... %>% ...
+  9. │       └─tibble::tibble(...)
+ 10. │         └─tibble:::tibble_quos(xs, .rows, .name_repair)
+ 11. │           └─tibble:::vectbl_recycle_rows(...)
+ 12. │             └─tibble:::abort_incompatible_size(...)
+ 13. │               └─tibble:::tibble_abort(...)
+ 14. │                 └─rlang::abort(x, class, ..., call = call, parent = parent, use_cli_format = TRUE)
+ 15. ├─dplyr::mutate(...)
+ 16. └─tidyr::unnest(., cols = df_list)
+Execution halted

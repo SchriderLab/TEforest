@@ -50,8 +50,10 @@ find_min() {
     fi
 }
 # Update target_coverage if it's greater than the minimum true coverage
-min_true_coverage=$(find_min "$coverage1" "$coverage2")
-target_coverage=$(find_min "$min_true_coverage" "$target_coverage")
+#min_true_coverage=$(find_min "$coverage1" "$coverage2")
+# only using coverage of first genome. Other genome needs to have less or could cause error at high target covg. 
+#min_true_coverage=$(find_min "$coverage1" "$coverage2")
+target_coverage=$(find_min "$coverage1" "$target_coverage")
 
 
 # Calculate target_coverage2 as half of the updated target_coverage
@@ -75,8 +77,8 @@ echo "Scale factor $scale_factor1_50"
 
 
  #Extract the scale factor for downsampling
-scale_factor2=$(echo $coverage2 | awk -v target=$target_coverage '{print target/$1}')
-echo "Scale factor $scale_factor2"
+#scale_factor2=$(echo $coverage2 | awk -v target=$target_coverage '{print target/$1}')
+#echo "Scale factor $scale_factor2"
 scale_factor2_50=$(echo $coverage2 | awk -v target=$target_coverage2 '{print target/$1}')
 echo "Scale factor $scale_factor2_50"
 
@@ -93,12 +95,12 @@ output_bam2="30x_downsampled_genome2.bam"
 output_bam2_50="15x_downsampled_genome2.bam"
 
 echo "Downsampling $input_bam2 to $target_coverage x coverage"
-samtools view -@ $threads -s $scale_factor2 -b -o $output_bam2 $input_bam2
+#samtools view -@ $threads -s $scale_factor2 -b -o $output_bam2 $input_bam2
 samtools view -@ $threads -s $scale_factor2_50 -b -o $output_bam2_50 $input_bam2
 
 ## Index the output BAM files
 samtools index -@ $threads $output_bam1
-samtools index -@ $threads $output_bam2
+#samtools index -@ $threads $output_bam2
 samtools index -@ $threads $output_bam1_50
 samtools index -@ $threads $output_bam2_50
 echo "Downsampling complete."

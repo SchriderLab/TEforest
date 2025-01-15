@@ -8,6 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
+from sklearn.inspection import permutation_importance
 import logging
 from tqdm import tqdm
 
@@ -72,6 +73,27 @@ def train_rf(X_train, y_train, class_lab, outdir):
 
     clf.fit(X_train, y_train)
     dump_model(clf, os.path.join(outdir, f"svrf_classifier_{class_lab}.pkl"))
+    
+    # Built-in feature importances
+    built_in_importances = clf.feature_importances_
+    
+    # Permutation feature importances
+    result = permutation_importance(clf, X_train, y_train, n_repeats=10, random_state=42, n_jobs=-1)
+    perm_importances = result.importances_mean
+    perm_std = result.importances_std
+
+    # Combine both feature importances in a table
+    indices = np.argsort(built_in_importances)[::-1]  # Sorting by built-in importance as a baseline
+
+    # Save the feature importances to a text file
+    with open(os.path.join(outdir, f"feature_importances_{class_lab}.txt"), 'w') as f:
+        f.write("Feature\tBuilt-in Importance\tPermutation Importance\tPermutation Std\n")
+        for i in indices:
+            f.write(
+                f"{i}\t{built_in_importances[i]:.6f}\t{perm_importances[i]:.6f}\t{perm_std[i]:.6f}\n"
+            )
+
+    print(f"Feature importances saved to {os.path.join(outdir, f'feature_importances_{class_lab}.txt')}")
 
     return clf
 

@@ -8,18 +8,20 @@ import pandas as pd
 # from sklearn.ensemble import RandomForestClassifier
 # from sklearn.model_selection import train_test_split
 from tqdm import tqdm
-import pycaret
+#import pycaret
 
-pycaret.__version__
+#pycaret.__version__
 
 # infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_generate_hetdata/3L3RX/condense.npz"
 # infile = "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/outputs/feature_vectors/condense.npz"
 # infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_A2A3oldreads/3L3RX/condense.npz"
 # infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_50bp/feature_vectors_het/A2A3/condense.npz"
 # infile = "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/outputs/feature_vectors/training_not2L/condense.npz"
-infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_generate_hetdata/condense_alldata/condense.npz"
-infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_full50bp/3L3RX/condense.npz"
-infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_full50bp_exp2/3L3RX/condense.npz"
+#infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_generate_hetdata/condense_alldata/condense.npz"
+#infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_full50bp/3L3RX/condense.npz"
+#infile = "/nas/longleaf/home/adaigle/work/test_TEforest/het_experiments_full50bp_exp2/3L3RX/condense.npz"
+#infile = "/nas/longleaf/home/adaigle/work/test_TEforest/test_basenorm_feats/3L3RX/condense.npz"
+infile = "/nas/longleaf/home/adaigle/work/test_TEforest/fullshrink/3L3RX/condense.npz"
 
 sv_data = np.load(infile)
 
@@ -130,7 +132,7 @@ full_df["true"] = pd.to_numeric(full_df["true"], errors="coerce")
 # full_df = full_df[full_df['true'] != 0]
 # full_df.loc[full_df['true'] == 2, 'true'] = 1
 
-# full_df.to_csv('/nas/longleaf/home/adaigle/TEforest/workflow/scripts/feature_data.csv')
+full_df.to_csv('/nas/longleaf/home/adaigle/TEforest/workflow/scripts/feature_data_shrink.csv')
 # working through pycaret regression tutorial
 # import pycaret regression and init setup
 
@@ -147,7 +149,7 @@ full_df["true"] = pd.to_numeric(full_df["true"], errors="coerce")
 #
 ## Print the metrics
 # print(results)
-from pycaret.classification import *
+#from pycaret.classification import *
 
 # full_df = full_df.loc[full_df['true'] != '0']
 s = setup(

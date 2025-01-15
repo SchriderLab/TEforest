@@ -5,6 +5,7 @@
 library(GenomicRanges)
 library(tidyverse)
 library(GenomicAlignments)
+
 shrink <- function(x, upstream = 0, downstream = 0) {
     if (any(strand(x) == "*")) {
         warning("'*' ranges were treated as '+'")
@@ -32,19 +33,21 @@ csv_path <- as.list(args[2])
 results_path <- as.list(args[3])
 aligned_dir <- as.list(args[4])
 csv_path_reference <- as.list(args[5])
+candidate_regions_data_dir <- as.list(args[6])
 
 basedir_outputs_path <- getwd()
 csv_path <- paste0(getwd(), "/", csv_path)
 print(csv_path)
 csv_path_reference <- paste0(getwd(), "/", csv_path_reference)
 print(csv_path_reference)
-#genomes <- "A2_A3"
-#csv_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX/A2_A3.csv"
-#results_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_model_validation_output/"
-#aligned_dir <- "aligned_het/"
-#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_improved_consensus_revertedfiltering2/"
-#csv_path_reference <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_improved_consensus_revertedfiltering2/3L3RX_reference/A2_A3.csv"
 
+#genomes <- "JUT-008_MUN-009"
+#csv_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads/output/JUT-008_MUN-009/predictions.csv"
+#results_path <- "output/"
+#aligned_dir <- "aligned/"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads/"
+#csv_path_reference <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads/output/JUT-008_MUN-009/predictions.csv"
+#candidate_regions_data_dir <- "/candidate_regions_data/"
 
 apply_labels_reference <- function (genome) {
 # this function also returns ref coords to correct length
@@ -56,7 +59,7 @@ if (genome_name_length == 1) {
     filter(pred != 0) %>% # remove 0 entries
     separate_wider_delim(file,names = names, delim = "-") %>%
     mutate(start=as.numeric(start)+51, end = as.numeric(end)-50, class = NULL,true = NULL, cntrl_score = NULL, genome = NULL) %>%
-    GRanges() 
+    GRanges()
 } else if (genome_name_length == 2) {
     names <- c("genome1", "genome2", "seqnames", "start", "end", "class", "TE")
     tp_calls <- read.csv(csv_path_reference) %>%
@@ -178,7 +181,7 @@ find_breakpoint <- function(candidate_region, genome) {
 # shrink candidate region down to avoid spurious split reads
 #based on original size of region
 #shrink_size <- (width(candidate_region) / 1.5)/2
-shrink_size <- 0
+#shrink_size <- 0
 shrink_size <- 200
 candidate_region <- shrink(candidate_region, shrink_size, shrink_size)
 tesbp <- ScanBamParam(which = IRangesList(c(candidate_region)), what = c("qname", "seq"))
@@ -285,6 +288,206 @@ gr <- GRanges(
 return(gr)
 }
 
+#candidate_region <- split(tp_calls)[[46]]
+
+find_breakpoint_tefirstversion <- function(candidate_region, genome) {
+    #print(candidate_region)
+# shrink candidate region down to avoid spurious split reads
+#based on original size of region
+#shrink_size <- (width(candidate_region) / 1.5)/2
+#shrink_size <- 0
+TE_specific_bam <- paste0(basedir_outputs_path, candidate_regions_data_dir, genome, "/", candidate_region$TE, "_to_ISO1.bam")
+
+shrink_size <- 200
+candidate_region <- shrink(candidate_region, shrink_size, shrink_size)
+tesbp <- ScanBamParam(which = IRangesList(c(candidate_region)), what = c("qname", "seq"))
+#bamfile <- paste0("/nas/longleaf/home/adaigle/work/mcclintock_stuff/synthetic_hets_mcclintock/", genome, "_1/intermediate/mapped_reads/", genome, "_1.sorted.bam")
+bamfile <- paste0(basedir_outputs_path, "/", aligned_dir, genome, ".bam")
+
+tebam <- BamFile(TE_specific_bam)
+tereads <- readGAlignments(tebam, param = tesbp)
+
+# Regular expression to match cigars ending in "S" or starting with a digit followed by "S"
+# Goal is to grab truly soft clipped reads rather than short inserts
+pattern <- "^(\\d+S)|.*(S)$"
+
+softclips <- subset(tereads, grepl(pattern, cigar))
+#check for hardclipped reads, none in this dataset
+#hardclips <- subset(tereads, grepl("H", cigar))
+
+split_lengths <- gsub("[^0-9]+", "", softclips@cigar)
+non_split_lengths <- gsub("([0-9]+)S.*", "\\1", softclips@cigar)
+split_seq <- data.frame(qname = softclips@elementMetadata[[1]], 
+                         rname = softclips@seqnames,
+                         start = start(softclips),
+                         end = end(softclips),
+                         strand = strand(softclips),
+                         split = substr(softclips@elementMetadata[[2]], 1, as.integer(non_split_lengths)), # non-split part of sequence
+                         nonsplit = substr(softclips@elementMetadata[[2]], as.integer(non_split_lengths)+1, nchar(softclips@elementMetadata[[2]]))) # split part of sequence
+
+split_seq <- split_seq[complete.cases(split_seq), ] #remove rows with NA values
+
+#deals with cases where M comes before S in split read
+#notice different in row naming-- important 
+split_lengths2 <- gsub("[^0-9]+", "", softclips@cigar)
+non_split_lengths2 <- gsub("([0-9]+)M.*", "\\1", softclips@cigar)
+#edited from original, see comments to right
+split_seq2 <- data.frame(qname = softclips@elementMetadata[[1]], 
+                         rname = softclips@seqnames,
+                         start = start(softclips),
+                         end = end(softclips), 
+                         strand = strand(softclips),
+                         nonsplit = substr(softclips@elementMetadata[[2]], 1, as.integer(non_split_lengths2)), #changed this bc te is on other side!
+                         split = substr(softclips@elementMetadata[[2]], as.integer(non_split_lengths2)+1, nchar(softclips@elementMetadata[[2]]))) #changed this bc te is on other side!
+
+split_seq2 <- split_seq2[complete.cases(split_seq2), ] #remove rows with NA values
+
+#merge two cases together
+split_seq_final <- rbind(split_seq, split_seq2)
+
+#filter rows where the shortest subsequence is less than 10 bp
+# Create a new column for the length of the shortest sequence
+split_seq_final$shortest_seq <- apply(split_seq_final[, c("split", "nonsplit")], 1, function(x) min(nchar(x)))
+# Filter the r table to remove rows where the shortest sequence is less than 5
+split_seq_final <- subset(split_seq_final, shortest_seq >= 5)
+
+if (nrow(split_seq_final) == 0) {
+    #print(candidate_region)
+    #print(shrink_size)
+    return()  # Exit the loop
+  }
+
+#use supporting reads to filter Galignments object
+softclips_filter <- softclips[softclips@elementMetadata[[1]] %in% split_seq_final$qname]
+
+cigar_ops <- strsplit(as.character(softclips_filter@cigar), "(?<=\\D)(?=\\d)", perl=TRUE) 
+cigar_first <- lapply(cigar_ops, function(x)  gsub("[0-9]+", "", x[1]))
+
+
+# Extract either the start or end position based on the first cigar operation
+# If the first string is M, the end coordinate is the
+supported_breakpoints <- c()
+supported_breakpoints <- ifelse(cigar_first == "S", 
+    start(softclips_filter), end(softclips_filter))
+seqname <- as.character(seqnames(softclips[1]))
+
+  # Check if supported_breakpoints is NULL
+  if (is.null(supported_breakpoints[1])) {
+    #print("PURGED")
+    #print(candidate_region)
+    return()  # Exit the loop
+  }
+
+bps <- table(supported_breakpoints)
+#taking top 2 rn, can be modified to only pick one if it is clearly larger
+# also could think of a rule to select close bps if two are far from each other?
+# just need to find good examples...
+top_breakpoints <- sort(as.numeric(names(sort(bps, decreasing = TRUE)[1:2])))
+
+if (length(top_breakpoints) == 0) {
+print(candidate_region)
+print("no te specific breakpoints, looking for split reads")
+tebam <- BamFile(bamfile)
+tereads <- readGAlignments(tebam, param = tesbp)
+
+# Regular expression to match cigars ending in "S" or starting with a digit followed by "S"
+# Goal is to grab truly soft clipped reads rather than short inserts
+pattern <- "^(\\d+S)|.*(S)$"
+
+softclips <- subset(tereads, grepl(pattern, cigar))
+#check for hardclipped reads, none in this dataset
+#hardclips <- subset(tereads, grepl("H", cigar))
+
+split_lengths <- gsub("[^0-9]+", "", softclips@cigar)
+non_split_lengths <- gsub("([0-9]+)S.*", "\\1", softclips@cigar)
+split_seq <- data.frame(qname = softclips@elementMetadata[[1]], 
+                         rname = softclips@seqnames,
+                         start = start(softclips),
+                         end = end(softclips),
+                         strand = strand(softclips),
+                         split = substr(softclips@elementMetadata[[2]], 1, as.integer(non_split_lengths)), # non-split part of sequence
+                         nonsplit = substr(softclips@elementMetadata[[2]], as.integer(non_split_lengths)+1, nchar(softclips@elementMetadata[[2]]))) # split part of sequence
+
+split_seq <- split_seq[complete.cases(split_seq), ] #remove rows with NA values
+
+#deals with cases where M comes before S in split read
+#notice different in row naming-- important 
+split_lengths2 <- gsub("[^0-9]+", "", softclips@cigar)
+non_split_lengths2 <- gsub("([0-9]+)M.*", "\\1", softclips@cigar)
+#edited from original, see comments to right
+split_seq2 <- data.frame(qname = softclips@elementMetadata[[1]], 
+                         rname = softclips@seqnames,
+                         start = start(softclips),
+                         end = end(softclips), 
+                         strand = strand(softclips),
+                         nonsplit = substr(softclips@elementMetadata[[2]], 1, as.integer(non_split_lengths2)), #changed this bc te is on other side!
+                         split = substr(softclips@elementMetadata[[2]], as.integer(non_split_lengths2)+1, nchar(softclips@elementMetadata[[2]]))) #changed this bc te is on other side!
+
+split_seq2 <- split_seq2[complete.cases(split_seq2), ] #remove rows with NA values
+
+#merge two cases together
+split_seq_final <- rbind(split_seq, split_seq2)
+
+#filter rows where the shortest subsequence is less than 10 bp
+# Create a new column for the length of the shortest sequence
+split_seq_final$shortest_seq <- apply(split_seq_final[, c("split", "nonsplit")], 1, function(x) min(nchar(x)))
+# Filter the r table to remove rows where the shortest sequence is less than 5
+split_seq_final <- subset(split_seq_final, shortest_seq >= 5)
+
+if (nrow(split_seq_final) == 0) {
+    #print(candidate_region)
+    #print(shrink_size)
+    return()  # Exit the loop
+  }
+
+#use supporting reads to filter Galignments object
+softclips_filter <- softclips[softclips@elementMetadata[[1]] %in% split_seq_final$qname]
+
+cigar_ops <- strsplit(as.character(softclips_filter@cigar), "(?<=\\D)(?=\\d)", perl=TRUE) 
+cigar_first <- lapply(cigar_ops, function(x)  gsub("[0-9]+", "", x[1]))
+
+
+# Extract either the start or end position based on the first cigar operation
+# If the first string is M, the end coordinate is the
+supported_breakpoints <- c()
+supported_breakpoints <- ifelse(cigar_first == "S", 
+    start(softclips_filter), end(softclips_filter))
+seqname <- as.character(seqnames(softclips[1]))
+
+  # Check if supported_breakpoints is NULL
+  if (is.null(supported_breakpoints[1])) {
+    #print("PURGED")
+    #print(candidate_region)
+    return()  # Exit the loop
+  }
+
+bps <- table(supported_breakpoints)
+#taking top 2 rn, can be modified to only pick one if it is clearly larger
+# also could think of a rule to select close bps if two are far from each other?
+# just need to find good examples...
+top_breakpoints <- sort(as.numeric(names(sort(bps, decreasing = TRUE)[1:2])))
+
+}
+if (length(top_breakpoints) == 1) {
+    gr <- GRanges(
+    seqnames = seqname,
+    ranges = IRanges(start = top_breakpoints[1], end = top_breakpoints[1]),
+    TE = candidate_region$TE[[1]],
+    pred = candidate_region$pred[[1]]
+    )
+    return(gr)  # Exit the loop
+  }
+
+
+gr <- GRanges(
+    seqnames = seqname,
+    ranges = IRanges(start = top_breakpoints[1], end = top_breakpoints[2]),
+    TE = candidate_region$TE[[1]],
+    pred = candidate_region$pred[[1]]
+    )
+
+return(gr)
+}
 
 apply_labels_breakpoints <- function (genome) {
 #if a genome has hyphens in its name it needs to be split up differently
@@ -322,7 +525,7 @@ if (genome_name_length == 1) {
 }
 tp_calls <- tp_calls[,1:2]
 
-mapping_results_filter_breakpoints <- lapply(split(tp_calls), function(candidate_region) find_breakpoint(candidate_region, genome))
+mapping_results_filter_breakpoints <- lapply(split(tp_calls), function(candidate_region) find_breakpoint_tefirstversion(candidate_region, genome))
 
 print("breakpoint finding complete!")
 remove_null_elements <- function(granges_list) {

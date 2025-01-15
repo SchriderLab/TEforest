@@ -139,6 +139,7 @@ echo "Aligning reads to TE seqs"
 bwa-mem2 index ${output_directory}/tefasta2.fasta
 bwa-mem2 mem -t $threads ${output_directory}/tefasta2.fasta ${fq1} ${fq2} | samtools view -@ $threads -F 4 -b - | samtools sort -@ $threads -o ${output_directory}/${genome_name}_to_alltes_alignment.bam -
 samtools index ${output_directory}/${genome_name}_to_alltes_alignment.bam
+
 # Iterate over each name provided as arguments
 for name in ${names[@]}; do
   samtools view -@ ${threads} -H ${output_directory}/${genome_name}_to_alltes_alignment.bam | grep '^@SQ' | cut -f 2 | cut -d ':' -f 2 | sed 's/-/_/g' | grep "${name}$" > ${output_directory}/current_tes.txt

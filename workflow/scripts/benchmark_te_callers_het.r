@@ -7,6 +7,7 @@ library(tidyverse)
 library(GenomicRanges)
 library(ggpubr)
 library(caret)
+library(viridis)
 #library(yardstick)
 
 args <- commandArgs(TRUE)
@@ -24,14 +25,16 @@ if (!dir.exists(plt_dir)) {
   dir.create(plt_dir)
 }
 
-#genome1 <- "A2"
-#genome2 <- "A3"
+#genome1 <- "JUT-008"
+#genome2 <- "MUN-009"
 #euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
 #caller_name <- "TEforest_regressor"
 #caller_name2 <- "TEforest_classifier"
-#plt_dir <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_improved_consensus_revertedfiltering2/2L_2R_plots"
-#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/full_model_improved_consensus_revertedfiltering2"
+#plt_dir <- "/nas/longleaf/home/adaigle/work/test_TEforest/test_basenorm_feats/2L_2R_plots"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/test_basenorm_feats"
 
+
+training_csv <- read.csv(paste0(basedir_outputs_path, "/3L3RX_classifer/", genome1, "_", genome2, ".csv"))
 
 read_mcclintock_het_format <- function(path) {
   #this function reads in the alternative format of mcclintock files. 
@@ -126,6 +129,15 @@ extend <- function(x, upstream=0, downstream=0) {
     trim(x)
 }
 
+read_bed_file <- function(file_path) {
+  # Extract the base name without the suffix
+  base_name <- sub("_Ref_Coord.bed$", "", basename(file_path))
+  # Read the BED file into a data frame
+  bed_df <- read.table(file_path, header = FALSE)
+  # Return a list with the name and the data frame
+  list(name = base_name, file_path = file_path, df = bed_df)
+}
+
 ISO1_og <- read.table("/nas/longleaf/home/adaigle/Rech_updated_supplemental/ReferenceCoordinates/ISO-1_Ref_Coord.bed") #%>%
     #filter(V1 %in% c("2L", "2R"))
 
@@ -147,6 +159,9 @@ result_path <- paste0("/nas/longleaf/home/adaigle/work/mcclintock_stuff/syntheti
 nonreference_genome1_truth_path <- paste0("/nas/longleaf/home/adaigle/Rech_updated_supplemental/ReferenceCoordinates/", genome1, "_Ref_Coord.bed")
 nonreference_genome2_truth_path <- paste0("/nas/longleaf/home/adaigle/Rech_updated_supplemental/ReferenceCoordinates/", genome2, "_Ref_Coord.bed")
 
+
+
+#moving files
 source_file <- paste0(basedir_outputs_path, "/3L3RX_model_validation_output/", genome1, "_", genome2, "_TEforest_nonredundant.bed")
 # Specify the destination directory
 destination_folder <- paste0("/nas/longleaf/home/adaigle/work/mcclintock_stuff/synthetic_hets_mcclintock/", genome, "_1/results/", caller_name)
@@ -196,6 +211,9 @@ destination_file <- paste0(destination_folder, "/", genome, "_1_", caller_name, 
 # Use file.copy() to copy the file
 file.copy(from = source_file, to = destination_file, overwrite=T)
 
+
+
+#creating heterozygote truth
 #complex sequence to turn tp's on chroms 2r and 3r to hets, and rest of the genome just genome1 calls
 nonreference_genome1_truth <- read.table(nonreference_genome1_truth_path) 
 colnames(nonreference_genome1_truth) <- c("seqnames", "start", "end", "ID", "length", "strand", "TE")
@@ -246,6 +264,36 @@ grange1_notr_heterozygosity$grange2 <- 0.0
 grange1_notr_heterozygosity$heterozygosity <- 1.0
 heterozygosity_2R3R <- heterozygosity_2R3R %>% select(seqnames, start, end, ID, length, strand, TE, grange1, grange2, heterozygosity)
 truth <- rbind(heterozygosity_2R3R, grange1_notr_heterozygosity)
+
+
+ISO1_ids <- ISO1_og$V4
+
+# Move truth dataframes to mcclintock output directories
+# Create a data frame of data frames
+genome_rename <- paste0(genome, "_1")
+mcclintock_format_truth <- truth %>% mutate(
+    start = start - 1, 
+    ref = if_else(ID %in% ISO1_ids, "reference", "non-reference"),
+    TE_string = paste(TE, ref, heterozygosity, genome_rename, "truth", "rp", "1", sep="|"),
+    score = 0, 
+    strand = "."
+) %>% 
+  select(seqnames, start, end, TE_string, score, strand) %>%
+  arrange(as.character(seqnames),start)
+
+
+destination_folder <- paste0(result_path, "truth")
+if (!dir.exists(destination_folder)) {
+  dir.create(destination_folder)
+}
+
+write.table(mcclintock_format_truth, 
+    file = paste0(destination_folder, "/", genome, "_1_", "truth", "_nonredundant.bed"),
+    quote = F, sep = "\t", row.names = F
+)
+
+
+
 #filtering to just validation chromosomes
 truth <- truth %>% filter(seqnames %in% c("2L","2R"))
 #truth <- truth %>% filter(seqnames %in% c("3L","3R", "X"))
@@ -275,6 +323,36 @@ truth_reference_gr <- subsetByOverlaps(truth_gr, ISO1_og_gr, type=c("equal"), ig
 truth_nonreference_extend_gr <- extend(subsetByOverlaps(truth_gr, ISO1_og_gr, type=c("equal"), invert=TRUE, ignore.strand=TRUE), 500, 500)
 num_true_ref <- length(truth_reference_gr)
 num_true_nonref <- length(truth_nonreference_extend_gr)
+
+# find a random sample of true negatives to add to confusion matrix
+# equal to the number of tp nonreference calls
+nrow(training_csv)
+
+training_csv_negative <- training_csv %>% filter(true==0)  
+genome_name_length <- length(strsplit(genome, "-")[[1]])
+
+if (genome_name_length == 1) {
+    names <- c("genome", "seqnames", "start", "end", "class", "TE")
+    training_csv_negative_downsampled <- training_csv_negative %>% 
+    separate_wider_delim(file,names = names, delim = "-") %>% 
+  sample_n(min(nrow(training_csv_negative),num_true_nonref))
+} else if (genome_name_length == 2) {
+    names <- c("genome1", "genome2", "seqnames", "start", "end", "class", "TE")
+    training_csv_negative_downsampled <- training_csv_negative %>% 
+    separate_wider_delim(file,names = names, delim = "-") %>%
+    mutate(genome = paste(genome1,  genome2,  sep = "-"),
+             genome1 = NULL, genome2 = NULL, genome3 = NULL) %>% 
+    sample_n(min(nrow(training_csv_negative),num_true_nonref))
+} else if (genome_name_length == 3) {
+    names <- c("genome1", "genome2", "genome3", "seqnames", "start", "end", "class", "TE")
+    training_csv_negative_downsampled <- training_csv_negative %>% 
+    separate_wider_delim(file,names = names, delim = "-") %>%
+    mutate(genome = paste(genome1,  genome2,  genome3, sep = "-"),
+             genome1 = NULL, genome2 = NULL, genome3 = NULL) %>% 
+    sample_n(min(nrow(training_csv_negative),num_true_nonref))
+} else {
+  names <- "Error"
+}
 
 mcclintock_results <- tibble(
   caller = list.files(result_path)[!grepl("summary", list.files(result_path))],
@@ -351,7 +429,6 @@ benchmark_mapping_results <- mcclintock_results %>% mutate(
     recall = nonref_calls_true_positives_length / (nonref_calls_true_positives_length + nonref_calls_false_negatives_length),
     f1_score = 2 * (precision * recall) / (precision + recall)
 )
-
 
 benchmark_mapping_results_ref <- mcclintock_results %>% mutate(
     A1_truth_forTE = map(TE, # reduce to get rid of nested TEs of same type
@@ -437,10 +514,27 @@ benchmark_mapping_results_het <- benchmark_mapping_results2 %>%
     homo_fp_zero_length = unlist(map(homo_fp_zero, ~ nrow(.x))),
     het_fp_zero_length = unlist(map(het_fp_zero, ~ nrow(.x))),
     fp = map(nonref_false_positives, ~ .x %>% as.data.frame),
-    homo_fp_length = unlist(map(fp, ~ sum(.x$heterozygosity<=0.75))),
-    het_fp_length = unlist(map(fp, ~ sum(.x$heterozygosity>0.75))),
+    homo_fp_length = unlist(map(fp, ~ sum(.x$heterozygosity>=0.75))),
+    het_fp_length = unlist(map(fp, ~ sum(.x$heterozygosity<0.75))),
   )
 
+
+benchmark_mapping_results_het <- benchmark_mapping_results_het %>% mutate(
+  true_negatives_truth = map(
+      TE, 
+      ~ {
+        df <- training_csv_negative_downsampled %>% filter(TE == .x) 
+        if (nrow(df) == 0) {
+          return(GRanges())  # Return empty grange if no true negatives for this TE fam
+        } else {
+          return(makeGRangesFromDataFrame(df, starts.in.df.are.0based = TRUE, keep.extra.columns = TRUE))
+        }
+      }
+    ),
+  true_negatives = map2(true_negatives_truth, nonreference_freq_filter,
+        ~ subsetByOverlaps(.x, .y, ignore.strand = TRUE, invert=TRUE)),
+  true_negatives_length = unlist(map(true_negatives, ~ length(.x))),
+)
 #test <- benchmark_mapping_results_het %>% filter(caller=="TEforest_classifier")
 #test2 <- benchmark_mapping_results_het %>% filter(caller=="2L_test")
 
@@ -457,6 +551,11 @@ benchmark_mapping_results_frequency_plot <- benchmark_mapping_results_het %>%
     fp = map2(caller, fp, ~ .y %>% mutate(caller = .x, truth = 0)),
   )
 
+benchmark_mapping_results_frequency_plot <- benchmark_mapping_results_frequency_plot %>% mutate(
+  tn_df = map(true_negatives, # reduce to get rid of nested TEs of same type
+        ~ as.data.frame(.x)),
+  tn = map2(caller, tn_df, ~ .y %>% mutate(caller = .x, truth = 0, heterozygosity=0, true = NULL, pred=NULL, cntrl_score=NULL, genome=NULL, class=NULL)))
+
 # Combine the labeled columns into a single data frame
 frequency_plot <- do.call(rbind, c(
   benchmark_mapping_results_frequency_plot$homo_tp_labeled,
@@ -467,7 +566,8 @@ frequency_plot <- do.call(rbind, c(
   benchmark_mapping_results_frequency_plot$het_fn_labeled,
   benchmark_mapping_results_frequency_plot$homo_fp_zero_labeled,
   benchmark_mapping_results_frequency_plot$het_fp_zero_labeled,
-  benchmark_mapping_results_frequency_plot$fp
+  benchmark_mapping_results_frequency_plot$fp,
+  benchmark_mapping_results_frequency_plot$tn
 ))
 
 
@@ -493,7 +593,8 @@ frequency_plot <- left_join(frequency_plot, r_squared_results, by = "caller") %>
 
 freqplt <- ggplot(frequency_plot, aes(x = truth, y = heterozygosity, color = caller)) +
   geom_jitter(alpha = 0.2, width = 0.1) +
-  geom_boxplot(aes(group=truth), width = 0.05, fill = "lightgray", outlier.shape = NA) +
+  #geom_boxplot(aes(group=truth), width = 0.05, fill = "lightgray", outlier.shape = NA) +
+  geom_violin(aes(group=truth)) + 
   #geom_smooth(method = "lm", se = FALSE, color = "red") +
   facet_wrap(~caller) +
   labs(title = "Scatterplot with Boxplot of True vs Predicted Values",
@@ -513,7 +614,8 @@ freqpltnozero <-ggplot(frequency_plot_nozero, aes(x = truth, y = heterozygosity,
 #tmp <- benchmark_mapping_results2 %>% select(caller, TE, nonref_calls_true_positives_length, distances_vector_mean, distances_vector_sd)
 #as.data.frame(tmp %>% filter(nonref_calls_true_positives_length!=0) %>% filter(TE=="roo"))
 
-benchmark_mapping_results_nodata <- benchmark_mapping_results_het[c(1,7,8,20,24:30,33, 45:48, 52:53, 55, 58:59, 61:62)]
+
+benchmark_mapping_results_nodata <- benchmark_mapping_results_het[c(1,7,8,20,24:30,33, 45:48, 52:53, 55, 58:59, 61:62, 65)]
 
 # Check for NaN values and replace with 0
 benchmark_mapping_results_nodata[is.na(benchmark_mapping_results_nodata)] <- 0
@@ -540,9 +642,6 @@ benchmark_mapping_results_summary <- benchmark_mapping_results_nodata %>%
     sum_false_positives = sum(nonref_calls_false_positives_length),
     sum_false_negatives = sum(nonref_calls_false_negatives_length),
     recalc_false_negatives = nonref_te_number - sum_true_positives,
-    precision = sum_true_positives / (sum_true_positives + sum_false_positives),
-    recall = sum_true_positives / (sum_true_positives + recalc_false_negatives),
-    f1_score = 2 * (precision * recall) / (precision + recall), 
     distance_mean = mean(unlist(distances_vector2)),
     distance_sd = sd(unlist(distances_vector2)),
     distance_vectors = list(c(distances_vector2)),
@@ -551,14 +650,24 @@ benchmark_mapping_results_summary <- benchmark_mapping_results_nodata %>%
     homo_fp_het_length = sum(homo_fp_het_length),
     het_fp_homo_length = sum(het_fp_homo_length),
     #homo_fn_length = sum(homo_fn_length),
-    homo_fn_length = nonref_te_number_homo - homo_tp_length,
+    homo_fn_length = nonref_te_number_homo - homo_tp_length - homo_fp_het_length,
     #het_fn_length = sum(het_fn_length),
-    het_fn_length = nonref_te_number_het - het_tp_length,
+    het_fn_length = nonref_te_number_het - het_tp_length - het_fp_homo_length,
     homo_fp_zero_length = sum(homo_fp_zero_length),
     het_fp_zero_length = sum(het_fp_zero_length),
     homo_fp_length = sum(homo_fp_length),
     het_fp_length = sum(het_fp_length),
+    true_negatives_length = sum(true_negatives_length),
   )
+benchmark_mapping_results_summary$recalc_false_negatives <- ifelse(benchmark_mapping_results_summary$recalc_false_negatives < 0, 0, benchmark_mapping_results_summary$recalc_false_negatives)
+benchmark_mapping_results_summary$homo_fn_length <- ifelse(benchmark_mapping_results_summary$homo_fn_length < 0, 0, benchmark_mapping_results_summary$homo_fn_length)
+benchmark_mapping_results_summary$het_fn_length <- ifelse(benchmark_mapping_results_summary$het_fn_length < 0, 0, benchmark_mapping_results_summary$het_fn_length)
+
+benchmark_mapping_results_summary <- benchmark_mapping_results_summary %>% mutate(
+    precision = sum_true_positives / (sum_true_positives + sum_false_positives),
+    recall = sum_true_positives / (sum_true_positives + recalc_false_negatives),
+    f1_score = 2 * (precision * recall) / (precision + recall)
+)
 
 benchmark_mapping_results_summary[is.na(benchmark_mapping_results_summary)] <- 0
 
@@ -571,7 +680,7 @@ num <- as.numeric(row.names(benchmark_mapping_results_summary)[benchmark_mapping
 
 conf_matrix_mycaller <- benchmark_mapping_results_summary[num,]
 #heterozygosity classification accuracy
-conf_matrix_values <- matrix(c(0, conf_matrix_mycaller$het_fn_length + conf_matrix_mycaller$het_fp_zero_length, conf_matrix_mycaller$homo_fn_length + conf_matrix_mycaller$homo_fp_zero_length, # need to grab fp hets and homos
+conf_matrix_values <- matrix(c(0, conf_matrix_mycaller$het_fn_length, conf_matrix_mycaller$homo_fn_length + conf_matrix_mycaller$homo_fp_zero_length, # need to grab fp hets and homos
                                 conf_matrix_mycaller$het_fp_length, conf_matrix_mycaller$het_tp_length, conf_matrix_mycaller$homo_fp_het_length, 
                                 conf_matrix_mycaller$homo_fp_length, conf_matrix_mycaller$het_fp_homo_length, conf_matrix_mycaller$homo_tp_length),
                              nrow = 3, byrow = TRUE)
@@ -600,7 +709,7 @@ return(plt)
 het_conf_matrix <- benchmark_mapping_results_summary %>%
   rowwise() %>%
   mutate(
-    conf_matrix = list(matrix(c(0, het_fn_length + het_fp_zero_length, homo_fn_length + homo_fp_zero_length,
+    conf_matrix = list(matrix(c(nrow(training_csv_negative_downsampled) - het_fp_length - homo_fp_length, het_fn_length, homo_fn_length,
                                  het_fp_length, het_tp_length, homo_fp_het_length,
                                  homo_fp_length, het_fp_homo_length, homo_tp_length),
                               nrow = 3, byrow = TRUE))
@@ -613,6 +722,53 @@ het_conf_matrix <- benchmark_mapping_results_summary %>%
     homo_stats = map(conf_matrix_summary, ~ c(precision=.x$byClass["Class: C","Precision"], 
       recall=.x$byClass["Class: C","Recall"], f1=.x$byClass["Class: C","F1"])),
   )
+
+cm <- het_conf_matrix %>% filter(caller == "TEforest_classifier_filter_bps") %>% 
+  pull(conf_matrix)
+
+cm <- cm[[1]]
+# Calculate column-wise proportions for coloring
+cm_proportion <- sweep(cm, 2, colSums(cm), FUN = "/")
+
+# Convert the original matrix to a data frame
+cm_df <- as.data.frame(cm)
+cm_df$Actual <- factor(c("0", "0.5", "1"))
+
+# Convert the proportion matrix to a data frame
+cm_proportion_df <- as.data.frame(cm_proportion)
+cm_proportion_df$Actual <- factor(c("0", "0.5", "1"))
+
+# Rename the columns to reflect Predicted classes
+colnames(cm_df) <- c("0", "0.5", "1", "Actual")
+colnames(cm_proportion_df) <- c("0", "0.5", "1", "Actual")
+
+# Reshape the data frames to long format
+cm_long <- cm_df %>% pivot_longer(cols = -Actual, names_to = "Predicted", values_to = "Value")
+cm_proportion_long <- cm_proportion_df %>% pivot_longer(cols = -Actual, names_to = "Predicted", values_to = "Proportion")
+
+# Combine the data frames
+cm_combined <- cm_long %>%
+  mutate(Proportion = cm_proportion_long$Proportion, 
+    Actual = factor(Actual, levels = c(0, 0.5, 1), labels = c("absent", "heterozygote", "homozygote")),
+    Predicted = factor(Predicted, levels = c(0, 0.5, 1), labels = c("absent", "heterozygote", "homozygote"))
+  )
+
+confusion_matrix <- ggplot(cm_combined, aes(x = Predicted, y = Actual, fill = Proportion)) +
+  geom_tile(color = "grey", size = 0.5) +
+  scale_fill_gradient(low = "white", high = "#0066ff") +
+  geom_text(aes(label = sprintf("%.2f", Proportion)), size = 8) +
+  labs(x = "True Genotype", y = "Predicted Genotype", fill = "Col proportion") +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title = element_blank(),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        legend.position = "none",
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+ggsave("/nas/longleaf/home/adaigle/TEforest/plots/conf_mat_TEforest.png", plot = confusion_matrix, width = 3.5, height = 3.5, dpi = 300)
+
 
 # Expand the list columns into separate columns
 het_stats_plot <- het_conf_matrix %>% select(caller, het_stats) %>%
@@ -1026,7 +1182,7 @@ return(plt)
 het_conf_matrix_ref <- benchmark_mapping_results_summary_ref %>%
   rowwise() %>%
   mutate(
-    conf_matrix = list(matrix(c(0, het_fn_length + het_fp_zero_length, homo_fn_length + homo_fp_zero_length,
+    conf_matrix = list(matrix(c(0, het_fn_length, homo_fn_length,
                                  het_fp_length, het_tp_length, homo_fp_het_length,
                                  homo_fp_length, het_fp_homo_length, homo_tp_length),
                               nrow = 3, byrow = TRUE))
@@ -1120,12 +1276,12 @@ benchmark_mapping_results_summary_plot_ref <- benchmark_mapping_results_summary_
 
 
 # Reshape the data to long format
-df_long <- pivot_longer(benchmark_mapping_results_summary_plot_ref, cols = c(precision, recall, f1_score), names_to = "Metric", values_to = "Score")
+df_long_ref <- pivot_longer(benchmark_mapping_results_summary_plot_ref, cols = c(precision, recall, f1_score), names_to = "Metric", values_to = "Score")
 
-df_long$caller <- factor(df_long$caller, levels = benchmark_mapping_results_summary_plot_ref$caller)
+df_long_ref$caller <- factor(df_long_ref$caller, levels = benchmark_mapping_results_summary_plot_ref$caller)
 
 # Create a grouped bar plot
-p_ref <- ggplot(df_long, aes(x = caller, y = Score, fill = Metric)) +
+p_ref <- ggplot(df_long_ref, aes(x = caller, y = Score, fill = Metric)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
   #scale_fill_manual(values = c("precision" = "blue", "recall" = "green", "f1_score" = "red")) +
   labs(y = "Score",
@@ -1147,6 +1303,131 @@ ggsave(paste0(plt_dir, "/hetplt/",genome1, "_", genome2, "_ref.pdf"), hetplt_ref
 ggsave(paste0(plt_dir, "/homoplt/",genome1, "_", genome2, "_ref.pdf"), homoplt_ref, width=14)
 ggsave(paste0(plt_dir, "/freqpltnozero/",genome1, "_", genome2, "_ref.pdf"), freqpltnozero_ref, width=14, height=10)
 ggsave(paste0(plt_dir, "/freqplt/",genome1, "_", genome2, "_ref.pdf"), freqplt_ref, width=14, height=10)
+save.image(file = paste0(plt_dir, "/", genome1, "_", genome2, ".RData"))
 
-
-
+#load("/nas/longleaf/home/adaigle/work/test_TEforest/test_basenorm_feats/2L_2R_plotsJUT-008_MUN-009.RData")
+#
+#benchmark_mapping_results_mycaller <- benchmark_mapping_results %>% filter(caller=="TEforest_classifier_filter_bps")
+#false_negatives <- do.call(c, unname(benchmark_mapping_results_mycaller$nonref_false_negatives))
+#benchmark_mapping_results_temp2 <- benchmark_mapping_results %>% filter(caller=="temp2")
+#false_negatives_temp2 <- do.call(c, unname(benchmark_mapping_results_temp2$nonref_false_negatives))
+#benchmark_mapping_results_retroseq <- benchmark_mapping_results %>% filter(caller=="retroseq")
+#false_negatives_retroseq <- do.call(c, unname(benchmark_mapping_results_retroseq$nonref_false_negatives))
+#
+#fn_other <- GenomicRanges::reduce(c(false_negatives_temp2,false_negatives_retroseq))
+#beattemp2 <- subsetByOverlaps(false_negatives_temp2, false_negatives, type="equal", invert=T)
+#beatretroseq <- subsetByOverlaps(false_negatives_retroseq, false_negatives, type="equal", invert=T)
+#subsetByOverlaps(beatretroseq, beattemp2, type="equal")
+#
+#df_long_filtered <- df_long %>% 
+#  filter(caller %in% c("TEforest_classifier_filter_bps", "temp", "temp2", "teflon", "retroseq", "popoolationte", "popoolationte2", "tepid")) %>%
+#  mutate(caller = recode(caller, "TEforest_classifier_filter_bps" = "TEforest"), 
+#         Metric = recode(Metric, "precision" = "Precision", "recall" = "Recall", "f1_score" = "F1 Score"))
+#
+#nonref_performance <- ggplot(df_long_filtered, aes(x = caller, y = Score, fill = caller)) +
+#  geom_bar(stat = "identity", position = position_dodge(width = 0.8), color = "black") +
+#  #scale_fill_manual(values = c("precision" = "blue", "recall" = "green", "f1_score" = "red")) +
+#  labs(y = "Score",
+#       x = "Caller") +
+#  theme_minimal() +
+#  scale_fill_viridis_d(option="inferno") +
+#  theme(axis.text.x = element_blank(),
+#        legend.title = element_blank(), 
+#        legend.text = element_text(size = 12),
+#        legend.position = "bottom",
+#        axis.text = element_text(size = 12), 
+#        axis.title = element_text(size = 14), 
+#        strip.text = element_text(size=16)) + 
+#  expand_limits(y=c(0,1)) +
+## Add F1 score numbers above the bars
+#  guides(fill = guide_legend(nrow = 1)) +
+#  geom_text(aes(label = sprintf("%.2f", Score), y = Score, group = Metric),
+#              position = position_dodge(width = 0.8), size = 3.75, vjust = -0.5) +
+#  facet_wrap(~ Metric)
+#ggsave("/nas/longleaf/home/adaigle/TEforest/plots/nonref_performance.png", plot = nonref_performance, width = 12, height = 6, dpi = 300)
+#
+#df_long_ref_filtered <- df_long_ref %>% 
+#  filter(caller %in% c("TEforest_classifier_filter_bps", "temp", "temp2", "teflon", "retroseq", "popoolationte", "popoolationte2", "tepid")) %>%
+#  mutate(caller = recode(caller, "TEforest_classifier_filter_bps" = "TEforest"), 
+#         Metric = recode(Metric, "precision" = "Precision", "recall" = "Recall", "f1_score" = "F1 Score"))
+#
+#ref_performance <- ggplot(df_long_ref_filtered, aes(x = caller, y = Score, fill = caller)) +
+#  geom_bar(stat = "identity", position = position_dodge(width = 0.8), color = "black") +
+#  #scale_fill_manual(values = c("precision" = "blue", "recall" = "green", "f1_score" = "red")) +
+#  labs(y = "Score",
+#       x = "Caller") +
+#  theme_minimal() +
+#  scale_fill_viridis_d(option="inferno") +
+#  theme(axis.text.x = element_blank(),
+#        legend.title = element_blank(), 
+#        legend.text = element_text(size = 12),
+#        legend.position = "bottom",
+#        axis.text = element_text(size = 12), 
+#        axis.title = element_text(size = 14), 
+#        strip.text = element_text(size=16)) + 
+#  expand_limits(y=c(0,1)) +
+## Add F1 score numbers above the bars
+#  guides(fill = guide_legend(nrow = 1)) +
+#  geom_text(aes(label = sprintf("%.2f", Score), y = Score, group = Metric),
+#              position = position_dodge(width = 0.8), size = 3.75, vjust = -0.5) +
+#  facet_wrap(~ Metric)
+#  ggsave("/nas/longleaf/home/adaigle/TEforest/plots/ref_performance.png", plot = ref_performance, width = 12, height = 6, dpi = 300)
+#
+#
+#frequency_plot_small <- frequency_plot %>% filter(caller %in% c("TEforest_classifier_filter_bps", "temp2", "retroseq")) %>%
+#  mutate(caller = recode(caller, "TEforest_classifier_filter_bps" = "TEforest"))
+#
+#colors <- c(
+#  "TEforest" = "#F8766D", 
+#  "temp2" = "#CD9600", 
+#  "retroseq" = "#7CAE00", 
+#  "temp" = "#00BE67", 
+#  "popoolationte" = "#00BFC4", 
+#  "teflon" = "#00A9FF", 
+#  "popoolationte2" = "#C77CFF", 
+#  "tepid" = "#FF61CC"
+#)
+## Function to lighten colors
+#lighten_color <- function(color, factor = 0.5) {
+#  col <- col2rgb(color) / 255
+#  col <- (1 - factor) + factor * col
+#  rgb(col[1], col[2], col[3], alpha = 1)
+#}
+#
+## Apply the lightening function to the colors
+#light_colors <- sapply(colors, lighten_color)
+#frequency_plot_small <- frequency_plot_small %>%
+#  mutate(truth = case_when(
+#    truth == 1 ~ "homozygote",
+#    truth == 0.5 ~ "heterozygote",
+#    truth == 0 ~ "absent",
+#    TRUE ~ as.character(truth) 
+#  )) %>%
+#  mutate(caller = factor(caller, levels = c("TEforest", "temp2", "retroseq", "temp", "popoolationte", "teflon", "popoolationte2", "tepid"))) %>%
+#  group_by(caller)
+#
+##freqplt_small <- 
+#frequency_plot_small_viol <- ggplot(frequency_plot_small, aes(x = truth, y = heterozygosity, color = caller, fill = caller)) +
+#  geom_jitter(alpha = 0.2, width = 0.2) +
+#  #geom_boxplot(aes(group=truth), width = 0.05, fill = "lightgray", outlier.shape = NA) +
+#  geom_violin(aes(group=truth), alpha = 0.5) + 
+#  #geom_boxplot(aes(group=truth), width=0.1) +
+#  stat_summary(fun = median, geom = "crossbar", width = 0.2, color = "black", alpha = 0.8) +
+#  #geom_smooth(method = "lm", se = FALSE, color = "red") +
+#  scale_color_manual(values = colors) +
+#  scale_fill_manual(values = light_colors) +
+#  facet_wrap(~caller) +
+#  labs(x = "Genotype",
+#       y = "Predicted Frequency") +
+#  theme_minimal() +
+#  theme(axis.text.x = element_text(size = 12, angle = 0),
+#       legend.position = "none",
+#       axis.text = element_text(size = 12), 
+#       axis.title = element_text(size = 14), 
+#       axis.title.x = element_blank(), 
+#       strip.text = element_text(size=16))
+#ggsave("/nas/longleaf/home/adaigle/TEforest/plots/het_viol.png", plot = frequency_plot_small_viol, width = 12, height = 3, dpi = 300)
+#
+#
+#save.image(file = "/nas/longleaf/home/adaigle/TEforest/plots/150_30X.RData")
+#load(file = "/nas/longleaf/home/adaigle/TEforest/plots/150_30X.RData")
