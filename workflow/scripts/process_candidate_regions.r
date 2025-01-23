@@ -11,9 +11,9 @@ euchromatin_coordinates_path <- args[2]
 #basedir_outputs_path <- args[2]
 
 basedir_outputs_path <- getwd()
-genome <- "AKA-017_GIM-024"
-basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads"
-euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+#genome <- "AKA-017_GIM-024"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads"
+#euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
 
 output_path <- paste0(basedir_outputs_path, "/candidate_regions_data/", genome)
 featvec_csv_path <- paste0(basedir_outputs_path, "/featvec_csvs")

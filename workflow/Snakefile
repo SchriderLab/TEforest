@@ -3,25 +3,14 @@ from snakemake.utils import min_version
 min_version("8.0")
 
 
-include: "rules/common.smk"
+#include: "rules/common.smk"
 
 
-# configfile: "config.yaml"
-
-
-# Define the parameters using the --config option
-
-
-# sample = config["sample"]
-# threads = config["threads"]
 # threads = min(threads, cores)
 rule all:
     input:
         [],
 
-
-# bug: I think fastp assumes files are phred 33. Need to swap places with previous rule.
-# fq_path = config["fq_base_path"]
 
 # Rule order for the main data processing
 ruleorder: organize_training_data > aggregate_organized > train_validate > train_validate_classifier
@@ -310,7 +299,10 @@ rule align_reads:
         "logs/{sample}/align_reads.log",
     shell:
         """
-        bwa-mem2 mem -t {threads} {input.ref_genome} {input.fq1_qc} {input.fq2_qc} | samtools sort -@ {threads} -o {output.bam} -
+        cp {input.ref_genome} fastp/
+        ref_genome_name=$(basename {input.ref_genome})
+        bwa-mem2 index fastp/$ref_genome_name
+        bwa-mem2 mem -t {threads} fastp/$ref_genome_name {input.fq1_qc} {input.fq2_qc} | samtools sort -@ {threads} -o {output.bam} -
         samtools index {output.bam}
         """
 

@@ -1,0 +1,52 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                          count
+-------------------------  -------
+align_reads                      2
+bam_to_fvec                      2
+bam_to_fvec_reference            2
+candidate_regions                2
+condense_data                    2
+condense_data_reference          2
+decompress                       2
+fastp                            2
+filter_reference                 1
+find_breakpoints                 2
+process_candidate_regions        2
+use_model                        2
+use_model_reference              2
+total                           25
+
+Select jobs to execute...
+Execute 2 jobs...
+
+[Thu Jan 23 16:22:42 2025]
+localrule fastp:
+    input: /nas/longleaf/home/adaigle/proj/adaigle/DSPR_illumina/data/rawdone/concatenated_renamed_fqs/A2_1.fq.gz, /nas/longleaf/home/adaigle/proj/adaigle/DSPR_illumina/data/rawdone/concatenated_renamed_fqs/A2_2.fq.gz
+    output: fastp/A2.R1.fq.gz, fastp/A2.R2.fq.gz, fastp/A2.html, fastp/A2.json
+    log: logs/A2/fastp.log
+    jobid: 7
+    benchmark: benchmarks/A2.fastp.benchmark.txt
+    reason: Missing output files: fastp/A2.R1.fq.gz, fastp/A2.R2.fq.gz
+    wildcards: sample=A2
+    threads: 10
+    resources: tmpdir=/tmp
+
+fastp -w 10 --detect_adapter_for_pe -i /nas/longleaf/home/adaigle/proj/adaigle/DSPR_illumina/data/rawdone/concatenated_renamed_fqs/A2_1.fq.gz -I /nas/longleaf/home/adaigle/proj/adaigle/DSPR_illumina/data/rawdone/concatenated_renamed_fqs/A2_2.fq.gz -o fastp/A2.R1.fq.gz -O fastp/A2.R2.fq.gz -h fastp/A2.html -j fastp/A2.json -z 4
+
+[Thu Jan 23 16:22:44 2025]
+localrule fastp:
+    input: /nas/longleaf/home/adaigle/proj/adaigle/DSPR_illumina/data/rawdone/concatenated_renamed_fqs/A1_1.fq.gz, /nas/longleaf/home/adaigle/proj/adaigle/DSPR_illumina/data/rawdone/concatenated_renamed_fqs/A1_2.fq.gz
+    output: fastp/A1.R1.fq.gz, fastp/A1.R2.fq.gz, fastp/A1.html, fastp/A1.json
+    log: logs/A1/fastp.log
+    jobid: 20
+    benchmark: benchmarks/A1.fastp.benchmark.txt
+    reason: Missing output files: fastp/A1.R1.fq.gz, fastp/A1.R2.fq.gz
+    wildcards: sample=A1
+    threads: 10
+    resources: tmpdir=/tmp
+
+fastp -w 10 --detect_adapter_for_pe -i /nas/longleaf/home/adaigle/proj/adaigle/DSPR_illumina/data/rawdone/concatenated_renamed_fqs/A1_1.fq.gz -I /nas/longleaf/home/adaigle/proj/adaigle/DSPR_illumina/data/rawdone/concatenated_renamed_fqs/A1_2.fq.gz -o fastp/A1.R1.fq.gz -O fastp/A1.R2.fq.gz -h fastp/A1.html -j fastp/A1.json -z 4

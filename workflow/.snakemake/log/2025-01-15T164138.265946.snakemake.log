@@ -1,0 +1,9 @@
+Building DAG of jobs...
+InputFunctionException in rule fastp in file /nas/longleaf/home/adaigle/TEforest/workflow/Snakefile, line 70:
+Error:
+  ValueError: No valid input files found for sample A1_TEforest_nonredundant.bed output/A2 read 1
+Wildcards:
+  sample=A1_TEforest_nonredundant.bed output/A2
+Traceback:
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile", line 72, in <lambda>
+  File "/nas/longleaf/home/adaigle/TEforest/workflow/Snakefile", line 68, in find_fastq (rule fastp, line 115, /nas/longleaf/home/adaigle/TEforest/workflow/Snakefile)

@@ -1,0 +1,3 @@
+Building DAG of jobs...
+MissingRuleException:
+No rule to produce /nas/longleaf/home/adaigle/work/test_TEforest/test_launcher/output/A1_TEforest_nonredundant.bed (if you use input functions make sure that they don't raise unexpected exceptions).

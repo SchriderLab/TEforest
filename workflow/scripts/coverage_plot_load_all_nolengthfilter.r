@@ -556,20 +556,20 @@ combined_genotype_data_54 <- combined_genotype_data_54 %>%
 plot_combined <- function(df) {
     set.seed(123)  # For reproducibility
     df <- df %>%
-        mutate(jittered_covg = jitter(covg, amount = 2))  # Jitter the x-axis (covg) values
+        mutate(jittered_covg = jitter(covg, amount = 1))  # Jitter the x-axis (covg) values
     df$caller <- factor(df$caller, levels = names(colors))
     df <- df[order(df$caller, decreasing = TRUE), ]
     ggplot(df) +
         # Plot for Tphomo
-        geom_line(aes(x = jittered_covg, y = tphomo_mean, color = caller), size = 1.5, alpha = 0.8) +
+        geom_line(aes(x = jittered_covg, y = tphomo_mean, color = caller), size = 1, alpha = 0.8) +
         geom_point(aes(x = jittered_covg, y = tphomo_mean, color = caller), size = 3) +
-        geom_errorbar(aes(x = jittered_covg, ymin = tphomo_mean - tphomo_sd, ymax = tphomo_mean + tphomo_sd, color = caller),
-                      width = 0.5, size = 1, alpha = 0.5) +
+        #geom_errorbar(aes(x = jittered_covg, ymin = tphomo_mean - tphomo_sd, ymax = tphomo_mean + tphomo_sd, color = caller),
+        #              width = 0.5, size = 1, alpha = 0.5) +
         # Plot for Tphet with lighter color
-        geom_line(aes(x = jittered_covg, y = tphet_mean, color = caller), size = 1.5, linetype = "dashed") +
-        geom_point(aes(x = jittered_covg, y = tphet_mean, color = caller), size = 3) +
-        geom_errorbar(aes(x = jittered_covg, ymin = tphet_mean - tphet_sd, ymax = tphet_mean + tphet_sd, color = caller),
-                      width = 0.5, size = 1, alpha = 0.5) +
+        geom_line(aes(x = jittered_covg, y = tphet_mean, color = caller), size = 1, alpha=0.5) +
+        geom_point(aes(x = jittered_covg, y = tphet_mean, color = caller), size = 3, alpha=0.5, shape = 17) +
+        #geom_errorbar(aes(x = covg, ymin = tphet_mean - tphet_sd, ymax = tphet_mean + tphet_sd, color = caller),
+        #              width = 0.5, size = 1, alpha = 0.5) +
         labs(
             x = "Coverage",
             y = "Predicted prevalence",
@@ -580,8 +580,8 @@ plot_combined <- function(df) {
         theme(
             legend.title = element_blank(),
             legend.text = element_text(size = 16),
-            axis.text = element_text(size = 12),
-            axis.title = element_text(size = 12),
+            axis.text = element_text(size = 10),
+            axis.title = element_text(size = 10),
             strip.text = element_text(size = 18)
         )
 }
@@ -768,14 +768,14 @@ final_plot_54 <- plot_grid(
 )
 
 
-ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_150.svg", final_plot, dpi=150, width = 8.5, height = 8.5)
-ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_150.jpg", final_plot, dpi=150, width = 8.5, height = 8.5)
+ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_150.svg", final_plot, dpi=300, width = 8.5, height = 8.5)
+ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_150.jpg", final_plot, dpi=300, width = 8.5, height = 8.5)
 
-ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_125.svg", final_plot_125, dpi=150, width = 8.5, height = 8.5)
-ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_125.jpg", final_plot_125, dpi=150, width = 8.5, height = 8.5)
+ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_125.svg", final_plot_125, dpi=300, width = 8.5, height = 8.5)
+ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_125.jpg", final_plot_125, dpi=300, width = 8.5, height = 8.5)
 
-ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_54.svg", final_plot_54, dpi=150, width = 8.5, height = 8.5)
-ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_54.jpg", final_plot_54, dpi=150, width = 8.5, height = 8.5)
+ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_54.svg", final_plot_54, dpi=300, width = 8.5, height = 8.5)
+ggsave("/nas/longleaf/home/adaigle/TEforest/plots/genotyping_54.jpg", final_plot_54, dpi=300, width = 8.5, height = 8.5)
 
 
 # investigate temp2 for 125 bp
