@@ -65,9 +65,9 @@ python TEforest.py \
 - **`--workflow_dir`**: Directory containing the `Snakefile` (`workflow/Snakefile`).
 - **`--workdir`**: Directory to store outputs and logs.
 - **`--threads`**: Number of CPU threads to use. 16 per sample is recommended.
-- **`--consensusTEs`, `--ref_genome`, `--ref_te_locations`, `--euchromatin`**: Input reference files for TE detection. All calls outside of the regions denoted in euchromatin will be filtered. 
-- **`--model`**: Path to the main trained model (Random Forest).
-- **`--ref_model`**: Path to the reference model (e.g., for control or comparison).
+- **`--consensusTEs`, `--ref_genome`, `--ref_te_locations`, `--euchromatin`**: Input reference files for TE detection. All calls outside of the regions denoted in euchromatin will be filtered. Example files used for Drosophila melanogaster are located in example_files/.
+- **`--model`**: Path to the main trained model. Choose a model close to the coverage of your reads. We recommend downsampling the reads to the coverage of the trained model with the nearest coverage. 
+- **`--ref_model`**: Path to the reference model.
 - **`--fq_base_path`**: Directory containing FASTQ files. Should contain sample in name like {sample}_1.fastq.gz and {sample}_2.fastq.gz or {sample}_1.fq.gz.
 - **`--samples`**: List of sample identifiers to process (space-separated).
 
@@ -78,6 +78,6 @@ The script will generate:
 
 ## Contributing
 
-- We are actively working on **usability improvements** (e.g., streamlined CLI arguments, a fully functional conda installation).
+- We are actively working on **usability improvements** over the next several months (e.g., streamlined CLI arguments, a fully functional conda installation, automatic coverage downsampling, faster runtime). 
 - This pipeline has only been tested in Drosophila melanogaster. Future tests and updates will ensure useability in other species. 
 - Issues and pull requests are welcome.
