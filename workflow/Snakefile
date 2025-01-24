@@ -107,41 +107,41 @@ rule fastp_het:
 #        "gunzip -c {input.fq2_gz} > {output.fq2_qc}"
 
 
-#rule decompress:
-#    input:
-#        fq1_gz="fastp/{sample}.R1.fq.gz",
-#        fq2_gz="fastp/{sample}.R2.fq.gz",
-#    output:
-#        fq1_qc="fastp/{sample}.R1.fq",
-#        fq2_qc="fastp/{sample}.R2.fq",
-#    threads: config["threads"]
-#    benchmark:
-#        "benchmarks/{sample}.decompress.benchmark.txt"
-#    log:
-#        "logs/{sample}/decompress.log",
-#    shell:
-#        "seqkit convert {input.fq1_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq1_qc}; "
-#        "seqkit convert {input.fq2_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq2_qc}"
-
 rule decompress:
     input:
         fq1_gz="fastp/{sample}.R1.fq.gz",
-        fq2_gz="fastp/{sample}.R2.fq.gz"
+        fq2_gz="fastp/{sample}.R2.fq.gz",
     output:
         fq1_qc="fastp/{sample}.R1.fq",
-        fq2_qc="fastp/{sample}.R2.fq"
+        fq2_qc="fastp/{sample}.R2.fq",
+    threads: 4
+    benchmark:
+        "benchmarks/{sample}.decompress.benchmark.txt"
+    log:
+        "logs/{sample}/decompress.log",
     shell:
-        """
-        tmp1=fastp/{wildcards.sample}.tmp.R1.fq
-        tmp2=fastp/{wildcards.sample}.tmp.R2.fq
-        
-        gunzip -c {input.fq1_gz} > $tmp1
-        gunzip -c {input.fq2_gz} > $tmp2
-        awk 'BEGIN{{OFS="\\n"}} {{header=$0; getline seq; getline plus; getline qual; if (header ~ /^@/ && header ~ /\\/1$|\\/2$/) sub(/\\/1$|\\/2$/, "", header); print header, seq, plus, qual}}' $tmp1 > {output.fq1_qc}
+        "seqkit convert {input.fq1_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq1_qc}; "
+        "seqkit convert {input.fq2_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq2_qc}"
 
-        awk 'BEGIN{{OFS="\\n"}} {{header=$0; getline seq; getline plus; getline qual; if (header ~ /^@/ && header ~ /\\/1$|\\/2$/) sub(/\\/1$|\\/2$/, "", header); print header, seq, plus, qual}}' $tmp2 > {output.fq2_qc}
-        rm -f $tmp1 $tmp2
-        """
+#rule decompress:
+#    input:
+#        fq1_gz="fastp/{sample}.R1.fq.gz",
+#        fq2_gz="fastp/{sample}.R2.fq.gz"
+#    output:
+#        fq1_qc="fastp/{sample}.R1.fq",
+#        fq2_qc="fastp/{sample}.R2.fq"
+#    shell:
+#        """
+#        tmp1=fastp/{wildcards.sample}.tmp.R1.fq
+#        tmp2=fastp/{wildcards.sample}.tmp.R2.fq
+#        
+#        gunzip -c {input.fq1_gz} > $tmp1
+#        gunzip -c {input.fq2_gz} > $tmp2
+#        awk 'BEGIN{{OFS="\\n"}} {{header=$0; getline seq; getline plus; getline qual; if (header ~ /^@/ && header ~ /\\/1$|\\/2$/) sub(/\\/1$|\\/2$/, "", header); print header, seq, plus, qual}}' $tmp1 > {output.fq1_qc}
+#
+#        awk 'BEGIN{{OFS="\\n"}} {{header=$0; getline seq; getline plus; getline qual; if (header ~ /^@/ && header ~ /\\/1$|\\/2$/) sub(/\\/1$|\\/2$/, "", header); print header, seq, plus, qual}}' $tmp2 > {output.fq2_qc}
+#        rm -f $tmp1 $tmp2
+#        """
 
 rule decompress_het:
     input:
@@ -179,8 +179,10 @@ rule candidate_regions:
     log:
         "logs/{sample}/candidate_regions.log",
     shell:
-        "{candidate_regions_script} -o candidate_regions_data/{wildcards.sample} -c {input.consensusTEs} -r {input.ref_te_locations} -@ {threads} -g {input.ref_genome} -1 {input.fq1_qc} -2 {input.fq2_qc} -n {wildcards.sample}"
-
+        """
+        ref_genome_name=$(basename {input.ref_genome})
+        {candidate_regions_script} -o candidate_regions_data/{wildcards.sample} -c {input.consensusTEs} -r {input.ref_te_locations} -@ {threads} -g fastp/$ref_genome_name -1 {input.fq1_qc} -2 {input.fq2_qc} -n {wildcards.sample}
+        """
 
 rule candidate_regions_het:
     input:
@@ -210,6 +212,7 @@ rule process_candidate_regions:
     input:
         "candidate_regions_data/{sample}",
         euchromatin=config["euchromatin"],
+        ref_te_locations=config["ref_te_locations"],
     output:
         featvec_csv="featvec_csvs/{sample}.csv",
         featvec_csv_ref="featvec_csvs/{sample}_reference.csv"
@@ -218,7 +221,7 @@ rule process_candidate_regions:
     log:
         "logs/{sample}/process_candidate_regions.log",
     shell:
-        "{process_regions_script} {wildcards.sample} {input.euchromatin}"
+        "{process_regions_script} {wildcards.sample} {input.euchromatin} {input.ref_te_locations}"
 
 
 #swap

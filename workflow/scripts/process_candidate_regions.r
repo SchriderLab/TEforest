@@ -8,6 +8,7 @@ args <- commandArgs(TRUE)
 print(args)
 genome <- args[1]
 euchromatin_coordinates_path <- args[2]
+ISO1_og <- args[3]
 #basedir_outputs_path <- args[2]
 
 basedir_outputs_path <- getwd()
@@ -20,7 +21,7 @@ featvec_csv_path <- paste0(basedir_outputs_path, "/featvec_csvs")
 dir.create(file.path(featvec_csv_path))
 
 #need to replace this path once I fix this... 
-ISO1_og <- read.table("/nas/longleaf/home/adaigle/Rech_updated_supplemental/ReferenceCoordinates/ISO-1_Ref_Coord.bed")
+#ISO1_og <- read.table("/nas/longleaf/home/adaigle/Rech_updated_supplemental/ReferenceCoordinates/ISO-1_Ref_Coord.bed")
 ISO1_og$V7 <- gsub("-", "_", ISO1_og$V7)
 
 euchromatin_coordinates <- makeGRangesFromDataFrame(read.table(euchromatin_coordinates_path), seqnames.field="V1", start.field="V2", end.field="V3")

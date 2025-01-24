@@ -8,3 +8,5 @@ temp/**
 plots/150_30X.RData
 workflow/scripts/sfs_analysis_slow_done.RData
 slurm-57808674.out
+slurm-57845766.out
+slurm-57853192.out
