@@ -404,7 +404,10 @@ rule condense_data:
     log:
         "logs/{sample}/condense_data.log",
     shell:
-        "rm {input.feat_vec_dir}/*readcount.npy; python {condense_data_script} -i {input.feat_vec_dir} -o {output.npz}"
+        """
+        find {input.feat_vec_dir} -name "*readcount.npy" -delete
+        python {condense_data_script} -i {input.feat_vec_dir} -o {output.npz}
+        """
 
 rule condense_data_reference:
     input:
@@ -417,7 +420,7 @@ rule condense_data_reference:
         "logs/{sample}/condense_data.log",
     shell:
         """
-        rm {input.feat_vec_dir}/*readcount.npy
+        find {input.feat_vec_dir} -name "*readcount.npy" -delete
         find {input.feat_vec_dir} -type f -size 800c -exec rm -f {{}} +
         python {condense_data_script} -i {input.feat_vec_dir} -o {output.npz}
         """

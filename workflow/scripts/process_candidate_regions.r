@@ -8,20 +8,21 @@ args <- commandArgs(TRUE)
 print(args)
 genome <- args[1]
 euchromatin_coordinates_path <- args[2]
-ISO1_og <- args[3]
+ISO1_og_path <- args[3]
 #basedir_outputs_path <- args[2]
 
 basedir_outputs_path <- getwd()
 #genome <- "AKA-017_GIM-024"
 #basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads"
 #euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+#ISO1_og_path <- "/nas/longleaf/home/adaigle/Rech_updated_supplemental/DeNovoCoordinates/ISO1.bed"
 
 output_path <- paste0(basedir_outputs_path, "/candidate_regions_data/", genome)
 featvec_csv_path <- paste0(basedir_outputs_path, "/featvec_csvs")
 dir.create(file.path(featvec_csv_path))
 
-#need to replace this path once I fix this... 
-#ISO1_og <- read.table("/nas/longleaf/home/adaigle/Rech_updated_supplemental/ReferenceCoordinates/ISO-1_Ref_Coord.bed")
+
+ISO1_og <- read.table(ISO1_og_path)
 ISO1_og$V7 <- gsub("-", "_", ISO1_og$V7)
 
 euchromatin_coordinates <- makeGRangesFromDataFrame(read.table(euchromatin_coordinates_path), seqnames.field="V1", start.field="V2", end.field="V3")
@@ -165,39 +166,6 @@ mapping_results_filter <- mapping_results %>% mutate(
 )
 print("filtering complete")
 
-#benchmark_mapping_results <- mapping_results_filter %>% mutate(
-#    nonreference_genome_truth_forTE = map(TE, # reduce to get rid of nested TEs of same type
-#        ~ makeGRangesFromDataFrame(nonreference_genome_truth %>% filter(TE==.x), keep.extra.columns = T )),
-#    nonreference_genome_truth_ref = map(nonreference_genome_truth_forTE,
-#        ~ subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE)),
-#    nonreference_genome_truth_nonref = map(nonreference_genome_truth_forTE,
-#        ~ subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE, invert = TRUE)),
-#    #nonreference_genome_truth_nonref = map(nonreference_genome_truth_nonref,
-#    #    ~ extend(.x, 500,500)),
-#    expand = map2(expand, TE, ~ GRanges(seqnames = seqnames(.x), 
-#        ranges = ranges(.x),
-#        TE = .y)),
-#    f1_score = unlist(map2(expand, nonreference_genome_truth_forTE, ~ f1_score(.x, .y))),
-#    nonref_false_negatives = map2(expand, nonreference_genome_truth_nonref, 
-#        ~ subsetByOverlaps(.y, .x, ignore.strand = TRUE, invert=TRUE)),
-#    nonref_true_positives = map2(expand, nonreference_genome_truth_nonref, 
-#        ~ subsetByOverlaps(.x, .y, ignore.strand = TRUE)),
-#    nonref_false_positives = map2(expand, nonreference_genome_truth_nonref, 
-#        ~ subsetByOverlaps(.x, .y, ignore.strand = TRUE, invert = TRUE)),
-#    nonref_true_positives_length = unlist(map(nonreference_genome_truth_nonref,~ length(.x))),
-#    stats = map2(expand, nonreference_genome_truth_nonref, ~ tp_fp_fn(.x, .y))
-#) %>%
-#  unnest_wider(stats)
-#print("benchmarking complete")
-#
-#take all my true coordinates from the benchmarking DF
-#not necessary to reduce because any candidate range overlapping this dataset
-#will count as a TP
-#false_negatives <- do.call(c, c(benchmark_mapping_results$nonref_false_negatives))
-#
-#true_positives <- do.call(c, c(benchmark_mapping_results$nonref_true_positives))
-#false_positives <- do.call(c, c(benchmark_mapping_results$nonref_false_positives))
-
 calls <- do.call(c, c(mapping_results_filter$expand))
 
 calls_df <- calls %>%
@@ -205,21 +173,7 @@ calls_df <- calls %>%
   mutate(Class = 0, Sample = genome, start = start - 1) %>%
   select(Sample, seqnames, start, end, Class, TE) %>%
   rename(Chrom = seqnames, Ref_begin = start, Ref_end = end)
-#Here I make csv's for neural net training
-# I also subtract 1 from beginning to make coordinates 0 based
-#tp_df <- true_positives %>%
-#  as.data.frame() %>%
-#  mutate(Class = 1, Sample = genome, start = start - 1) %>%
-#  select(Sample, seqnames, start, end, Class, TE) %>%
-#  rename(Chrom = seqnames, Ref_begin = start, Ref_end = end)
-#
-#fp_df <- false_positives %>%
-#  as.data.frame() %>%
-#  mutate(Class = 0, Sample = genome, start = start - 1) %>%
-#  select(Sample, seqnames, start, end, Class, TE) %>%
-#  rename(Chrom = seqnames, Ref_begin = start, Ref_end = end)
 
-#featvec_csv <- rbind(tp_df, fp_df)
 write.csv(calls_df, file = paste0(featvec_csv_path, "/", genome, ".csv"), quote = FALSE, row.names = FALSE)
 write.csv(reference_df_labled, file = paste0(featvec_csv_path, "/", genome, "_reference.csv"), quote = FALSE, row.names = FALSE)
 
