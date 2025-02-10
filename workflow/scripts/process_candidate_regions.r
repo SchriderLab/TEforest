@@ -12,10 +12,10 @@ ISO1_og_path <- args[3]
 #basedir_outputs_path <- args[2]
 
 basedir_outputs_path <- getwd()
-#genome <- "AKA-017_GIM-024"
-#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads"
-#euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
-#ISO1_og_path <- "/nas/longleaf/home/adaigle/Rech_updated_supplemental/DeNovoCoordinates/ISO1.bed"
+#genome <- "RW7000"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/test_celegans2"
+#euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/celegans/chroms.txt"
+#ISO1_og_path <- "/nas/longleaf/home/adaigle/work/celegans/tc1_improved.bed"
 
 output_path <- paste0(basedir_outputs_path, "/candidate_regions_data/", genome)
 featvec_csv_path <- paste0(basedir_outputs_path, "/featvec_csvs")

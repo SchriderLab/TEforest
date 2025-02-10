@@ -28,7 +28,10 @@ rule filter_reference:
     output:
         "ref_genome/filtered_ISO1.bed",
     shell:
-        "{filter_ref_script} {input.ref_te_locations}"
+        """
+        mkdir -p fastp 
+        {filter_ref_script} {input.ref_te_locations}
+        """
 
 rule index_ref:
     input:
@@ -61,8 +64,8 @@ rule fastp:
         fq1=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "1"),
         fq2=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "2")
     output:
-        fq1_gz="fastp/{sample}.R1.fq.gz",
-        fq2_gz="fastp/{sample}.R2.fq.gz",
+        fq1_gz="fastp/{sample}.R1.fq",
+        fq2_gz="fastp/{sample}.R2.fq",
         html="fastp/{sample}.html",
         json="fastp/{sample}.json",
     threads: 10
@@ -71,7 +74,7 @@ rule fastp:
     benchmark:
         "benchmarks/{sample}.fastp.benchmark.txt"
     shell:
-        "fastp -w {threads} --detect_adapter_for_pe -i {input.fq1} -I {input.fq2} -o fastp/{wildcards.sample}.R1.fq.gz -O fastp/{wildcards.sample}.R2.fq.gz -h fastp/{wildcards.sample}.html -j fastp/{wildcards.sample}.json -z 4"
+        "fastp -w {threads} --detect_adapter_for_pe -i {input.fq1} -I {input.fq2} -o fastp/{wildcards.sample}.R1.fq -O fastp/{wildcards.sample}.R2.fq -h fastp/{wildcards.sample}.html -j fastp/{wildcards.sample}.json -z 4"
 
 
 rule fastp_het:
@@ -79,8 +82,8 @@ rule fastp_het:
         fq1="het_reads/{sample}/{sample}_1.fq",
         fq2="het_reads/{sample}/{sample}_2.fq",
     output:
-        fq1_gz="fastp_het/{sample}.R1.fq.gz",
-        fq2_gz="fastp_het/{sample}.R2.fq.gz",
+        fq1_gz="fastp_het/{sample}.R1.fq",
+        fq2_gz="fastp_het/{sample}.R2.fq",
         html="fastp_het/{sample}.html",
         json="fastp_het/{sample}.json",
     threads: config["threads"]
@@ -89,7 +92,7 @@ rule fastp_het:
     benchmark:
         "benchmarks/{sample}.fastp.benchmark.txt"
     shell:
-        "fastp -w {threads} --detect_adapter_for_pe -i {input.fq1} -I {input.fq2} -o fastp_het/{wildcards.sample}.R1.fq.gz -O fastp_het/{wildcards.sample}.R2.fq.gz -h fastp_het/{wildcards.sample}.html -j fastp_het/{wildcards.sample}.json -z 4"
+        "fastp -w {threads} --detect_adapter_for_pe -i {input.fq1} -I {input.fq2} -o fastp_het/{wildcards.sample}.R1.fq -O fastp_het/{wildcards.sample}.R2.fq -h fastp_het/{wildcards.sample}.html -j fastp_het/{wildcards.sample}.json -z 4"
 
 
 # rule decompress:
@@ -107,21 +110,21 @@ rule fastp_het:
 #        "gunzip -c {input.fq2_gz} > {output.fq2_qc}"
 
 
-rule decompress:
-    input:
-        fq1_gz="fastp/{sample}.R1.fq.gz",
-        fq2_gz="fastp/{sample}.R2.fq.gz",
-    output:
-        fq1_qc="fastp/{sample}.R1.fq",
-        fq2_qc="fastp/{sample}.R2.fq",
-    threads: 4
-    benchmark:
-        "benchmarks/{sample}.decompress.benchmark.txt"
-    log:
-        "logs/{sample}/decompress.log",
-    shell:
-        "seqkit convert {input.fq1_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq1_qc}; "
-        "seqkit convert {input.fq2_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq2_qc}"
+###rule decompress:
+###    input:
+###        fq1_gz="fastp/{sample}.R1.fq.gz",
+###        fq2_gz="fastp/{sample}.R2.fq.gz",
+###    output:
+###        fq1_qc="fastp/{sample}.R1.fq",
+###        fq2_qc="fastp/{sample}.R2.fq",
+###    threads: 4
+###    benchmark:
+###        "benchmarks/{sample}.decompress.benchmark.txt"
+###    log:
+###        "logs/{sample}/decompress.log",
+###    shell:
+###        "seqkit convert {input.fq1_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq1_qc}; "
+###        "seqkit convert {input.fq2_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq2_qc}"
 
 #rule decompress:
 #    input:
@@ -143,21 +146,21 @@ rule decompress:
 #        rm -f $tmp1 $tmp2
 #        """
 
-rule decompress_het:
-    input:
-        fq1_gz="fastp_het/{sample}.R1.fq.gz",
-        fq2_gz="fastp_het/{sample}.R2.fq.gz",
-    output:
-        fq1_qc="fastp_het/{sample}.R1.fq",
-        fq2_qc="fastp_het/{sample}.R2.fq",
-    threads: config["threads"]
-    benchmark:
-        "benchmarks/{sample}.decompress.benchmark.txt"
-    log:
-        "logs/{sample}/decompress.log",
-    shell:
-        "seqkit convert {input.fq1_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq1_qc}; "
-        "seqkit convert {input.fq2_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq2_qc}"
+##rule decompress_het:
+##    input:
+##        fq1_gz="fastp_het/{sample}.R1.fq.gz",
+##        fq2_gz="fastp_het/{sample}.R2.fq.gz",
+##    output:
+##        fq1_qc="fastp_het/{sample}.R1.fq",
+##        fq2_qc="fastp_het/{sample}.R2.fq",
+##    threads: config["threads"]
+##    benchmark:
+##        "benchmarks/{sample}.decompress.benchmark.txt"
+##    log:
+##        "logs/{sample}/decompress.log",
+##    shell:
+##        "seqkit convert {input.fq1_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq1_qc}; "
+##        "seqkit convert {input.fq2_gz} -N 1 --to Illumina-1.5+ | sed 's/\/[12]//' > {output.fq2_qc}"
 
 
 candidate_regions_script = workflow.basedir + "/scripts/find_candidate_regions.sh"
@@ -165,8 +168,13 @@ candidate_regions_script = workflow.basedir + "/scripts/find_candidate_regions.s
 
 rule candidate_regions:
     input:
-        fq1_qc="fastp/{sample}.R1.fq",
-        fq2_qc="fastp/{sample}.R2.fq",
+        fq1_qc= "downsampled/{sample}_1.fq",
+        fq2_qc= "downsampled/{sample}_2.fq",
+        #fq1_qc="fastp/{sample}.R1.fq",
+        #fq2_qc="fastp/{sample}.R2.fq",
+        #"ref_genome/filtered_ISO1.bed",
+        #fq1_qc=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "1"),
+        #fq2_qc=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "2"),
         consensusTEs=config["consensusTEs"],
         ref_genome=config["ref_genome"],
         ref_te_locations="ref_genome/filtered_ISO1.bed",
@@ -186,10 +194,10 @@ rule candidate_regions:
 
 rule candidate_regions_het:
     input:
-        fq1_qc="het_reads/{sample}/{sample}_1.fq",
-        fq2_qc="het_reads/{sample}/{sample}_2.fq",
-        #fq1_qc="fastp_het/{sample}.R1.fq",
-        #fq2_qc="fastp_het/{sample}.R2.fq",
+        #fq1_qc="het_reads/{sample}/{sample}_1.fq",
+        #fq2_qc="het_reads/{sample}/{sample}_2.fq",
+        fq1_qc="fastp_het/{sample}.R1.fq",
+        fq2_qc="fastp_het/{sample}.R2.fq",
         consensusTEs=config["consensusTEs"],
         ref_genome=config["ref_genome"],
         ref_te_locations="ref_genome/filtered_ISO1.bed",
@@ -290,8 +298,11 @@ rule generate_synthetic_hets:
 
 rule align_reads:
     input:
-        fq1_qc="fastp/{sample}.R1.fq.gz",
-        fq2_qc="fastp/{sample}.R2.fq.gz",
+        "ref_genome/filtered_ISO1.bed",
+        #fq1_qc="fastp/{sample}.R1.fq",
+        #fq2_qc="fastp/{sample}.R2.fq",
+        fq1_qc=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "1"),
+        fq2_qc=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "2"),
         ref_genome=config["ref_genome"],
     output:
         bam="aligned/{sample}.bam",
@@ -310,12 +321,42 @@ rule align_reads:
         """
 
 
+downsample_reads_script = (
+    workflow.basedir + "/scripts/downsample_reads.sh"
+)
+
+
+rule downsample_reads:
+    input:
+        bam = "aligned/{sample}.bam"
+    output:
+        bam_downsampled = "downsampled/{sample}.bam",
+        bai_downsampled = "downsampled/{sample}.bam.bai",
+        fq1 = "downsampled/{sample}_1.fq",
+        fq2 = "downsampled/{sample}_2.fq",
+        fq_single = "downsampled/{sample}_singletons.fq",
+        coverage = "downsampled/{sample}_coverage.txt"
+    threads: 16
+    benchmark:
+        "benchmarks/{sample}.downsample_reads.benchmark.txt"
+    log:
+        "logs/{sample}/downsample_reads.log"
+    shell:
+        """
+        {downsample_reads_script} \
+            {input.bam} \
+            {threads} \
+            downsampled \
+            {wildcards.sample}
+        """
+
+
 rule align_reads_het:
     input:
-        #fq1_qc="fastp_het/{sample}.R1.fq",
-        #fq2_qc="fastp_het/{sample}.R2.fq",
-        fq1_qc="het_reads/{sample}/{sample}_1.fq",
-        fq2_qc="het_reads/{sample}/{sample}_2.fq",
+        fq1_qc="fastp_het/{sample}.R1.fq",
+        fq2_qc="fastp_het/{sample}.R2.fq",
+        #fq1_qc="het_reads/{sample}/{sample}_1.fq",
+        #fq2_qc="het_reads/{sample}/{sample}_2.fq",
         ref_genome=config["ref_genome"],
     output:
         bam="aligned_het/{sample}.bam",
@@ -338,7 +379,8 @@ bam_to_fvec_script = workflow.basedir + "/scripts/bam_to_fvec_cov_normalized.py"
 rule bam_to_fvec:
     input:
         featvec_csv="featvec_csvs/{sample}.csv",  #+ "featvec_csvs_hettrain/{sample}.csv",
-        bam="aligned/{sample}.bam",
+        bam="downsampled/{sample}.bam",
+        #bam="aligned/{sample}.bam",
     output:
         feat_vec_dir=directory("feature_vectors/{sample}"),
     benchmark:
@@ -346,13 +388,14 @@ rule bam_to_fvec:
     log:
         "logs/{sample}/bam_to_fvec.log",
     shell:
-        "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors -bd aligned -tebd candidate_regions_data"
+        "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors -bd downsampled -tebd candidate_regions_data"
 
 
 rule bam_to_fvec_reference:
     input:
         featvec_csv="featvec_csvs/{sample}_reference.csv",
-        bam="aligned/{sample}.bam",
+        bam="downsampled/{sample}.bam",
+        #bam="aligned/{sample}.bam",
     output:
         feat_vec_dir=directory("feature_vectors_reference/{sample}"),
     benchmark:
@@ -361,7 +404,7 @@ rule bam_to_fvec_reference:
     log:
         "logs/{sample}/bam_to_fvec_ref.log",
     shell:
-        "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors_reference -bd aligned -tebd candidate_regions_data"
+        "python {bam_to_fvec_script} -i {input.featvec_csv} -od feature_vectors_reference -bd downsampled -tebd candidate_regions_data"
 
 
 rule bam_to_fvec_het:
@@ -680,7 +723,7 @@ rule find_breakpoints:
     log:
         "logs/{sample}/find_breakpoints.log",
     shell:
-        "{find_breakpoints_script} {wildcards.sample} {input.predictions} output/ aligned/ {input.predictions_ref} /candidate_regions_data/"
+        "{find_breakpoints_script} {wildcards.sample} {input.predictions} output/ downsampled/ {input.predictions_ref} /candidate_regions_data/"
 
 
 rule find_breakpoints_het:
@@ -718,7 +761,7 @@ rule find_breakpoints_het_classifier:
     log:
         "logs/{sample}/find_breakpoints.log",
     shell:
-        "{find_breakpoints_script} {wildcards.sample} {input.predictions1} 2L2R_model_validation_output_classifier/ aligned_het/ {input.predictions1_ref}; {find_breakpoints_script} {wildcards.sample} {input.predictions2} 3L3RX_model_validation_output_classifier/ aligned_het/ {input.predictions2_ref}"
+        "{find_breakpoints_script} {wildcards.sample} {input.predictions1} 2L2R_model_validation_output_classifier/ aligned_het/ {input.predictions1_ref} /candidate_regions_data_het/; {find_breakpoints_script} {wildcards.sample} {input.predictions2} 3L3RX_model_validation_output_classifier/ aligned_het/ {input.predictions2_ref} /candidate_regions_data_het/"
 
 #swap
 #benchmark_script = workflow.basedir + "/scripts/benchmark_te_callers_het.r"

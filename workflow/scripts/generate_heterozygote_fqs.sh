@@ -28,8 +28,8 @@ fi
 
 cd $output_dir
 # Calculate average coverage by chromosome for the first BAM file
-echo "Calculating average coverage by chromosome for $input_bam1"
-coverage1=$(samtools depth $input_bam1 | awk '{sum[$1]+=$3; count[$1]++} END {for(chr in sum) print chr, sum[chr]/count[chr]}')
+#echo "Calculating average coverage by chromosome for $input_bam1"
+#coverage1=$(samtools depth $input_bam1 | awk '{sum[$1]+=$3; count[$1]++} END {for(chr in sum) print chr, sum[chr]/count[chr]}')
 echo "Calculating average coverage for $input_bam1"
 coverage1=$(samtools depth $input_bam1 | awk '{sum+=$3; count++} END {print sum/count}')
 #coverage1=49.4922

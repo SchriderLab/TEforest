@@ -41,12 +41,12 @@ print(csv_path)
 csv_path_reference <- paste0(getwd(), "/", csv_path_reference)
 print(csv_path_reference)
 
-#genomes <- "JUT-008_MUN-009"
-#csv_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads/output/JUT-008_MUN-009/predictions.csv"
-#results_path <- "output/"
-#aligned_dir <- "aligned/"
-#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads/"
-#csv_path_reference <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads/output/JUT-008_MUN-009/predictions.csv"
+#genomes <- "AKA-017_GIM-024"
+#csv_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/basenorm_feats_50X_redo2/2L2R_classifer_reference/AKA-017_GIM-024.csv"
+#results_path <- "2L2R_model_validation_output_classifier/"
+#aligned_dir <- "aligned_het/"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/basenorm_feats_50X_redo2/"
+#csv_path_reference <- "/work/users/a/d/adaigle/test_TEforest/basenorm_feats_50X_redo2/2L2R_classifer_reference/AKA-017_GIM-024.csv"
 #candidate_regions_data_dir <- "/candidate_regions_data/"
 
 apply_labels_reference <- function (genome) {
