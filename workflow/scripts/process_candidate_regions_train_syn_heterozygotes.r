@@ -248,7 +248,7 @@ mapping_results_filter <- mapping_results %>% mutate(
             ranges = IRanges(start = start(.x) - 400, end = end(.x) + 400)))),
     expand = map(expand1, # toggle numbers in ranges to change expansion
         ~ GRanges(seqnames = seqnames(.x), 
-            ranges = IRanges(start = start(.x) + 200, end = end(.x) - 200)))
+            ranges = IRanges(start = start(.x) + 400, end = end(.x) - 400)))
 )
 
 print("filtering complete")

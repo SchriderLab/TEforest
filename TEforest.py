@@ -171,7 +171,7 @@ def main():
     snakemake_cmd_unlock = [
         "snakemake",
     ] + output_targets + [
-        "-j", str(args.threads),
+        "--cores", str(args.threads),
         "-s", snakefile_path,
         "--configfile", os.path.abspath(config_path),
         "--unlock"
@@ -191,7 +191,7 @@ def main():
     snakemake_cmd = [
         "snakemake",
     ] + output_targets + [
-        "-j", str(args.threads),
+        "--cores", str(args.threads),
         "-s", snakefile_path,
         "--configfile", os.path.abspath(config_path)
     ]

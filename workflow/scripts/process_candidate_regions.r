@@ -17,6 +17,16 @@ basedir_outputs_path <- getwd()
 #euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/celegans/chroms.txt"
 #ISO1_og_path <- "/nas/longleaf/home/adaigle/work/celegans/tc1_improved.bed"
 
+#genome <- "MA19F"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/users/rob_flies/teforest_runs/fullMA_fullnorm"
+#euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/fullchrom.txt"
+#ISO1_og_path <- "/nas/longleaf/home/adaigle/TEforest/example_files/ISO1.bed"
+
+#genome <- "NA12878_highcov"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/test_humans"
+#euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/human_TEs/mcclintock_inputs/chroms.txt"
+#ISO1_og_path <- "/nas/longleaf/home/adaigle/work/human_TEs/mcclintock_inputs/human_ref_tes.bed"
+
 output_path <- paste0(basedir_outputs_path, "/candidate_regions_data/", genome)
 featvec_csv_path <- paste0(basedir_outputs_path, "/featvec_csvs")
 dir.create(file.path(featvec_csv_path))
@@ -123,7 +133,12 @@ mapping_results <- mapping_results %>% mutate(
 )
 print("mapping results loaded")
 
-
+mode_read_length <- function(gal) {
+  ql <- qwidth(gal)
+  ql <- ql[!is.na(ql)]
+  if (!length(ql)) return(NA_integer_)
+  as.integer(names(which.max(table(ql))))
+}
 
 #family specific reference TEs
 
@@ -152,14 +167,22 @@ mapping_results_filter <- mapping_results %>% mutate(
     #euchromatin_calls_without_nested_reftes_shrunk = map(euchromatin_calls_without_nested_reftes, # toggle numbers in ranges to change expansion
     #    ~ GRanges(seqnames = seqnames(.x), 
     #        ranges = IRanges(start = start(.x) + 200, end = end(.x) - 200))),
-    early_width_filter = map(euchromatin_calls_without_nested_reftes, 
-        ~ subset(.x, width(.x) >= 154)), 
+    # NEW: compute per-BAM read length (mode of qwidths), then threshold = read_length + 5
+    read_length = map_int(bam, mode_read_length),
+    width_threshold = read_length + 5L,
+    
+    # UPDATED: use per-row threshold instead of fixed 154
+    early_width_filter = map2(euchromatin_calls_without_nested_reftes, width_threshold,
+        ~ subset(.x, width(.x) >= .y)),
     expand1 = map(early_width_filter, # toggle numbers in ranges to change expansion
         ~ GenomicRanges::reduce(GRanges(seqnames = seqnames(.x), 
             ranges = IRanges(start = start(.x) - 400, end = end(.x) + 400)))),
+    #expand = map(expand1, # toggle numbers in ranges to change expansion
+    #    ~ GRanges(seqnames = seqnames(.x), #CHANGED THIS!
+    #        ranges = IRanges(start = start(.x) + 200, end = end(.x) - 200))),
     expand = map(expand1, # toggle numbers in ranges to change expansion
         ~ GRanges(seqnames = seqnames(.x), 
-            ranges = IRanges(start = start(.x) + 200, end = end(.x) - 200))),
+            ranges = IRanges(start = start(.x) + 400, end = end(.x) - 400))),
     expand = map2(expand, TE, ~ GRanges(seqnames = seqnames(.x), 
             ranges = ranges(.x),
             TE = .y))

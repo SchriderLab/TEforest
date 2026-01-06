@@ -7,8 +7,8 @@ library(tidyverse)
 library(GenomicRanges)
 library(ggpubr)
 library(caret)
-library(viridis)
-library(yardstick)
+#library(viridis)
+#library(yardstick)
 
 args <- commandArgs(TRUE)
 print(args)
@@ -25,6 +25,25 @@ if (!dir.exists(plt_dir)) {
   # Create the directory
   dir.create(plt_dir)
 }
+
+# hack to end script early if it is an ISO-1 heterozygous genome
+# ——— early exit for special genomes ———
+genome <- paste0(genome1, "_", genome2)
+skip.these <- c("ISO-1125_AKA-017", "ISO-1125_JUT-008", "ISO-154_A2")
+if (genome %in% skip.these) {
+  # ensure our freqplt output dir exists
+  freq.dir <- file.path(plt_dir, "freqplt")
+  if (!dir.exists(freq.dir)) dir.create(freq.dir, recursive = TRUE)
+
+  # write an empty PDF so Snakemake sees it
+  empty.pdf <- file.path(freq.dir, paste0(genome, ".pdf"))
+  pdf(empty.pdf)
+  dev.off()
+
+  # quit without running the rest
+  quit(save = "no", status = 0)
+}
+
 
 #genome1 <- "AKA-017"
 #genome2 <- "GIM-024"
@@ -1067,314 +1086,314 @@ print(paste0(genome, " done!"))
 #  labs(y = "Average F1 Score", x = "Caller")
 
 #START REFERENCE 
-
-
-#of my true positives, find which ones are homozygotes called as heterozygotes, etc
-benchmark_mapping_results_het_ref <- benchmark_mapping_results_ref %>%
-  mutate(
-    A1_truth_forTE_het = map(TE, # reduce to get rid of nested TEs of same type
-        ~ makeGRangesFromDataFrame(A1_truth %>% filter(TE==.x, heterozygosity >= 0.25, heterozygosity <= 0.75),  keep.extra.columns = T )),
-    A1_truth_ref_het = map(A1_truth_forTE_het,
-        ~ subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE)),
-    A1_truth_nonref_het = map(A1_truth_forTE_het, #extended bc a tp is within 500 bp of a tp
-        ~ extend(
-            subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE, invert = TRUE),
-            500, 500)),
-    A1_truth_forTE_homo = map(TE, # reduce to get rid of nested TEs of same type
-        ~ makeGRangesFromDataFrame(A1_truth %>% filter(TE==.x, , heterozygosity >= 0.75),  keep.extra.columns = T )),
-    A1_truth_ref_homo = map(A1_truth_forTE_homo,
-        ~ subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE)),
-    A1_truth_nonref_homo = map(A1_truth_forTE_homo, #extended bc a tp is within 500 bp of a tp
-        ~ extend(
-            subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE, invert = TRUE),
-            500, 500)),
-    ref_true_positives_homo = map2(ref_true_positives, A1_truth_ref_homo, 
-        ~ as.data.frame(subsetByOverlaps(.x, .y, ignore.strand = TRUE, type=c("equal")))),
-    homo_tp = map(ref_true_positives_homo, ~ .x %>% filter(heterozygosity >= 0.75)),
-    homo_fp_het = map(ref_true_positives_homo, ~ .x %>% filter(heterozygosity >= 0.25, heterozygosity <= 0.75)),
-    homo_tp_length = unlist(map(homo_tp, ~ nrow(.x))),
-    homo_fp_het_length = unlist(map(homo_fp_het, ~ nrow(.x))),
-    homo_fn = map(ref_false_negatives, ~ .x %>% as.data.frame %>% filter(heterozygosity==1.0)),
-    homo_fn_length = unlist(map(homo_fn, ~ sum(.x$heterozygosity==1.0))),
-    ref_true_positives_het = map2(ref_true_positives, A1_truth_ref_het, 
-        ~ as.data.frame(subsetByOverlaps(.x, .y, ignore.strand = TRUE, type=c("equal")))),
-    het_tp = map(ref_true_positives_het, ~ .x %>% filter(heterozygosity >= 0.25, heterozygosity <= 0.75)),
-    #eventually need to differentiate FPs that are below 0.25, as these are a different class of error
-    het_fp_homo = map(ref_true_positives_het, ~ .x %>% filter(heterozygosity > 0.75)),
-    het_tp_length = unlist(map(het_tp, ~ nrow(.x))),
-    het_fp_homo_length = unlist(map(het_fp_homo, ~ nrow(.x))),
-    het_fn = map(ref_false_negatives, ~ .x %>% as.data.frame %>% filter(heterozygosity==0.5)),
-    het_fn_length = unlist(map(het_fn, ~ sum(.x$heterozygosity==0.5))),
-    homo_fp_zero = map(ref_true_positives_homo, ~ .x %>% filter(heterozygosity < 0.25)),
-    het_fp_zero = map(ref_true_positives_het, ~ .x %>% filter(heterozygosity < 0.25)),
-    homo_fp_zero_length = unlist(map(homo_fp_zero, ~ nrow(.x))),
-    het_fp_zero_length = unlist(map(het_fp_zero, ~ nrow(.x))),
-    fp = map(ref_false_positives, ~ .x %>% as.data.frame),
-    homo_fp_length = unlist(map(fp, ~ sum(.x$heterozygosity<=0.75))),
-    het_fp_length = unlist(map(fp, ~ sum(.x$heterozygosity>0.75))),
-  )
-
-#test <- benchmark_mapping_results_het %>% filter(caller=="TEforest_classifier")
-#test2 <- benchmark_mapping_results_het %>% filter(caller=="2L_test")
-
-benchmark_mapping_results_frequency_plot_ref <- benchmark_mapping_results_het_ref %>%
-  mutate(
-    homo_tp_labeled = map2(caller, homo_tp, ~ .y %>% mutate(caller = .x, truth = 1.0)),
-    het_tp_labeled = map2(caller, het_tp, ~ .y %>% mutate(caller = .x, truth = 0.5)),
-    homo_fp_het_labeled = map2(caller, homo_fp_het, ~ .y %>% mutate(caller = .x, truth = 1.0)),
-    het_fp_homo_labeled = map2(caller, het_fp_homo, ~ .y %>% mutate(caller = .x, truth = 0.5)),
-    homo_fn_labeled = map2(caller, homo_fn, ~ .y %>% mutate(caller = .x, truth = 1.0, ID = NULL, heterozygosity=0, length = NULL)),
-    het_fn_labeled = map2(caller, het_fn, ~ .y %>% mutate(caller = .x, truth = 0.5, heterozygosity=0, ID = NULL, length = NULL)),
-    homo_fp_zero_labeled = map2(caller, homo_fp_zero, ~ .y %>% mutate(caller = .x, truth = 1.0)),
-    het_fp_zero_labeled = map2(caller, het_fp_zero, ~ .y %>% mutate(caller = .x, truth = 0.5)),
-    fp = map2(caller, fp, ~ .y %>% mutate(caller = .x, truth = 0)),
-  )
-
-# Combine the labeled columns into a single data frame
-frequency_plot_ref <- do.call(rbind, c(
-  benchmark_mapping_results_frequency_plot_ref$homo_tp_labeled,
-  benchmark_mapping_results_frequency_plot_ref$het_tp_labeled,
-  benchmark_mapping_results_frequency_plot_ref$homo_fp_het_labeled,
-  benchmark_mapping_results_frequency_plot_ref$het_fp_homo_labeled,
-  benchmark_mapping_results_frequency_plot_ref$homo_fn_labeled,
-  benchmark_mapping_results_frequency_plot_ref$het_fn_labeled,
-  benchmark_mapping_results_frequency_plot_ref$homo_fp_zero_labeled,
-  benchmark_mapping_results_frequency_plot_ref$het_fp_zero_labeled,
-  benchmark_mapping_results_frequency_plot_ref$fp
-))
-
-
-# Calculate R-squared value
-calculate_r_squared <- function(data) {
-  lm_model <- lm(truth ~ as.numeric(heterozygosity), data = data)
-  return(data.frame(R_squared = summary(lm_model)$r.squared))
-}
-r_squared_results_ref <- frequency_plot_ref %>%
-  group_by(caller) %>%
-  do(calculate_r_squared(.))
-
-frequency_plot_ref <- left_join(frequency_plot_ref, r_squared_results_ref, by = "caller") %>% mutate(heterozygosity = as.numeric(heterozygosity))
-
-freqplt_ref <- ggplot(frequency_plot_ref, aes(x = truth, y = heterozygosity, color = caller)) +
-  geom_jitter(alpha = 0.2, width = 0.1) +
-  geom_boxplot(aes(group=truth), width = 0.05, fill = "lightgray", outlier.shape = NA) +
-  #geom_smooth(method = "lm", se = FALSE, color = "red") +
-  facet_wrap(~caller) +
-  labs(title = "Scatterplot with Boxplot of True vs Predicted Values",
-       x = "True Values",
-       y = "Predicted Values") 
-
-frequency_plot_nozero_ref <- frequency_plot_ref %>% filter(heterozygosity!=0)
-freqpltnozero_ref <-ggplot(frequency_plot_nozero_ref, aes(x = truth, y = heterozygosity, color = caller)) +
-  geom_jitter(alpha = 0.2, width = 0.1) +
-  geom_boxplot(aes(group=truth), width = 0.05, fill = "lightgray", outlier.shape = NA) +
-  #geom_smooth(method = "lm", se = FALSE, color = "red") +
-  facet_wrap(~caller) +
-  labs(title = "Scatterplot with Boxplot of True vs Predicted Values",
-       x = "True Values",
-       y = "Predicted Values") 
-
-benchmark_mapping_results_ref_nodata <- benchmark_mapping_results_het_ref[c(1,7,8, 22:29, 39:40, 42:43, 46:47, 49, 52:53, 55:56)]
-
-# Check for NaN values and replace with 0
-benchmark_mapping_results_ref_nodata[is.na(benchmark_mapping_results_ref_nodata)] <- 0
-
-#length of reduced nonref DF
-#will mess up reduced nested TEs of different classes
-#but necessary for proper analysis 
-ref_te_number_het <- length(unique(truth_het_reference_gr))
-
-ref_te_number_homo <- length(unique(truth_homo_reference_gr))
-
-benchmark_mapping_results_summary_ref <- benchmark_mapping_results_ref_nodata %>%
-  group_by(caller) %>%
-  summarize(
-    #per_fam_mean_f1_score = mean(f1_score, na.rm = TRUE),
-    #per_fam_mean_precision = mean(precision, na.rm = TRUE),
-    #per_fam_mean_recall = mean(recall, na.rm = TRUE),
-    sum_ref_true_positives_length = sum(ref_true_positives_length),
-    sum_true_positives = sum(ref_calls_true_positives_length),
-    sum_false_positives = sum(ref_calls_false_positives_length),
-    sum_false_negatives = sum(ref_calls_false_negatives_length),
-    recalc_false_negatives = num_true_ref - sum_true_positives,
-    precision = sum_true_positives / (sum_true_positives + sum_false_positives),
-    recall = sum_true_positives / (sum_true_positives + recalc_false_negatives),
-    f1_score = 2 * (precision * recall) / (precision + recall), 
-    homo_tp_length = sum(homo_tp_length),
-    het_tp_length = sum(het_tp_length),
-    homo_fp_het_length = sum(homo_fp_het_length),
-    het_fp_homo_length = sum(het_fp_homo_length),
-    #homo_fn_length = sum(homo_fn_length),
-    homo_fn_length = ref_te_number_homo - homo_tp_length,
-    #het_fn_length = sum(het_fn_length),
-    het_fn_length = ref_te_number_het - het_tp_length,
-    homo_fp_zero_length = sum(homo_fp_zero_length),
-    het_fp_zero_length = sum(het_fp_zero_length),
-    homo_fp_length = sum(homo_fp_length),
-    het_fp_length = sum(het_fp_length),
-  )
-
-benchmark_mapping_results_summary_ref[is.na(benchmark_mapping_results_summary_ref)] <- 0
-
-het_conf_matrix_ref <- function(caller_name) {
-num <- as.numeric(row.names(benchmark_mapping_results_summary_ref)[benchmark_mapping_results_summary_ref$caller == caller_name])
-
-conf_matrix_mycaller <- benchmark_mapping_results_summary_ref[num,]
-#heterozygosity classification accuracy
-conf_matrix_values <- matrix(c(0, conf_matrix_mycaller$het_fn_length + conf_matrix_mycaller$het_fp_zero_length, conf_matrix_mycaller$homo_fn_length + conf_matrix_mycaller$homo_fp_zero_length, # need to grab fp hets and homos
-                                conf_matrix_mycaller$het_fp_length, conf_matrix_mycaller$het_tp_length, conf_matrix_mycaller$homo_fp_het_length, 
-                                conf_matrix_mycaller$homo_fp_length, conf_matrix_mycaller$het_fp_homo_length, conf_matrix_mycaller$homo_tp_length),
-                             nrow = 3, byrow = TRUE)
-conf_matrix <- confusionMatrix(conf_matrix_values)
-cm <- conf_mat(conf_matrix_values)
-
-plt <- autoplot(cm, type = "heatmap") +
-  scale_fill_gradient(low="#D6EAF8",high = "#2E86C1") + 
-  theme(legend.position = "right")+
-  scale_x_discrete(labels = c("absent", "heterozygote", "homozygote")) +
-  scale_y_discrete(labels = c("homozygote", "heterozygote", "absent"))
-
-#summary(cm)[1,]$.estimate
-return(plt)
-}
-#conf_matrix_mycaller <- het_conf_matrix("2L_test")
-#et_conf_matrix("temp")
-#et_conf_matrix("temp2")
-#et_conf_matrix("teflon")
-#et_conf_matrix("retroseq")
-#et_conf_matrix("popoolationte")
-#et_conf_matrix("popoolationte2")
-
-
-
-het_conf_matrix_ref <- benchmark_mapping_results_summary_ref %>%
-  rowwise() %>%
-  mutate(
-    conf_matrix = list(matrix(c(0, het_fn_length + het_fp_zero_length, homo_fn_length + homo_fp_zero_length,
-                                 het_fp_length, het_tp_length, homo_fp_het_length,
-                                 homo_fp_length, het_fp_homo_length, homo_tp_length),
-                              nrow = 3, byrow = TRUE))
-  ) %>%
-  ungroup() %>%
-  mutate(
-    conf_matrix_summary = map(conf_matrix, ~confusionMatrix(.x)),
-    het_stats = map(conf_matrix_summary, ~ c(precision=.x$byClass["Class: B","Precision"], 
-      recall=.x$byClass["Class: B","Recall"], f1=.x$byClass["Class: B","F1"])),
-    homo_stats = map(conf_matrix_summary, ~ c(precision=.x$byClass["Class: C","Precision"], 
-      recall=.x$byClass["Class: C","Recall"], f1=.x$byClass["Class: C","F1"])),
-  )
-
-# Expand the list columns into separate columns
-het_stats_plot_ref <- het_conf_matrix_ref %>% select(caller, het_stats) %>%
-  tidyr::unnest_wider(het_stats) %>%
-  gather(metric, value, precision:f1) %>%
-  group_by(caller) 
-# Calculate the average F1 score for each caller and order by this score
-f1_order <- het_stats_plot_ref %>%
-  filter(metric == "f1") %>%
-  group_by(caller) %>%
-  summarise(mean_f1 = mean(value)) %>%
-  arrange(desc(mean_f1)) %>%
-  pull(caller)
-
-# Reorder the caller factor levels based on F1 score
-het_stats_plot_ref <- het_stats_plot_ref %>%
-  mutate(caller = factor(caller, levels = f1_order))
-
-# Create the bar plot
-hetplt_ref <- ggplot(het_stats_plot_ref, aes(x = caller, y = value, fill = metric)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "",
-       x = "Caller", y = "Score") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.title = element_blank(),  # Adjust legend title size
-        legend.text = element_text(size = 12),   # Adjust legend text size
-        axis.text = element_text(size = 12),     # Adjust axis text size
-        axis.title = element_text(size = 14))  +  # Adjust axis title size
-  expand_limits(y=c(0,1)) +
-# Add F1 score numbers above the bars
- geom_text(aes(label = sprintf("%.2f", value), y = value, group = metric),
-              position = position_dodge(width = 0.8), size = 2.75, vjust = -0.5)
-
-
-# Expand the list columns into separate columns
-homo_stats_plot_ref <- het_conf_matrix_ref %>% select(caller, homo_stats) %>%
-  tidyr::unnest_wider(homo_stats) %>%
-  gather(metric, value, precision:f1) %>%
-  group_by(caller)
-
-f1_order_homo <- homo_stats_plot_ref %>%
-  filter(metric == "f1") %>%
-  group_by(caller) %>%
-  summarise(mean_f1 = mean(value)) %>%
-  arrange(desc(mean_f1)) %>%
-  pull(caller)
-
-# Reorder the caller factor levels based on F1 score
-homo_stats_plot_ref <- homo_stats_plot_ref %>%
-  mutate(caller = factor(caller, levels = f1_order_homo))
-
-
-# Create the bar plot
-homoplt_ref <- ggplot(homo_stats_plot_ref, aes(x = caller, y = value, fill = metric)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(title = "",
-       x = "Caller", y = "Score") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.title = element_blank(),  # Adjust legend title size
-        legend.text = element_text(size = 12),   # Adjust legend text size
-        axis.text = element_text(size = 12),     # Adjust axis text size
-        axis.title = element_text(size = 14))  +  # Adjust axis title size
-  expand_limits(y=c(0,1)) +
-# Add F1 score numbers above the bars
- geom_text(aes(label = sprintf("%.2f", value), y = value, group = metric),
-              position = position_dodge(width = 0.8), size = 2.75, vjust = -0.5)
-
-#benchmark_mapping_results_summary_plot_ref <- benchmark_mapping_results_summary_ref #%>% #filter(caller !="ngs_te_mapper")%>% filter(caller !="ngs_te_mapper2") %>%
-    #filter(caller !=c("allseeingeye", "allseeingeye2", "allseeingeye3"))
-#benchmark_mapping_results_summary_plot <- benchmark_mapping_results_summary_plot #%>% 
-  #mutate(caller = case_when(
-  #  caller == "allseeingeye4" ~ "mystuff",
-  #  caller == "allseeingeye5" ~ "mystuff_with_bps",
-  #  TRUE ~ caller  # Keep other values unchanged
-  #))
-benchmark_mapping_results_summary_plot_ref <- benchmark_mapping_results_summary_ref %>%
-  arrange(desc(f1_score))
-
-
-
-# Reshape the data to long format
-df_long_ref <- pivot_longer(benchmark_mapping_results_summary_plot_ref, cols = c(precision, recall, f1_score), names_to = "Metric", values_to = "Score")
-
-df_long_ref$caller <- factor(df_long_ref$caller, levels = benchmark_mapping_results_summary_plot_ref$caller)
-df_long_ref_save <- df_long_ref
-df_long_ref_save$covg <- paste0(coverage, "X")
-# Create a grouped bar plot
-p_ref <- ggplot(df_long_ref, aes(x = caller, y = Score, fill = Metric)) +
-  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
-  #scale_fill_manual(values = c("precision" = "blue", "recall" = "green", "f1_score" = "red")) +
-  labs(y = "Score",
-       x = "Caller") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.title = element_blank(),  # Adjust legend title size
-        legend.text = element_text(size = 12),   # Adjust legend text size
-        axis.text = element_text(size = 12),     # Adjust axis text size
-        axis.title = element_text(size = 14))  +  # Adjust axis title size
-  expand_limits(y=c(0,1)) +
-# Add F1 score numbers above the bars
- geom_text(aes(label = sprintf("%.2f", Score), y = Score, group = Metric),
-              position = position_dodge(width = 0.8), size = 2.75, vjust = -0.5)#return(benchmark_mapping_results_summary)
-
-
-ggsave(paste0(plt_dir, "/performance_plots/", genome1, "_", genome2, "_ref.pdf"), p_ref, width=14)
-ggsave(paste0(plt_dir, "/hetplt/",genome1, "_", genome2, "_ref.pdf"), hetplt_ref, width=14)
-ggsave(paste0(plt_dir, "/homoplt/",genome1, "_", genome2, "_ref.pdf"), homoplt_ref, width=14)
-ggsave(paste0(plt_dir, "/freqpltnozero/",genome1, "_", genome2, "_ref.pdf"), freqpltnozero_ref, width=14, height=10)
-ggsave(paste0(plt_dir, "/freqplt/",genome1, "_", genome2, "_ref.pdf"), freqplt_ref, width=14, height=10)
+###
+###
+####of my true positives, find which ones are homozygotes called as heterozygotes, etc
+###benchmark_mapping_results_het_ref <- benchmark_mapping_results_ref %>%
+###  mutate(
+###    A1_truth_forTE_het = map(TE, # reduce to get rid of nested TEs of same type
+###        ~ makeGRangesFromDataFrame(A1_truth %>% filter(TE==.x, heterozygosity >= 0.25, heterozygosity <= 0.75),  keep.extra.columns = T )),
+###    A1_truth_ref_het = map(A1_truth_forTE_het,
+###        ~ subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE)),
+###    A1_truth_nonref_het = map(A1_truth_forTE_het, #extended bc a tp is within 500 bp of a tp
+###        ~ extend(
+###            subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE, invert = TRUE),
+###            500, 500)),
+###    A1_truth_forTE_homo = map(TE, # reduce to get rid of nested TEs of same type
+###        ~ makeGRangesFromDataFrame(A1_truth %>% filter(TE==.x, , heterozygosity >= 0.75),  keep.extra.columns = T )),
+###    A1_truth_ref_homo = map(A1_truth_forTE_homo,
+###        ~ subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE)),
+###    A1_truth_nonref_homo = map(A1_truth_forTE_homo, #extended bc a tp is within 500 bp of a tp
+###        ~ extend(
+###            subsetByOverlaps(.x, ISO1_og_gr, type=c("equal"), ignore.strand=TRUE, invert = TRUE),
+###            500, 500)),
+###    ref_true_positives_homo = map2(ref_true_positives, A1_truth_ref_homo, 
+###        ~ as.data.frame(subsetByOverlaps(.x, .y, ignore.strand = TRUE, type=c("equal")))),
+###    homo_tp = map(ref_true_positives_homo, ~ .x %>% filter(heterozygosity >= 0.75)),
+###    homo_fp_het = map(ref_true_positives_homo, ~ .x %>% filter(heterozygosity >= 0.25, heterozygosity <= 0.75)),
+###    homo_tp_length = unlist(map(homo_tp, ~ nrow(.x))),
+###    homo_fp_het_length = unlist(map(homo_fp_het, ~ nrow(.x))),
+###    homo_fn = map(ref_false_negatives, ~ .x %>% as.data.frame %>% filter(heterozygosity==1.0)),
+###    homo_fn_length = unlist(map(homo_fn, ~ sum(.x$heterozygosity==1.0))),
+###    ref_true_positives_het = map2(ref_true_positives, A1_truth_ref_het, 
+###        ~ as.data.frame(subsetByOverlaps(.x, .y, ignore.strand = TRUE, type=c("equal")))),
+###    het_tp = map(ref_true_positives_het, ~ .x %>% filter(heterozygosity >= 0.25, heterozygosity <= 0.75)),
+###    #eventually need to differentiate FPs that are below 0.25, as these are a different class of error
+###    het_fp_homo = map(ref_true_positives_het, ~ .x %>% filter(heterozygosity > 0.75)),
+###    het_tp_length = unlist(map(het_tp, ~ nrow(.x))),
+###    het_fp_homo_length = unlist(map(het_fp_homo, ~ nrow(.x))),
+###    het_fn = map(ref_false_negatives, ~ .x %>% as.data.frame %>% filter(heterozygosity==0.5)),
+###    het_fn_length = unlist(map(het_fn, ~ sum(.x$heterozygosity==0.5))),
+###    homo_fp_zero = map(ref_true_positives_homo, ~ .x %>% filter(heterozygosity < 0.25)),
+###    het_fp_zero = map(ref_true_positives_het, ~ .x %>% filter(heterozygosity < 0.25)),
+###    homo_fp_zero_length = unlist(map(homo_fp_zero, ~ nrow(.x))),
+###    het_fp_zero_length = unlist(map(het_fp_zero, ~ nrow(.x))),
+###    fp = map(ref_false_positives, ~ .x %>% as.data.frame),
+###    homo_fp_length = unlist(map(fp, ~ sum(.x$heterozygosity<=0.75))),
+###    het_fp_length = unlist(map(fp, ~ sum(.x$heterozygosity>0.75))),
+###  )
+###
+####test <- benchmark_mapping_results_het %>% filter(caller=="TEforest_classifier")
+####test2 <- benchmark_mapping_results_het %>% filter(caller=="2L_test")
+###
+###benchmark_mapping_results_frequency_plot_ref <- benchmark_mapping_results_het_ref %>%
+###  mutate(
+###    homo_tp_labeled = map2(caller, homo_tp, ~ .y %>% mutate(caller = .x, truth = 1.0)),
+###    het_tp_labeled = map2(caller, het_tp, ~ .y %>% mutate(caller = .x, truth = 0.5)),
+###    homo_fp_het_labeled = map2(caller, homo_fp_het, ~ .y %>% mutate(caller = .x, truth = 1.0)),
+###    het_fp_homo_labeled = map2(caller, het_fp_homo, ~ .y %>% mutate(caller = .x, truth = 0.5)),
+###    homo_fn_labeled = map2(caller, homo_fn, ~ .y %>% mutate(caller = .x, truth = 1.0, ID = NULL, heterozygosity=0, length = NULL)),
+###    het_fn_labeled = map2(caller, het_fn, ~ .y %>% mutate(caller = .x, truth = 0.5, heterozygosity=0, ID = NULL, length = NULL)),
+###    homo_fp_zero_labeled = map2(caller, homo_fp_zero, ~ .y %>% mutate(caller = .x, truth = 1.0)),
+###    het_fp_zero_labeled = map2(caller, het_fp_zero, ~ .y %>% mutate(caller = .x, truth = 0.5)),
+###    fp = map2(caller, fp, ~ .y %>% mutate(caller = .x, truth = 0)),
+###  )
+###
+#### Combine the labeled columns into a single data frame
+###frequency_plot_ref <- do.call(rbind, c(
+###  benchmark_mapping_results_frequency_plot_ref$homo_tp_labeled,
+###  benchmark_mapping_results_frequency_plot_ref$het_tp_labeled,
+###  benchmark_mapping_results_frequency_plot_ref$homo_fp_het_labeled,
+###  benchmark_mapping_results_frequency_plot_ref$het_fp_homo_labeled,
+###  benchmark_mapping_results_frequency_plot_ref$homo_fn_labeled,
+###  benchmark_mapping_results_frequency_plot_ref$het_fn_labeled,
+###  benchmark_mapping_results_frequency_plot_ref$homo_fp_zero_labeled,
+###  benchmark_mapping_results_frequency_plot_ref$het_fp_zero_labeled,
+###  benchmark_mapping_results_frequency_plot_ref$fp
+###))
+###
+###
+#### Calculate R-squared value
+###calculate_r_squared <- function(data) {
+###  lm_model <- lm(truth ~ as.numeric(heterozygosity), data = data)
+###  return(data.frame(R_squared = summary(lm_model)$r.squared))
+###}
+###r_squared_results_ref <- frequency_plot_ref %>%
+###  group_by(caller) %>%
+###  do(calculate_r_squared(.))
+###
+###frequency_plot_ref <- left_join(frequency_plot_ref, r_squared_results_ref, by = "caller") %>% mutate(heterozygosity = as.numeric(heterozygosity))
+###
+###freqplt_ref <- ggplot(frequency_plot_ref, aes(x = truth, y = heterozygosity, color = caller)) +
+###  geom_jitter(alpha = 0.2, width = 0.1) +
+###  geom_boxplot(aes(group=truth), width = 0.05, fill = "lightgray", outlier.shape = NA) +
+###  #geom_smooth(method = "lm", se = FALSE, color = "red") +
+###  facet_wrap(~caller) +
+###  labs(title = "Scatterplot with Boxplot of True vs Predicted Values",
+###       x = "True Values",
+###       y = "Predicted Values") 
+###
+###frequency_plot_nozero_ref <- frequency_plot_ref %>% filter(heterozygosity!=0)
+###freqpltnozero_ref <-ggplot(frequency_plot_nozero_ref, aes(x = truth, y = heterozygosity, color = caller)) +
+###  geom_jitter(alpha = 0.2, width = 0.1) +
+###  geom_boxplot(aes(group=truth), width = 0.05, fill = "lightgray", outlier.shape = NA) +
+###  #geom_smooth(method = "lm", se = FALSE, color = "red") +
+###  facet_wrap(~caller) +
+###  labs(title = "Scatterplot with Boxplot of True vs Predicted Values",
+###       x = "True Values",
+###       y = "Predicted Values") 
+###
+###benchmark_mapping_results_ref_nodata <- benchmark_mapping_results_het_ref[c(1,7,8, 22:29, 39:40, 42:43, 46:47, 49, 52:53, 55:56)]
+###
+#### Check for NaN values and replace with 0
+###benchmark_mapping_results_ref_nodata[is.na(benchmark_mapping_results_ref_nodata)] <- 0
+###
+####length of reduced nonref DF
+####will mess up reduced nested TEs of different classes
+####but necessary for proper analysis 
+###ref_te_number_het <- length(unique(truth_het_reference_gr))
+###
+###ref_te_number_homo <- length(unique(truth_homo_reference_gr))
+###
+###benchmark_mapping_results_summary_ref <- benchmark_mapping_results_ref_nodata %>%
+###  group_by(caller) %>%
+###  summarize(
+###    #per_fam_mean_f1_score = mean(f1_score, na.rm = TRUE),
+###    #per_fam_mean_precision = mean(precision, na.rm = TRUE),
+###    #per_fam_mean_recall = mean(recall, na.rm = TRUE),
+###    sum_ref_true_positives_length = sum(ref_true_positives_length),
+###    sum_true_positives = sum(ref_calls_true_positives_length),
+###    sum_false_positives = sum(ref_calls_false_positives_length),
+###    sum_false_negatives = sum(ref_calls_false_negatives_length),
+###    recalc_false_negatives = num_true_ref - sum_true_positives,
+###    precision = sum_true_positives / (sum_true_positives + sum_false_positives),
+###    recall = sum_true_positives / (sum_true_positives + recalc_false_negatives),
+###    f1_score = 2 * (precision * recall) / (precision + recall), 
+###    homo_tp_length = sum(homo_tp_length),
+###    het_tp_length = sum(het_tp_length),
+###    homo_fp_het_length = sum(homo_fp_het_length),
+###    het_fp_homo_length = sum(het_fp_homo_length),
+###    #homo_fn_length = sum(homo_fn_length),
+###    homo_fn_length = ref_te_number_homo - homo_tp_length,
+###    #het_fn_length = sum(het_fn_length),
+###    het_fn_length = ref_te_number_het - het_tp_length,
+###    homo_fp_zero_length = sum(homo_fp_zero_length),
+###    het_fp_zero_length = sum(het_fp_zero_length),
+###    homo_fp_length = sum(homo_fp_length),
+###    het_fp_length = sum(het_fp_length),
+###  )
+###
+###benchmark_mapping_results_summary_ref[is.na(benchmark_mapping_results_summary_ref)] <- 0
+###
+###het_conf_matrix_ref <- function(caller_name) {
+###num <- as.numeric(row.names(benchmark_mapping_results_summary_ref)[benchmark_mapping_results_summary_ref$caller == caller_name])
+###
+###conf_matrix_mycaller <- benchmark_mapping_results_summary_ref[num,]
+####heterozygosity classification accuracy
+###conf_matrix_values <- matrix(c(0, conf_matrix_mycaller$het_fn_length + conf_matrix_mycaller$het_fp_zero_length, conf_matrix_mycaller$homo_fn_length + conf_matrix_mycaller$homo_fp_zero_length, # need to grab fp hets and homos
+###                                conf_matrix_mycaller$het_fp_length, conf_matrix_mycaller$het_tp_length, conf_matrix_mycaller$homo_fp_het_length, 
+###                                conf_matrix_mycaller$homo_fp_length, conf_matrix_mycaller$het_fp_homo_length, conf_matrix_mycaller$homo_tp_length),
+###                             nrow = 3, byrow = TRUE)
+###conf_matrix <- confusionMatrix(conf_matrix_values)
+###cm <- conf_mat(conf_matrix_values)
+###
+###plt <- autoplot(cm, type = "heatmap") +
+###  scale_fill_gradient(low="#D6EAF8",high = "#2E86C1") + 
+###  theme(legend.position = "right")+
+###  scale_x_discrete(labels = c("absent", "heterozygote", "homozygote")) +
+###  scale_y_discrete(labels = c("homozygote", "heterozygote", "absent"))
+###
+####summary(cm)[1,]$.estimate
+###return(plt)
+###}
+####conf_matrix_mycaller <- het_conf_matrix("2L_test")
+####et_conf_matrix("temp")
+####et_conf_matrix("temp2")
+####et_conf_matrix("teflon")
+####et_conf_matrix("retroseq")
+####et_conf_matrix("popoolationte")
+####et_conf_matrix("popoolationte2")
+###
+###
+###
+###het_conf_matrix_ref <- benchmark_mapping_results_summary_ref %>%
+###  rowwise() %>%
+###  mutate(
+###    conf_matrix = list(matrix(c(0, het_fn_length + het_fp_zero_length, homo_fn_length + homo_fp_zero_length,
+###                                 het_fp_length, het_tp_length, homo_fp_het_length,
+###                                 homo_fp_length, het_fp_homo_length, homo_tp_length),
+###                              nrow = 3, byrow = TRUE))
+###  ) %>%
+###  ungroup() %>%
+###  mutate(
+###    conf_matrix_summary = map(conf_matrix, ~confusionMatrix(.x)),
+###    het_stats = map(conf_matrix_summary, ~ c(precision=.x$byClass["Class: B","Precision"], 
+###      recall=.x$byClass["Class: B","Recall"], f1=.x$byClass["Class: B","F1"])),
+###    homo_stats = map(conf_matrix_summary, ~ c(precision=.x$byClass["Class: C","Precision"], 
+###      recall=.x$byClass["Class: C","Recall"], f1=.x$byClass["Class: C","F1"])),
+###  )
+###
+#### Expand the list columns into separate columns
+###het_stats_plot_ref <- het_conf_matrix_ref %>% select(caller, het_stats) %>%
+###  tidyr::unnest_wider(het_stats) %>%
+###  gather(metric, value, precision:f1) %>%
+###  group_by(caller) 
+#### Calculate the average F1 score for each caller and order by this score
+###f1_order <- het_stats_plot_ref %>%
+###  filter(metric == "f1") %>%
+###  group_by(caller) %>%
+###  summarise(mean_f1 = mean(value)) %>%
+###  arrange(desc(mean_f1)) %>%
+###  pull(caller)
+###
+#### Reorder the caller factor levels based on F1 score
+###het_stats_plot_ref <- het_stats_plot_ref %>%
+###  mutate(caller = factor(caller, levels = f1_order))
+###
+#### Create the bar plot
+###hetplt_ref <- ggplot(het_stats_plot_ref, aes(x = caller, y = value, fill = metric)) +
+###  geom_bar(stat = "identity", position = "dodge") +
+###  labs(title = "",
+###       x = "Caller", y = "Score") +
+###  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+###        legend.title = element_blank(),  # Adjust legend title size
+###        legend.text = element_text(size = 12),   # Adjust legend text size
+###        axis.text = element_text(size = 12),     # Adjust axis text size
+###        axis.title = element_text(size = 14))  +  # Adjust axis title size
+###  expand_limits(y=c(0,1)) +
+#### Add F1 score numbers above the bars
+### geom_text(aes(label = sprintf("%.2f", value), y = value, group = metric),
+###              position = position_dodge(width = 0.8), size = 2.75, vjust = -0.5)
+###
+###
+#### Expand the list columns into separate columns
+###homo_stats_plot_ref <- het_conf_matrix_ref %>% select(caller, homo_stats) %>%
+###  tidyr::unnest_wider(homo_stats) %>%
+###  gather(metric, value, precision:f1) %>%
+###  group_by(caller)
+###
+###f1_order_homo <- homo_stats_plot_ref %>%
+###  filter(metric == "f1") %>%
+###  group_by(caller) %>%
+###  summarise(mean_f1 = mean(value)) %>%
+###  arrange(desc(mean_f1)) %>%
+###  pull(caller)
+###
+#### Reorder the caller factor levels based on F1 score
+###homo_stats_plot_ref <- homo_stats_plot_ref %>%
+###  mutate(caller = factor(caller, levels = f1_order_homo))
+###
+###
+#### Create the bar plot
+###homoplt_ref <- ggplot(homo_stats_plot_ref, aes(x = caller, y = value, fill = metric)) +
+###  geom_bar(stat = "identity", position = "dodge") +
+###  labs(title = "",
+###       x = "Caller", y = "Score") +
+###  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+###        legend.title = element_blank(),  # Adjust legend title size
+###        legend.text = element_text(size = 12),   # Adjust legend text size
+###        axis.text = element_text(size = 12),     # Adjust axis text size
+###        axis.title = element_text(size = 14))  +  # Adjust axis title size
+###  expand_limits(y=c(0,1)) +
+#### Add F1 score numbers above the bars
+### geom_text(aes(label = sprintf("%.2f", value), y = value, group = metric),
+###              position = position_dodge(width = 0.8), size = 2.75, vjust = -0.5)
+###
+####benchmark_mapping_results_summary_plot_ref <- benchmark_mapping_results_summary_ref #%>% #filter(caller !="ngs_te_mapper")%>% filter(caller !="ngs_te_mapper2") %>%
+###    #filter(caller !=c("allseeingeye", "allseeingeye2", "allseeingeye3"))
+####benchmark_mapping_results_summary_plot <- benchmark_mapping_results_summary_plot #%>% 
+###  #mutate(caller = case_when(
+###  #  caller == "allseeingeye4" ~ "mystuff",
+###  #  caller == "allseeingeye5" ~ "mystuff_with_bps",
+###  #  TRUE ~ caller  # Keep other values unchanged
+###  #))
+###benchmark_mapping_results_summary_plot_ref <- benchmark_mapping_results_summary_ref %>%
+###  arrange(desc(f1_score))
+###
+###
+###
+#### Reshape the data to long format
+###df_long_ref <- pivot_longer(benchmark_mapping_results_summary_plot_ref, cols = c(precision, recall, f1_score), names_to = "Metric", values_to = "Score")
+###
+###df_long_ref$caller <- factor(df_long_ref$caller, levels = benchmark_mapping_results_summary_plot_ref$caller)
+###df_long_ref_save <- df_long_ref
+###df_long_ref_save$covg <- paste0(coverage, "X")
+#### Create a grouped bar plot
+###p_ref <- ggplot(df_long_ref, aes(x = caller, y = Score, fill = Metric)) +
+###  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+###  #scale_fill_manual(values = c("precision" = "blue", "recall" = "green", "f1_score" = "red")) +
+###  labs(y = "Score",
+###       x = "Caller") +
+###  theme_minimal() +
+###  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+###        legend.title = element_blank(),  # Adjust legend title size
+###        legend.text = element_text(size = 12),   # Adjust legend text size
+###        axis.text = element_text(size = 12),     # Adjust axis text size
+###        axis.title = element_text(size = 14))  +  # Adjust axis title size
+###  expand_limits(y=c(0,1)) +
+#### Add F1 score numbers above the bars
+### geom_text(aes(label = sprintf("%.2f", Score), y = Score, group = Metric),
+###              position = position_dodge(width = 0.8), size = 2.75, vjust = -0.5)#return(benchmark_mapping_results_summary)
+###
+###
+###ggsave(paste0(plt_dir, "/performance_plots/", genome1, "_", genome2, "_ref.pdf"), p_ref, width=14)
+###ggsave(paste0(plt_dir, "/hetplt/",genome1, "_", genome2, "_ref.pdf"), hetplt_ref, width=14)
+###ggsave(paste0(plt_dir, "/homoplt/",genome1, "_", genome2, "_ref.pdf"), homoplt_ref, width=14)
+###ggsave(paste0(plt_dir, "/freqpltnozero/",genome1, "_", genome2, "_ref.pdf"), freqpltnozero_ref, width=14, height=10)
+###ggsave(paste0(plt_dir, "/freqplt/",genome1, "_", genome2, "_ref.pdf"), freqplt_ref, width=14, height=10)
 
 saveRDS(df_long_save, file = paste0(plt_dir, "/performance_plots/", genome1, "_", genome2, ".rds"))
-saveRDS(df_long_ref_save, file = paste0(plt_dir, "/performance_plots/", genome1, "_", genome2, "_ref", ".rds"))
+###saveRDS(df_long_ref_save, file = paste0(plt_dir, "/performance_plots/", genome1, "_", genome2, "_ref", ".rds"))
 
 
 ## Finding a common set of nonref tp calls

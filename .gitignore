@@ -10,3 +10,4 @@ workflow/scripts/sfs_analysis_slow_done.RData
 slurm-57808674.out
 slurm-57845766.out
 slurm-57853192.out
+workflow/scripts/benchmark_mapping_results_150_50X_revision.RData

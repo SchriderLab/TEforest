@@ -23,20 +23,24 @@ library(yardstick)
 #plt_dir <- paste0(basedir_outputs_path, "/", plt_dir)
 
 
+#genome1 <- "JUT-008"
+#genome2 <- "MUN-009"
 genome1 <- "AKA-017"
 genome2 <- "GIM-024"
 euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
-caller_name <- "TEforest_regressor"
+caller_name <- "TEforest_new_trimmed"
 caller_name2 <- "TEforest_classifier"
-plt_dir <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads/2L_2R_plots"
-basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads"
+#plt_dir <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads/2L_2R_plots"
+#basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/inference_trimreads"
+plt_dir <- "/nas/longleaf/home/adaigle/users/test_TEforest/trim_reads_test_newmodel/2L_2R_plots"
+basedir_outputs_path <- "/nas/longleaf/home/adaigle/users/test_TEforest/trim_reads_test_newmodel"
 coverage <- "30"
 
 if (!dir.exists(plt_dir)) {
   # Create the directory
   dir.create(plt_dir)
 }
-training_csv <- read.csv(paste0("/nas/longleaf/home/adaigle/work/test_TEforest/basenorm_feats_30X/3L3RX_classifer/", genome1, "_", genome2, ".csv"))
+training_csv <- read.csv(paste0("/nas/longleaf/home/adaigle/work/test_TEforest/test_lightgbm_30X_newfilter_dynamiclength/3L3RX_classifer/", genome1, "_", genome2, ".csv"))
 
 read_mcclintock_het_format <- function(path) {
   #this function reads in the alternative format of mcclintock files. 
@@ -760,7 +764,7 @@ generate_confusion_matrix <- function(het_conf_matrix, caller_name) {
   return(confusion_matrix)
 }
 
-confusion_matrix_TEforest <- generate_confusion_matrix(het_conf_matrix, "TEforest_classifier_filter_bps")
+confusion_matrix_TEforest <- generate_confusion_matrix(het_conf_matrix, "TEforest_classifier_bps")
 confusion_matrix_retroseq <- generate_confusion_matrix(het_conf_matrix, "retroseq")
 confusion_matrix_temp2 <- generate_confusion_matrix(het_conf_matrix, "temp2")
 
@@ -876,7 +880,7 @@ make_bp_plot <- function(caller_name, benchmark_mapping_results_summary) {
 #}
 
 colors <- c(
-    "TEforest_classifier_filter_bps" = "#F8766D",
+    "TEforest_classifier_bps" = "#F8766D",
     "temp2" = "#CD9600",
     "retroseq" = "#7CAE00",
     "temp" = "#00BE67",
@@ -978,6 +982,9 @@ ggsave(paste0(plt_dir, "/hetplt/",genome1, "_", genome2, ".pdf"), hetplt, width=
 ggsave(paste0(plt_dir, "/homoplt/",genome1, "_", genome2, ".pdf"), homoplt, width=14)
 ggsave(paste0(plt_dir, "/freqpltnozero/",genome1, "_", genome2, ".pdf"), freqpltnozero, width=14, height=10)
 ggsave(paste0(plt_dir, "/freqplt/",genome1, "_", genome2, ".pdf"), freqplt, width=14, height=10)
+
+# save rds early so I don't have to run reference stuff
+saveRDS(df_long_save, file = paste0(plt_dir, "/performance_plots/", genome1, "_", genome2, ".rds"))
 
 #ggsave(paste0(plt_dir, "/confusion_matrices/", genome, "mycaller", ".pdf"), conf_matrix_mycaller, width=10, height=8.5)
 
@@ -1480,7 +1487,7 @@ benchmark_mapping_results_common_calls_nodata <- benchmark_mapping_results_het_c
 # Check for NaN values and replace with 0
 benchmark_mapping_results_common_calls_nodata[is.na(benchmark_mapping_results_common_calls_nodata)] <- 0
 
-debug_breakpoints <- benchmark_mapping_results_het_common_calls %>% filter(caller=="TEforest_classifier_filter_bps") %>% filter(TE=="roo")
+debug_breakpoints <- benchmark_mapping_results_het_common_calls %>% filter(caller=="TEforest_classifier_bps") %>% filter(TE=="roo")
 debug_breakpointstmp2 <- benchmark_mapping_results_het_common_calls %>% filter(caller=="temp2") %>% filter(TE=="roo")
 
 #length of reduced nonref DF
@@ -1589,9 +1596,9 @@ return(benchmark_mapping_results_common_calls_summary_clean)
 }
 
 
-six_callers <- c('temp2', 'truth', 'TEforest_classifier_filter_bps', 'retroseq', 'teflon', 'temp', 'popoolationte')
-three_callers <- c('temp2', 'truth', 'retroseq', 'TEforest_classifier_filter_bps')
-two_callers <- c('temp2', 'truth', 'TEforest_classifier_filter_bps')
+six_callers <- c('temp2', 'truth', 'TEforest_classifier_bps', 'retroseq', 'teflon', 'temp', 'popoolationte')
+three_callers <- c('temp2', 'truth', 'retroseq', 'TEforest_classifier_bps')
+two_callers <- c('temp2', 'truth', 'TEforest_classifier_bps')
 
 three_callers_df <- common_calls_benchmarks(three_callers)
 #two_callers_df <- common_calls_benchmarks(two_callers)
@@ -1609,7 +1616,7 @@ write.csv(three_callers_df, file = paste0(plt_dir, "/", genome1, "_", genome2, "
 #load("/nas/longleaf/home/adaigle/work/test_TEforest/test_basenorm_feats/2L_2R_plotsJUT-008_MUN-009.RData")
 #load("/nas/longleaf/home/adaigle/work/test_TEforest/test_basenorm_feats/2L_2R_plotsAKA-017_GIM-024.RData")
 #
-#benchmark_mapping_results_mycaller <- benchmark_mapping_results %>% filter(caller=="TEforest_classifier_filter_bps")
+#benchmark_mapping_results_mycaller <- benchmark_mapping_results %>% filter(caller=="TEforest_classifier_bps")
 #false_negatives <- do.call(c, unname(benchmark_mapping_results_mycaller$nonref_false_negatives))
 #
 #colors <- c(
@@ -1625,9 +1632,9 @@ write.csv(three_callers_df, file = paste0(plt_dir, "/", genome1, "_", genome2, "
 #
 ## Filter and recode the data
 #df_long_filtered <- df_long %>% 
-#  filter(caller %in% c("TEforest_classifier_filter_bps", "temp", "temp2", "teflon", "retroseq", "popoolationte", "popoolationte2", "tepid")) %>%
+#  filter(caller %in% c("TEforest_classifier_bps", "temp", "temp2", "teflon", "retroseq", "popoolationte", "popoolationte2", "tepid")) %>%
 #  mutate(caller = recode(caller, 
-#                         "TEforest_classifier_filter_bps" = "TEforest",
+#                         "TEforest_classifier_bps" = "TEforest",
 #                         "temp2" = "temp2",
 #                         "retroseq" = "retroseq",
 #                         "temp" = "temp",
@@ -1814,4 +1821,3 @@ saveRDS(frequency_plot, file = paste0(plt_dir, "/", genome1, "_", genome2, "_fre
 
 
 save.image(file = paste0(plt_dir, "/", genome1, "_", genome2, ".RData"))
-

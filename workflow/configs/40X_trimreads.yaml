@@ -1,0 +1,22 @@
+# config.yaml
+
+# Number of threads
+threads: 96
+
+# Paths to reference files
+consensusTEs: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/from_the_ashes/data/consensusTEs.fasta"
+ref_genome: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/ISO1_GCF_000001215.4_Release_6_prepped/genome_fasta/ISO1_GCF_000001215.4_Release_6_prepped_unaugmented.fasta"
+ref_te_locations: "/nas/longleaf/home/adaigle/Rech_updated_supplemental/DeNovoCoordinates/ISO1.bed"
+euchromatin: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
+
+# Path to the model file
+model: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/outputs/feature_vectors/mixed_model/training/svrf_all.pkl"
+ref_model: "/nas/longleaf/home/adaigle/work/mcclintock_stuff/find_candidate_regions/heterozygosity_experiments/outputs/feature_vectors/mixed_model/training/svrf_all.pkl"
+
+#path to bam files that will be combined into synthetic bams
+bam_path: "/nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data"
+
+# Specify the input fastq files
+fq_base_path: "/nas/longleaf/home/adaigle/work/test_TEforest/synthetic_het_data/"
+
+target_coverage: "40"

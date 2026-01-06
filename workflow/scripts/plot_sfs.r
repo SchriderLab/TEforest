@@ -14,8 +14,6 @@ colors <- c(
   "tepid" = "#FF61CC"
 )
 
-
-
 ISO1 <- read.table("/nas/longleaf/home/adaigle/Rech_updated_supplemental/ReferenceCoordinates/ISO-1_Ref_Coord.bed") #%>%
 
 dir_path <- "/nas/longleaf/home/adaigle/Rech_updated_supplemental/ReferenceCoordinates"
@@ -502,9 +500,9 @@ nested_results_truthjoin_rare <- nested_results_truthjoin %>%
       allowed_intervals = list(c(0,1))
     )
   )
-saveRDS(nested_results_truthjoin, "/nas/longleaf/home/adaigle/TEforest/plots/nested_results_truthjoin_signed.rds")
+saveRDS(nested_results_truthjoin, "/nas/longleaf/home/adaigle/TEforest/revised_plots/nested_results_truthjoin_signed.rds")
 
-nested_results_truthjoin <- readRDS("/nas/longleaf/home/adaigle/TEforest/plots/nested_results_truthjoin_signed.rds")
+nested_results_truthjoin <- readRDS("/nas/longleaf/home/adaigle/TEforest/revised_plots/nested_results_truthjoin_signed.rds")
 # Summarize the overlap differences for each caller
 freq_comparision_summary <- nested_results_truthjoin %>%
   #filter(TE == "roo") %>%
@@ -565,11 +563,11 @@ ggplot(freq_comparision_summary_unnested,
     y = "Predicted Frequency - True frequency"
   ) + scale_y_log10() 
 
-ggsave(paste0("/nas/longleaf/home/adaigle/TEforest/plots/freqdif.png"), freqdif, width=8, height = 5)
-ggsave(paste0("/nas/longleaf/home/adaigle/TEforest/plots/freqdif.svg"), freqdif, width=8, height = 5)
-ggsave(paste0("/nas/longleaf/home/adaigle/TEforest/plots/freqdif.tiff"), freqdif, width=8, height = 5)
+ggsave(paste0("/nas/longleaf/home/adaigle/TEforest/revised_plots/freqdif.png"), freqdif, width=8, height = 5)
+ggsave(paste0("/nas/longleaf/home/adaigle/TEforest/revised_plots/freqdif.svg"), freqdif, width=8, height = 5)
+ggsave(paste0("/nas/longleaf/home/adaigle/TEforest/revised_plots/freqdif.tiff"), freqdif, width=8, height = 5)
 
-nested_results_truthjoin <- readRDS("/nas/longleaf/home/adaigle/TEforest/plots/nested_results_truthjoin_signed.rds")
+nested_results_truthjoin <- readRDS("/nas/longleaf/home/adaigle/TEforest/revised_plots/nested_results_truthjoin_signed.rds")
 # Summarize the overlap differences for each caller
 freq_comparision_summary_common <- nested_results_truthjoin_common %>%
   #filter(TE == "roo") %>%
@@ -771,7 +769,7 @@ combined_plot <- ggarrange(
   font.label = list(size = 22, color = "black", face = "bold")
 )
 
-ggsave(paste0("/nas/longleaf/home/adaigle/TEforest/plots/sfs_crap.jpg"), combined_plot, width=10.5, height=10, dpi=300)
+ggsave(paste0("/nas/longleaf/home/adaigle/TEforest/revised_plots/sfs_crap.jpg"), combined_plot, width=10.5, height=10, dpi=300)
 
 
 sfs_data <- nested_results_sfs_alltes_normalized %>%

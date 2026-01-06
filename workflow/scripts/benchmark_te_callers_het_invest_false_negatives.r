@@ -31,8 +31,8 @@ genome2 <- "MUN-009"
 euchromatin_coordinates_path <- "/nas/longleaf/home/adaigle/work/mcclintock_stuff/euchromatin.txt"
 caller_name <- "TEforest_regressor"
 caller_name2 <- "TEforest_classifier"
-plt_dir <- "/nas/longleaf/home/adaigle/work/test_TEforest/basenorm_feats_50X/2L_2R_plots"
-basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/basenorm_feats_50X"
+plt_dir <- "/nas/longleaf/home/adaigle/work/test_TEforest/test_lightgbm_50X_newfilter_dynamiclength/2L_2R_plots"
+basedir_outputs_path <- "/nas/longleaf/home/adaigle/work/test_TEforest/test_lightgbm_50X_newfilter_dynamiclength"
 coverage <- "50"
 
 training_csv <- read.csv(paste0(basedir_outputs_path, "/3L3RX_classifer/", genome1, "_", genome2, ".csv"))
@@ -471,7 +471,7 @@ benchmark_mapping_results <- mcclintock_results %>% mutate(
 )
 
 path <- "/nas/longleaf/home/adaigle/TEforest/workflow/scripts/"
-save(benchmark_mapping_results, file = paste0(path, "benchmark_mapping_results_150_50X.RData"))
+save(benchmark_mapping_results, file = paste0(path, "benchmark_mapping_results_150_50X_revision.RData"))
 
 benchmark_mapping_results_ref <- mcclintock_results %>% mutate(
     A1_truth_forTE = map(TE, # reduce to get rid of nested TEs of same type

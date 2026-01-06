@@ -1,117 +1,70 @@
-import argparse
-import os
-import pickle as pkl
-import argparse
+#!/usr/bin/env python3
+"""
+Predict with a pre-trained LightGBM model on the condensed .npz file.
+"""
 
+import argparse, os, pickle as pkl
+from pathlib import Path
 import numpy as np
 import pandas as pd
-import sklearn as sklearn
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-n",
-        "--npz",
-        # metavar="INDIR",
-        required=True,
-        dest="npz",
-        help="Path to condensed npz data.",
-    )
-
-    # parser.add_argument(
-    #    "-c",
-    #    "--csv",
-    #    #metavar="INDIR",
-    #    required=True,
-    #    dest="csv",
-    #    help="Path to candidate regions csv."
-    # )
-
-    parser.add_argument(
-        "-m",
-        "--model",
-        # metavar="INDIR",
-        required=True,
-        dest="model",
-        help="Path to model that will make predictions using the data.",
-    )
-
-    parser.add_argument(
-        "-o",
-        "--output-dir",
-        metavar="OUTDIR",
-        required=True,
-        dest="outdir",
-        help="Directory to save model outputs to.",
-    )
-
-    return parser.parse_args()
-
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser()
+    p.add_argument("-n", "--npz", required=True,
+                   help="Condensed feature file from condense_training_data.py")
+    p.add_argument("-m", "--model", required=True,
+                   help="Pickled LightGBM model (.pkl)")
+    p.add_argument("-o", "--output-dir", required=True,
+                   help="Directory for predictions.csv")
+    p.add_argument("-t", "--threads", type=int, default=os.cpu_count(),
+                   help="Threads for LightGBM predict (default: all cores)")
+    return p.parse_args()
 
 def main():
-    ap = parse_args()
+    args = parse_args()
 
-    # Load model from file
-    with open(ap.model, "rb") as f:
-        loaded_model = pkl.load(f)
+    # 1 . load model
+    with open(args.model, "rb") as f:
+        model = pkl.load(f)
 
-    infile = ap.npz
+    # LightGBM sklearn wrapper: honour n_jobs
+    if hasattr(model, "n_jobs"):
+        model.n_jobs = args.threads
+    # Native Booster: set OMP threads
+    elif hasattr(model, "set_param"):
+        model.set_param({"num_threads": args.threads})
 
-    sv_data = np.load(infile)
-    samps = {"data": [], "labs": [], "files": []}
+    with np.load(args.npz, mmap_mode="r") as z:
+        # if condense wrote no arrays, bail out gracefully
+        if "X" not in z.files or "files" not in z.files or "labels" not in z.files:
+            out = Path(args.output_dir) / "predictions.csv"
+            pd.DataFrame(columns=["file", "true", "pred", "cntrl_score"]) \
+              .to_csv(out, index=False)
+            print(f"No reference TEs found in {args.npz} – wrote empty predictions.csv")
+            return
+        X      = z["X"]
+        files  = z["files"]
+        labels = z["labels"]
 
-    for id in tqdm(sv_data.files):
-        samps["data"].append(sv_data[id])
-        samps["labs"].append(id.split("-")[-2])
-        samps["files"].append(id)
+    if X.size == 0:
+        out = Path(args.output_dir) / "predictions.csv"
+        pd.DataFrame(columns=["file", "true", "pred", "cntrl_score"]).to_csv(out, index=False)
+        print("No samples found – wrote empty predictions.csv")
+        return
 
-    preds = loaded_model.predict(samps["data"])
-    # probs = loaded_model.predict_proba(samps["data"])
-    # pd.DataFrame(
-    #    {
-    #        "file": samps["files"],
-    #        "true": samps["labs"],
-    #        "pred": preds,
-    #        "cntrl_score": probs[:, 0],
-    #    }
-    # ).to_csv(os.path.join(ap.csv), index=False)
+    # 3 . predict in chunks if RAM limited (usually not needed now)
+    CHUNK = 250_000
+    preds = np.empty(X.shape[0], dtype=np.int16)
+    for i in tqdm(range(0, X.shape[0], CHUNK), desc="LightGBM predict"):
+        preds[i:i+CHUNK] = model.predict(X[i:i+CHUNK])
 
-    # Create the DataFrame
-    data = {
-        "file": samps["files"],
-        "true": samps["labs"],
-        "pred": preds,
-        "cntrl_score": [0] * len(samps["files"]),
-    }
-
-    full_df = pd.DataFrame(data)
-
-    # note; this doesn't work on genomes with a hyphen in their name.
-    # need to work on this before this step to avoid bugs
-    def custom_grouping(file_name):
-        return file_name.split("-")[0]
-
-    # Group the DataFrame using the custom grouping function
-    grouped = full_df.groupby(full_df["file"].apply(custom_grouping))
-
-    # Define the output directory
-    output_directory = ap.outdir
-    output_path = os.path.join(output_directory, f"predictions.csv")
-    # Save the group DataFrame to a CSV file
-    full_df.to_csv(output_path, index=False)
-    # Iterate over the groups and save each group to a CSV file
-    # for group_name, group_df in grouped:
-    #    # Define the full path to the output CSV file
-    #    print(group_name)
-    #    # output_path = os.path.join(output_directory, f"{group_name}.csv")
-    #    output_path = os.path.join(output_directory, f"predictions.csv")
-    #    # Save the group DataFrame to a CSV file
-    #    group_df.to_csv(output_path, index=False)
-
+    # 4 . write output
+    df = pd.DataFrame({"file": files, "true": labels,
+                       "pred": preds, "cntrl_score": 0})
+    os.makedirs(args.output_dir, exist_ok=True)
+    df.to_csv(Path(args.output_dir) / "predictions.csv", index=False)
+    print(f"Wrote predictions for {len(df):,} samples → {args.output_dir}/predictions.csv")
 
 if __name__ == "__main__":
     main()
