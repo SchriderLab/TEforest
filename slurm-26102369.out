@@ -1,0 +1,16 @@
+2026-01-07 17:30:00,894 - INFO - Config file created at: /nas/longleaf/home/adaigle/work/test_TEforest/train_simple_20X/config.yaml
+Building DAG of jobs...
+Unlocked working directory.
+2026-01-07 17:30:02,120 - INFO - Running Snakemake command:
+snakemake training/teforest_classifier_20X.pkl --cores 32 -s /nas/longleaf/home/adaigle/TEforest/workflow/training/Snakefile --configfile /nas/longleaf/home/adaigle/work/test_TEforest/train_simple_20X/config.yaml
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+IncompleteFilesException:
+The files below seem to be incomplete. If you are sure that certain files are not incomplete, mark them as complete with
+
+    snakemake --cleanup-metadata <filenames>
+
+To re-generate the files rerun your command with the --rerun-incomplete flag.
+Incomplete files:
+feature_vectors_train/JUT-008_MUN-009
+2026-01-07 17:30:02,778 - ERROR - Snakemake failed with exit code 1

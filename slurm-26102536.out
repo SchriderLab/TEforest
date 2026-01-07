@@ -1,0 +1,84 @@
+2026-01-07 17:32:38,294 - INFO - Config file created at: /nas/longleaf/home/adaigle/work/test_TEforest/train_simple_20X/config.yaml
+Building DAG of jobs...
+Unlocked working directory.
+2026-01-07 17:32:39,319 - INFO - Running Snakemake command:
+snakemake training/teforest_classifier_20X.pkl --cores 32 -s /nas/longleaf/home/adaigle/TEforest/workflow/training/Snakefile --configfile /nas/longleaf/home/adaigle/work/test_TEforest/train_simple_20X/config.yaml
+Assuming unrestricted shared filesystem usage for local execution.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job stats:
+job                       count
+----------------------  -------
+bam_to_fvec                   1
+condense_training_data        1
+train_model                   1
+total                         3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Jan  7 17:32:39 2026]
+localrule bam_to_fvec:
+    input: featvec_csvs_labeled/JUT-008_MUN-009.csv, downsampled/JUT-008_MUN-009.bam
+    output: feature_vectors_train/JUT-008_MUN-009
+    log: logs/JUT-008_MUN-009/bam_to_fvec.log
+    jobid: 2
+    benchmark: benchmarks/JUT-008_MUN-009.bam_to_fvec.benchmark.txt
+    reason: Missing output files: feature_vectors_train/JUT-008_MUN-009
+    wildcards: sample=JUT-008_MUN-009
+    threads: 32
+    resources: tmpdir=/tmp/adaigle/26102536/g1416schr01.ll.unc.edu
+
+/nas/longleaf/home/adaigle/TEforest/workflow/scripts/bam_to_fvec_cov_normalized_rescale_regions_majorchanges.py:11: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+Using 32 processes
+Spawning 32 workers for fused_region_generator
+/work/users/a/d/adaigle/.conda/envs/TEforest/lib/python3.12/site-packages/numpy/core/fromnumeric.py:59: FutureWarning: 'DataFrame.swapaxes' is deprecated and will be removed in a future version. Please use 'DataFrame.transpose' instead.
+  return bound(*args, **kwds)
+[Wed Jan  7 17:33:03 2026]
+Finished job 2.
+1 of 3 steps (33%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Jan  7 17:33:03 2026]
+localrule condense_training_data:
+    input: feature_vectors_train/JUT-008_MUN-009
+    output: training/condense.npz
+    log: logs/condense_training_data.log
+    jobid: 1
+    benchmark: benchmarks/condense_training_data.benchmark.txt
+    reason: Missing output files: training/condense.npz; Input files updated by another job: feature_vectors_train/JUT-008_MUN-009
+    resources: tmpdir=/tmp/adaigle/26102536/g1416schr01.ll.unc.edu
+
+Reading feature vectors:   0%|          | 0/5818 [00:00<?, ?it/s]Reading feature vectors:   3%|▎         | 175/5818 [00:00<00:03, 1730.21it/s]Reading feature vectors:   6%|▋         | 367/5818 [00:00<00:02, 1838.03it/s]Reading feature vectors:   9%|▉         | 551/5818 [00:00<00:02, 1773.94it/s]Reading feature vectors:  13%|█▎        | 741/5818 [00:00<00:02, 1820.12it/s]Reading feature vectors:  16%|█▌        | 924/5818 [00:00<00:02, 1820.75it/s]Reading feature vectors:  19%|█▉        | 1109/5818 [00:00<00:02, 1829.72it/s]Reading feature vectors:  22%|██▏       | 1309/5818 [00:00<00:02, 1883.27it/s]Reading feature vectors:  26%|██▌       | 1511/5818 [00:00<00:02, 1926.02it/s]Reading feature vectors:  29%|██▉       | 1704/5818 [00:00<00:02, 1908.75it/s]Reading feature vectors:  33%|███▎      | 1895/5818 [00:01<00:02, 1897.34it/s]Reading feature vectors:  36%|███▌      | 2085/5818 [00:01<00:01, 1896.17it/s]Reading feature vectors:  39%|███▉      | 2279/5818 [00:01<00:01, 1905.52it/s]Reading feature vectors:  42%|████▏     | 2470/5818 [00:01<00:01, 1885.35it/s]Reading feature vectors:  46%|████▌     | 2669/5818 [00:01<00:01, 1914.44it/s]Reading feature vectors:  49%|████▉     | 2867/5818 [00:01<00:01, 1928.68it/s]Reading feature vectors:  53%|█████▎    | 3060/5818 [00:01<00:01, 1904.37it/s]Reading feature vectors:  56%|█████▌    | 3251/5818 [00:01<00:01, 1855.73it/s]Reading feature vectors:  59%|█████▉    | 3437/5818 [00:01<00:01, 1833.13it/s]Reading feature vectors:  62%|██████▏   | 3621/5818 [00:01<00:01, 1797.14it/s]Reading feature vectors:  65%|██████▌   | 3801/5818 [00:02<00:01, 1762.23it/s]Reading feature vectors:  68%|██████▊   | 3978/5818 [00:02<00:01, 1580.20it/s]Reading feature vectors:  72%|███████▏  | 4167/5818 [00:02<00:00, 1661.48it/s]Reading feature vectors:  75%|███████▍  | 4347/5818 [00:02<00:00, 1698.62it/s]Reading feature vectors:  78%|███████▊  | 4541/5818 [00:02<00:00, 1765.34it/s]Reading feature vectors:  81%|████████▏ | 4729/5818 [00:02<00:00, 1797.31it/s]Reading feature vectors:  85%|████████▍ | 4921/5818 [00:02<00:00, 1830.96it/s]Reading feature vectors:  88%|████████▊ | 5119/5818 [00:02<00:00, 1872.31it/s]Reading feature vectors:  91%|█████████ | 5308/5818 [00:02<00:00, 1803.15it/s]Reading feature vectors:  94%|█████████▍| 5490/5818 [00:03<00:00, 1803.44it/s]Reading feature vectors:  98%|█████████▊| 5679/5818 [00:03<00:00, 1826.03it/s]Reading feature vectors: 100%|██████████| 5818/5818 [00:03<00:00, 1827.82it/s]
+Wrote 2909 samples × 168 features → training/condense.npz
+[Wed Jan  7 17:33:07 2026]
+Finished job 1.
+2 of 3 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Jan  7 17:33:07 2026]
+localrule train_model:
+    input: training/condense.npz
+    output: training/teforest_classifier_20X.pkl
+    log: logs/train_model.log
+    jobid: 0
+    reason: Missing output files: training/teforest_classifier_20X.pkl; Input files updated by another job: training/condense.npz
+    resources: tmpdir=/tmp/adaigle/26102536/g1416schr01.ll.unc.edu
+
+[train_lightgbm] Accuracy: 0.9485
+[train_lightgbm] Wrote model to training/teforest_classifier_20X.pkl
+[Wed Jan  7 17:33:10 2026]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2026-01-07T173239.842712.snakemake.log

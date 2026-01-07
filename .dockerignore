@@ -1,0 +1,12 @@
+.git
+.github
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+build-temp-*
+teforest.sif
+teforest_sandbox
+.env
+.venv

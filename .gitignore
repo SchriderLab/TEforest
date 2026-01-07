@@ -12,3 +12,4 @@ workflow/scripts/sfs_analysis_slow_done.RData
 workflow/scripts/benchmark_mapping_results_150_50X_revision.RData
 valid_df.pkl.gz
 train_df.pkl.gz
+teforest-src.tar.gz

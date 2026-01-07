@@ -11,7 +11,7 @@ This repository is designed for detecting transposable element (TE) insertions u
     - Model training
     - Model deployment (prediction)
     - Benchmarking
-  - Only scripts used for model deployment are designed to be run on another machine. The training and benchmarking scripts contain hard-coded paths for now. 
+  - The new user-facing training pipeline lives in `workflow/training` and is launched via `TEforest_train.py`. Some legacy training/benchmarking scripts still contain hard-coded paths.
 
 - **Scripts**  
   - Supporting scripts for training and model deployment are located in `workflow/scripts`.
@@ -80,6 +80,39 @@ The script will generate:
 VCF notes:
 - Non-reference calls are represented as INS records with ALT `<INS:ME:<TEFAM>>`.
 - Present reference TEs are represented as DEL records with GT=0/0 (absence will be GT=1/1 once deletion calling is added).
+
+## Training pipeline (user-provided truth BED)
+
+Use `TEforest_train.py` with the training Snakefile at `workflow/training/Snakefile` to train a model on your own data. This pipeline labels candidate regions by overlap with a truth BED and trains a LightGBM classifier. Candidate regions that do not overlap a truth locus are labeled absent (0). If you are interested in training on one region of the genome,be sure to use the --euchromatin flag to denote the regions you want to include (otherwise all regions of the genome will be considered for candidate regions). 
+
+Truth BED requirements:
+- Columns: `seqnames`, `start`, `end`, `zygosity`, `sample` (and optional `te` family).
+- `zygosity` values are interpreted as 1, 0.5, or 0; in classifier mode these are mapped to classes 2/1/0.
+
+Example usage:
+
+```bash
+python TEforest_train.py \
+    --workflow_dir /path/to/TEforest/workflow/training \
+    --workdir /path/to/training_workdir \
+    --threads 32 \
+    --consensusTEs /path/to/consensusTEs.fasta \
+    --ref_genome /path/to/reference_genome.fasta \
+    --ref_te_locations /path/to/ref_te_locations.bed \
+    --euchromatin /path/to/euchromatin.bed \
+    --truth_bed /path/to/truth_labels.bed \
+    --fq_base_path /path/to/fastqs \
+    --samples SAMPLE1 SAMPLE2 \
+    --label_mode classifier \
+    --train_mode classifier \
+    --test_size 0.1 \
+    --model_out training/teforest_classifier.pkl
+```
+
+Notes:
+- `--label_mode classifier` maps 1/0.5/0 to 2/1/0; `regressor` keeps the numeric zygosity values.
+- `--test_size` controls the train/test split (0 disables the split).
+- Output model path is relative to the workdir unless you give an absolute path.
 
 ## Quick install test (example dataset)
 

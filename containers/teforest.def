@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: mambaorg/micromamba:1.5.10
+
+%setup
+    mkdir -p "${APPTAINER_ROOTFS}/proj" \
+             "${APPTAINER_ROOTFS}/work" \
+             "${APPTAINER_ROOTFS}/nas"  \
+             "${APPTAINER_ROOTFS}/scratch" || true
+
+%files
+    TEforest.yml /tmp/TEforest.yml
+    teforest-src.tar.gz /tmp/teforest-src.tar.gz
+
+%post
+    set -euo pipefail
+
+    mkdir -p /opt/teforest
+    tar -xzf /tmp/teforest-src.tar.gz -C /opt/teforest
+
+    micromamba create -y -f /tmp/TEforest.yml
+    micromamba clean -a -y
+
+%environment
+    export MAMBA_ROOT_PREFIX=/opt/micromamba
+    export PATH=/opt/micromamba/envs/TEforest/bin:$PATH
+    export TEFOREST_HOME=/opt/teforest
+
+%runscript
+    exec python /opt/teforest/TEforest.py "$@"
