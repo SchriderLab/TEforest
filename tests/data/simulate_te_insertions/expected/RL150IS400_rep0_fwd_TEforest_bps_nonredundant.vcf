@@ -1,0 +1,16 @@
+##fileformat=VCFv4.2
+##source=TEforest
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Length of structural variant">
+##INFO=<ID=IMPRECISE,Number=0,Type=Flag,Description="Imprecise structural variation">
+##INFO=<ID=CIPOS,Number=2,Type=Integer,Description="Confidence interval around POS">
+##INFO=<ID=CIEND,Number=2,Type=Integer,Description="Confidence interval around END">
+##INFO=<ID=MEINFO,Number=4,Type=String,Description="Mobile element info: NAME,START,END,POLARITY">
+##INFO=<ID=TEORIG,Number=1,Type=String,Description="TE origin (reference or non-reference)">
+##INFO=<ID=CALLER,Number=1,Type=String,Description="Calling method">
+##INFO=<ID=EVID,Number=1,Type=String,Description="Evidence tag">
+##INFO=<ID=IDNUM,Number=1,Type=Integer,Description="Record index from TEforest">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	RL150IS400_rep0_fwd
+3L	5002	TEforest_1	G	<INS:ME:roo>	.	PASS	SVTYPE=INS;END=5005;SVLEN=4;IMPRECISE;CIPOS=0,0;CIEND=0,0;MEINFO=roo,.,.,.;TEORIG=non-reference;CALLER=TEforest;EVID=rp;IDNUM=1	GT	1/1
