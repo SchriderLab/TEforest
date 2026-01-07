@@ -881,6 +881,7 @@ rule split_data_classifier_reference:
 
 
 find_breakpoints_script = workflow.basedir + "/scripts/find_breakpoints.r"
+bed_to_vcf_script = workflow.basedir + "/scripts/bed_to_vcf.py"
 
 
 rule find_breakpoints:
@@ -896,6 +897,18 @@ rule find_breakpoints:
         "logs/{sample}/find_breakpoints.log",
     shell:
         "{find_breakpoints_script} {wildcards.sample} {input.predictions} output/ downsampled/ {input.predictions_ref} /candidate_regions_data/"
+
+
+rule bed_to_vcf:
+    input:
+        bed="output/{sample}_TEforest_bps_nonredundant.bed",
+        ref=config["ref_genome"]
+    output:
+        vcf="output/{sample}_TEforest_bps_nonredundant.vcf"
+    log:
+        "logs/{sample}/bed_to_vcf.log",
+    shell:
+        "python {bed_to_vcf_script} --bed {input.bed} --ref {input.ref} --output {output.vcf}"
 
 
 rule find_breakpoints_het:

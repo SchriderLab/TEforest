@@ -75,6 +75,11 @@ The script will generate:
 - A `config.yaml` in your specified `workdir` with all parameters.
 - Intermediate files used to run the pipeline
 - Output `.bed` files ({sample}_TEforest_bps_nonredundant.bed) for each sample in `output/` within the specified `workdir`.
+- Output `.vcf` files ({sample}_TEforest_bps_nonredundant.vcf) for each sample in `output/` within the specified `workdir`.
+
+VCF notes:
+- Non-reference calls are represented as INS records with ALT `<INS:ME:<TEFAM>>`.
+- Present reference TEs are represented as DEL records with GT=0/0 (absence will be GT=1/1 once deletion calling is added).
 
 ## Quick install test (example dataset)
 

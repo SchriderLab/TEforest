@@ -157,10 +157,10 @@ def main():
     logging.info(f"Config file created at: {config_path}")
 
     # 2) Generate output targets based on samples
-    output_targets = [
-        os.path.join(f"output/{sample}_TEforest_nonredundant.bed") 
-        for sample in args.samples
-    ]
+    output_targets = []
+    for sample in args.samples:
+        output_targets.append(f"output/{sample}_TEforest_nonredundant.bed")
+        output_targets.append(f"output/{sample}_TEforest_bps_nonredundant.vcf")
 
     # Ensure the output directory exists
     output_dir = os.path.join(args.workdir, "output")
