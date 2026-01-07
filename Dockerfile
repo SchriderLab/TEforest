@@ -1,8 +1,5 @@
 FROM mambaorg/micromamba:1.5.10
 
-# HPC-friendly mountpoints (helps when Apptainer bind-mounts these)
-RUN mkdir -p /proj /work /nas /scratch
-
 # Install conda env
 COPY TEforest.yml /tmp/TEforest.yml
 RUN micromamba create -y -f /tmp/TEforest.yml && micromamba clean -a -y
