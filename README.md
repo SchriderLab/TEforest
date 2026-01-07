@@ -74,7 +74,28 @@ python TEforest.py \
 The script will generate:
 - A `config.yaml` in your specified `workdir` with all parameters.
 - Intermediate files used to run the pipeline
-- Output `.bed` files ({sample}_TEforest_bps_nonredundant.bed) for each sample in `outputs/` within the specified `workdir`.
+- Output `.bed` files ({sample}_TEforest_bps_nonredundant.bed) for each sample in `output/` within the specified `workdir`.
+
+## Quick install test (example dataset)
+
+A small dataset is bundled under `tests/data/simulate_te_insertions` so you can sanity-check a new install after activating the `TEforest` conda environment.
+
+```bash
+# from the repo root
+./tests/run_example.sh
+```
+
+This runs TEforest on `RL150IS400_rep0_fwd` and compares the breakpoint output to the expected call. The expected breakpoint is:
+
+```text
+3L    5001    5005    roo|non-reference|1|RL150IS400_rep0_fwd|TEforest|rp|1    0    .
+```
+
+You can also override the work directory:
+
+```bash
+./tests/run_example.sh /tmp/teforest_example
+```
 
 ## Contributing
 
