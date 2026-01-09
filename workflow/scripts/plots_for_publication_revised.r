@@ -414,8 +414,6 @@ figure <- ggarrange(
     ncol = 3, nrow = 2, common.legend = T, legend="bottom"
   )
 
-ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_150.svg", figure, dpi=300, width = 8.5, height = 8.5)
-ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_150.jpg", figure, dpi=300, width = 8.5, height = 8.5)
 
 performance_125 <- plot_coverage_threeplot(basenorm_feats_125bp_plot)
 breakpoints_generic_125 <- plot_bp(basenorm_feats_125bp)
@@ -430,8 +428,6 @@ figure_125 <- ggarrange(
     ncol = 3, nrow = 2, common.legend = T, legend="bottom"
   )
 
-ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_125.svg", figure_125, dpi=300, width = 8.5, height = 8.5)
-ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_125.jpg", figure_125, dpi=300, width = 8.5, height = 8.5)
 
 performance_54 <- plot_coverage_threeplot(basenorm_feats_54bp_plot)
 breakpoints_generic_54 <- plot_bp(basenorm_feats_54bp)
@@ -445,6 +441,11 @@ figure_54 <- ggarrange(
     labels = c("A", "B", "C", "D", "E", "F"),
     ncol = 3, nrow = 2, common.legend = T, legend="bottom"
   )
+ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_150.svg", figure, dpi=300, width = 8.5, height = 8.5)
+ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_150.jpg", figure, dpi=300, width = 8.5, height = 8.5)
+
+ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_125.svg", figure_125, dpi=300, width = 8.5, height = 8.5)
+ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_125.jpg", figure_125, dpi=300, width = 8.5, height = 8.5)
 
 ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_50.svg", figure_54, dpi=300, width = 8.5, height = 8.5)
 ggsave("/nas/longleaf/home/adaigle/TEforest/revised_plots/performance_50.jpg", figure_54, dpi=300, width = 8.5, height = 8.5)
@@ -458,7 +459,7 @@ merged_performance <- ggarrange(
   )
 
 titles_row <- ggarrange(
-  text_grob("154 bp", face = "bold", size = 14, just = "center"),
+  text_grob("151 bp", face = "bold", size = 14, just = "center"),
   text_grob("125 bp", face = "bold", size = 14, just = "center"),
   text_grob("54 bp",  face = "bold", size = 14, just = "center"),
   ncol = 3

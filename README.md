@@ -23,6 +23,12 @@ This repository is designed for detecting transposable element (TE) insertions u
   - Final output files (predictions) will be generated in your chosen work directory under the path:
     ```bash
     outputs/{sample}_TEforest_bps_nonredundant.bed
+    outputs/{sample}_TEforest_bps_nonredundant.vcf
+    ```
+  - Candidate regions prior to precise breakpoint detection are also avaliable: 
+    
+    ```bash
+    outputs/{sample}_TEforest_nonredundant.bed
     ```
 
 ## Environment Setup
@@ -65,7 +71,7 @@ python TEforest.py \
 - **`--workflow_dir`**: Directory containing the `Snakefile` (`workflow/Snakefile`).
 - **`--workdir`**: Directory to store outputs and logs.
 - **`--threads`**: Number of CPU threads to use. 16 per sample is recommended.
-- **`--consensusTEs`, `--ref_genome`, `--ref_te_locations`, `--euchromatin`**: Input reference files for TE detection. All calls outside of the regions denoted in euchromatin will be filtered. Example files used for Drosophila melanogaster are located in example_files/.
+- **`--consensusTEs`, `--ref_genome`, `--ref_te_locations`, `--euchromatin`**: Input reference files for TE detection. All calls outside of the regions denoted in euchromatin will be filtered. Example files used for Drosophila melanogaster are located in example_files/. Be aware the BWA-mem2 will treat IUPAC bases as missing, so TEforest may have reduced performance on consensus sequences with high IUPAC content.  
 - **`--model`**: Path to the non-reference random forest model. Select a model that best matches the coverage of your reads. Alignments are automatically downsampled to the nearest available coverage—whichever is immediately lower than your average—using one of the following trained models: 5X, 10X, 20X, 30X, 40X, or 50X.
 - **`--ref_model`**: Path to the reference random forest model.
 - **`--fq_base_path`**: Directory containing FASTQ files. Should contain sample in name formatted {sample}_1.fastq.gz and {sample}_2.fastq.gz or {sample}_1.fq.gz.
