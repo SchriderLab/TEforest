@@ -2,6 +2,19 @@ from snakemake.utils import min_version
 
 min_version("8.0")
 
+def cleanup_enabled():
+    value = config.get("cleanup_intermediates", False)
+    if isinstance(value, str):
+        return value.strip().lower() in {"1", "true", "yes", "y"}
+    return bool(value)
+
+
+def maybe_temp(path):
+    return temp(path) if cleanup_enabled() else path
+
+
+def maybe_temp_dir(path):
+    return temp(directory(path)) if cleanup_enabled() else directory(path)
 
 #include: "rules/common.smk"
 
@@ -69,8 +82,8 @@ rule fastp:
         fq1=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "1"),
         fq2=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "2")
     output:
-        fq1_gz="fastp/{sample}.R1.fq",
-        fq2_gz="fastp/{sample}.R2.fq",
+        fq1_gz=maybe_temp("fastp/{sample}.R1.fq"),
+        fq2_gz=maybe_temp("fastp/{sample}.R2.fq"),
         html="fastp/{sample}.html",
         json="fastp/{sample}.json",
     threads: 10,
@@ -87,8 +100,8 @@ rule fastp_het:
         fq1="het_reads/{sample}/{sample}_1.fq",
         fq2="het_reads/{sample}/{sample}_2.fq",
     output:
-        fq1_gz="fastp_het/{sample}.R1.fq",
-        fq2_gz="fastp_het/{sample}.R2.fq",
+        fq1_gz=maybe_temp("fastp_het/{sample}.R1.fq"),
+        fq2_gz=maybe_temp("fastp_het/{sample}.R2.fq"),
         html="fastp_het/{sample}.html",
         json="fastp_het/{sample}.json",
     threads: 10,
@@ -186,9 +199,9 @@ rule candidate_regions:
         ref_te_locations="ref_genome/filtered_ISO1.bed",
     
     output:
-        directory("candidate_regions_data/{sample}"),
-        "candidate_regions_data/{sample}/completed.txt",
-    threads: 16
+        maybe_temp_dir("candidate_regions_data/{sample}"),
+        maybe_temp("candidate_regions_data/{sample}/completed.txt"),
+    threads: 32
     benchmark:
         "benchmarks/{sample}.candidate_regions.benchmark.txt"
     log:
@@ -210,8 +223,8 @@ rule candidate_regions_het:
         ref_index = "fastp/ref_genome.index.done",
         ref_te_locations="ref_genome/filtered_ISO1.bed",
     output:
-        directory("candidate_regions_data_het/{sample}"),
-        "candidate_regions_data_het/{sample}/completed.txt",
+        maybe_temp_dir("candidate_regions_data_het/{sample}"),
+        maybe_temp("candidate_regions_data_het/{sample}/completed.txt"),
     threads: 16
     benchmark:
         "benchmarks/{sample}.candidate_regions.benchmark.txt"
@@ -381,8 +394,8 @@ rule index_reference:
         ref = config["ref_genome"],
         consensusTEs  = config["consensusTEs"]
     output:
-        ref_copy = "fastp/ref_genome",
-        index_done = "fastp/ref_genome.index.done"
+        ref_copy = maybe_temp("fastp/ref_genome"),
+        index_done = maybe_temp("fastp/ref_genome.index.done")
     shell:
         """
         # concatenate genome + TE consensus into one FASTA
@@ -424,8 +437,8 @@ rule align_reads:
         #fq2_qc=lambda wildcards: find_fastq(config["fq_base_path"], wildcards.sample, "2"),
         #ref_genome=config["ref_genome"],
     output:
-        bam="aligned/{sample}.bam",
-    threads: 16
+        bam=maybe_temp("aligned/{sample}.bam"),
+    threads: 32
     benchmark:
         "benchmarks/{sample}.align_reads.benchmark.txt"
     log:
@@ -446,12 +459,12 @@ rule downsample_reads:
         bam = "aligned/{sample}.bam",
         ref_te_locations="ref_genome/filtered_ISO1.bed"
     output:
-        bam_downsampled = "downsampled/{sample}.bam",
-        bai_downsampled = "downsampled/{sample}.bam.bai",
-        fq1 = "downsampled/{sample}_1.fq",
-        fq2 = "downsampled/{sample}_2.fq",
-        fq_single = "downsampled/{sample}_singletons.fq",
-        coverage = "downsampled/{sample}_coverage.txt"
+        bam_downsampled = maybe_temp("downsampled/{sample}.bam"),
+        bai_downsampled = maybe_temp("downsampled/{sample}.bam.bai"),
+        fq1 = maybe_temp("downsampled/{sample}_1.fq"),
+        fq2 = maybe_temp("downsampled/{sample}_2.fq"),
+        fq_single = maybe_temp("downsampled/{sample}_singletons.fq"),
+        coverage = maybe_temp("downsampled/{sample}_coverage.txt")
     threads: 32
     benchmark:
         "benchmarks/{sample}.downsample_reads.benchmark.txt"
@@ -498,6 +511,8 @@ rule bam_to_fvec:
     input:
         featvec_csv="featvec_csvs/{sample}.csv",
         bam="downsampled/{sample}.bam",
+        bam_index="downsampled/{sample}.bam.bai",
+        candidate_dir="candidate_regions_data/{sample}",
     output:
         feat_vec_dir=directory("feature_vectors/{sample}"),
     benchmark:
@@ -536,22 +551,30 @@ rule bam_to_fvec_reference:
     input:
         featvec_csv="featvec_csvs/{sample}_reference.csv",
         bam="downsampled/{sample}.bam",
+        bam_index="downsampled/{sample}.bam.bai",
+        candidate_dir="candidate_regions_data/{sample}",
         #bam="aligned/{sample}.bam",
     output:
         feat_vec_dir=directory("feature_vectors_reference/{sample}"),
     benchmark:
         "benchmarks/{sample}.bam_to_fvec.benchmark.txt",
-    threads: 16,
+    threads: 32,
     log:
         "logs/{sample}/bam_to_fvec_ref.log",
     shell:
-        "mkdir {output.feat_vec_dir}"
+        "python {bam_to_fvec_reference_script} "
+        "-i {input.featvec_csv} "
+        "-od feature_vectors_reference "
+        "-bd downsampled "
+        "-tebd candidate_regions_data "
+        "-p {threads}"
 
 
 rule bam_to_fvec_het:
     input:
         featvec_csv="featvec_csvs_hettrain/{sample}.csv",  #+ "featvec_csvs_hettrain/{sample}.csv",
         bam="aligned_het/{sample}.bam",
+        candidate_dir="candidate_regions_data_het/{sample}",
     output:
         feat_vec_dir=directory("feature_vectors_het/{sample}"),
     threads: 32
@@ -567,6 +590,7 @@ rule bam_to_fvec_reference_het:
     input:
         featvec_csv="featvec_csvs_hettrain/{sample}_reference.csv",  #+ "featvec_csvs_hettrain/{sample}.csv",
         bam="aligned_het/{sample}.bam",
+        candidate_dir="candidate_regions_data_het/{sample}",
     output:
         feat_vec_dir=directory("feature_vectors_het_reference/{sample}"),
     threads: 16
@@ -887,7 +911,10 @@ bed_to_vcf_script = workflow.basedir + "/scripts/bed_to_vcf.py"
 rule find_breakpoints:
     input:
         predictions="output/{sample}/predictions.csv",
-        predictions_ref="output_reference/{sample}/predictions.csv"
+        predictions_ref="output_reference/{sample}/predictions.csv",
+        downsampled_bam="downsampled/{sample}.bam",
+        downsampled_bam_index="downsampled/{sample}.bam.bai",
+        candidate_dir="candidate_regions_data/{sample}"
     output:
         bed="output/{sample}_TEforest_nonredundant.bed",
         bps="output/{sample}_TEforest_bps_nonredundant.bed",
@@ -917,6 +944,7 @@ rule find_breakpoints_het:
         predictions2="3L3RX/{sample}.csv",
         predictions1_ref="2L2R_reference/{sample}.csv",
         predictions2_ref="3L3RX_reference/{sample}.csv",
+        candidate_dir="candidate_regions_data_het/{sample}",
     output:
         bed1="2L2R_model_validation_output/{sample}_TEforest_nonredundant.bed",
         bps1="2L2R_model_validation_output/{sample}_TEforest_bps_nonredundant.bed",
@@ -936,6 +964,7 @@ rule find_breakpoints_het_classifier:
         predictions2="3L3RX_classifer/{sample}.csv",
         predictions1_ref="2L2R_classifer_reference/{sample}.csv",
         predictions2_ref="3L3RX_classifer_reference/{sample}.csv",
+        candidate_dir="candidate_regions_data_het/{sample}",
     output:
         bed1="2L2R_model_validation_output_classifier/{sample}_TEforest_nonredundant.bed",
         bps1="2L2R_model_validation_output_classifier/{sample}_TEforest_bps_nonredundant.bed",

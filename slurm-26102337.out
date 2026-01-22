@@ -1,5 +1,0 @@
-2026-01-07 17:29:21,098 - INFO - Config file created at: /nas/longleaf/home/adaigle/work/test_TEforest/train_simple_20X/config.yaml
-WorkflowError in file /nas/longleaf/home/adaigle/TEforest/workflow/training/Snakefile, line 4:
-Expecting Snakemake version 8.0 or higher (you are currently using 7.32.4).
-  File "/nas/longleaf/home/adaigle/TEforest/workflow/training/Snakefile", line 4, in <module>
-2026-01-07 17:29:23,112 - ERROR - Snakemake unlock failed with exit code 1

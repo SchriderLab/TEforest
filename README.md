@@ -1,6 +1,6 @@
 # TEforest
 
-This repository is designed for detecting transposable element (TE) insertions using short-read sequencing data. It enables both the assessment of annotated TE presence/absence in the reference genome and the detection and genotyping of novel insertions not represented in the reference. The repository includes a Snakemake pipeline used for training, deploying, and benchmarking TE insertion detection models based on random forest classifiers. Please note that this is a beta release, and we are actively working to improve usability.
+This repository is designed for detecting transposable element (TE) insertions using short-read sequencing data. It enables both the assessment of annotated TE presence/absence in the reference genome and the detection and genotyping of novel insertions not represented in the reference. The repository includes a Snakemake pipeline used for training, deploying, and benchmarking TE insertion detection models based on LightGBM classifiers.
 
 ## Overview
 
@@ -33,17 +33,20 @@ This repository is designed for detecting transposable element (TE) insertions u
 
 ## Environment Setup
 
-A Conda environment YAML file (`TEforest.yml`) is included for convenience. It defines the base dependencies for running this pipeline. However, note that **additional R packages** such as **GenomicAlignments** and **GenomicRanges** should be installed to ensure full functionality. A full Conda installation is under development and will be released shortly. 
+Two supported options are available:
+
+### Conda
+
+Create and activate the environment with the provided YAML:
 
 ```bash
-# Example environment creation
 conda env create -f TEforest.yml
-
-# Activate the environment
 conda activate TEforest
-
-# Then install additional R packages within this environment.
 ```
+
+### Docker (GitHub container)
+
+We publish a container image via GitHub Container Registry (GHCR). Use the image from the repository to run TEforest without managing local dependencies. See the repository’s GHCR workflow for the current image name and tags.
 
 ## How to Launch
 
@@ -65,6 +68,7 @@ python TEforest.py \
     --model <path/to/pretrained_model.pkl> \
     --ref_model <path/to/reference_model.pkl> \
     --fq_base_path <path/to/fastq/files> \
+    --cleanup_intermediates \
     --samples A1 A2 A3
 ```
 
@@ -75,6 +79,7 @@ python TEforest.py \
 - **`--model`**: Path to the non-reference random forest model. Select a model that best matches the coverage of your reads. Alignments are automatically downsampled to the nearest available coverage—whichever is immediately lower than your average—using one of the following trained models: 5X, 10X, 20X, 30X, 40X, or 50X.
 - **`--ref_model`**: Path to the reference random forest model.
 - **`--fq_base_path`**: Directory containing FASTQ files. Should contain sample in name formatted {sample}_1.fastq.gz and {sample}_2.fastq.gz or {sample}_1.fq.gz.
+- **`--cleanup_intermediates`**: Optional flag to delete large intermediate files after they are used (e.g., `fastp/`, `aligned/`, `downsampled/`, `candidate_regions_data/`). Omit this if you want to keep read alignments or candidate-region BAMs for debugging.
 - **`--samples`**: List of sample identifiers to process (space-separated). Note more than one sample can be run in parallel. 
 
 The script will generate:
@@ -143,6 +148,5 @@ You can also override the work directory:
 
 ## Contributing
 
-- We are actively working on usability improvements over the next several months (e.g., streamlined CLI arguments, a fully functional conda installation, automatic model selection, faster runtime). 
-- This pipeline has only been tested in *Drosophila melanogaster*. Future tests and updates will ensure useability in other species. 
+- We are actively working on improving performance across different use cases and on large datasets.
 - Issues and pull requests are welcome.

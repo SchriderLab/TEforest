@@ -106,6 +106,11 @@ def main():
         required=True,
         help="Path to directory containing fastq files"
     )
+    parser.add_argument(
+        "--cleanup_intermediates",
+        action="store_true",
+        help="Delete large intermediate files (fastp/, aligned/, downsampled/, candidate_regions_data/) after use."
+    )
     #parser.add_argument(
     #    "--target_coverage",
     #    type=int,
@@ -147,7 +152,8 @@ def main():
         "bam_path": "/na/",
         "fq_base_path": args.fq_base_path,
         #"target_coverage": args.target_coverage,
-        "target_coverage": 50
+        "target_coverage": 50,
+        "cleanup_intermediates": args.cleanup_intermediates,
 
     }
 
