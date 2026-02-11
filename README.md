@@ -69,6 +69,8 @@ python TEforest.py \
     --ref_model <path/to/reference_model.pkl> \
     --fq_base_path <path/to/fastq/files> \
     --cleanup_intermediates \
+    --disable_reference_detection \
+    --dry_run \
     --samples A1 A2 A3
 ```
 
@@ -76,11 +78,23 @@ python TEforest.py \
 - **`--workdir`**: Directory to store outputs and logs.
 - **`--threads`**: Number of CPU threads to use. 16 per sample is recommended.
 - **`--consensusTEs`, `--ref_genome`, `--ref_te_locations`, `--euchromatin`**: Input reference files for TE detection. All calls outside of the regions denoted in euchromatin will be filtered. Example files used for Drosophila melanogaster are located in example_files/. Be aware the BWA-mem2 will treat IUPAC bases as missing, so TEforest may have reduced performance on consensus sequences with high IUPAC content.  
+  - Current reference BED usage in inference: columns 1/2/3 are used as genomic coordinates, and column 7 is used as the TE family ID.
+  - Columns 4/5/6 and any trailing columns are accepted but are not used by the pipeline.
+  - BED can be tab-delimited or whitespace-delimited.
 - **`--model`**: Path to the non-reference model (optional). If omitted, TEforest auto-selects a model based on the observed coverage (5X/10X/20X/30X/40X/50X). If the data are not downsampled (e.g., 48X), the next highest model is chosen (50X).  
 - **`--ref_model`**: Path to the reference model (optional). Auto-selection follows the same coverage logic as above.
 - **`--fq_base_path`**: Directory containing FASTQ files. TEforest will match common read naming conventions (e.g., `_R1/_R2`, `_1/_2`, `.1/.2`, `R1/R2`, lane tokens like `_L001_R1_001`) as long as the sample name appears in the filename.
 - **`--cleanup_intermediates`**: Optional flag to delete large intermediate files after they are used (e.g., `fastp/`, `aligned/`, `downsampled/`, `candidate_regions_data/`). Omit this if you want to keep read alignments or candidate-region BAMs for debugging.
+- **`--disable_reference_detection`**: Optional flag to skip reference TE feature-vector creation and reference model prediction. This can be useful for genomes with very large numbers of old reference TEs, where reference detection can dominate runtime.
+- **`--dry_run`**: Optional flag to run `snakemake --dry-run` through the wrapper, so you can validate file naming, inputs, and DAG construction before launching compute-heavy jobs.
 - **`--samples`**: List of sample identifiers to process (space-separated). Note more than one sample can be run in parallel. 
+
+Input validation (runs for both normal execution and `--dry_run`):
+- FASTQs are resolved per sample/read, must exist, be non-empty, and have a valid first FASTQ record.
+- Reference BED must have at least 7 whitespace-delimited columns.
+- Reference BED chromosome names (column 1) must match sequence headers in `ref_genome`.
+- Every TE ID in reference BED column 7 must be present in `consensusTEs` FASTA headers.
+- Extra TE families in the consensus FASTA are allowed.
 
 The script will generate:
 - A `config.yaml` in your specified `workdir` with all parameters.

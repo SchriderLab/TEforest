@@ -28,17 +28,27 @@ extend <- function(x, upstream=0, downstream=0) {
 
 args <- commandArgs(TRUE)
 print(args)
+if (length(args) < 6) {
+  stop("Expected at least 6 args: sample, nonref_csv, results_path, aligned_dir, ref_csv_or_NA, candidate_regions_dir, [reference_enabled]")
+}
 genomes <- as.list(args[1])
 csv_path <- as.list(args[2])
 results_path <- as.list(args[3])
 aligned_dir <- as.list(args[4])
-csv_path_reference <- as.list(args[5])
+csv_path_reference_arg <- as.character(args[5])
 candidate_regions_data_dir <- as.list(args[6])
+reference_enabled <- TRUE
+if (length(args) >= 7) {
+  reference_enabled <- tolower(as.character(args[7])) %in% c("1", "true", "yes", "y")
+}
 
 basedir_outputs_path <- getwd()
 csv_path <- paste0(getwd(), "/", csv_path)
 print(csv_path)
-csv_path_reference <- paste0(getwd(), "/", csv_path_reference)
+csv_path_reference <- NULL
+if (reference_enabled && !(tolower(csv_path_reference_arg) %in% c("na", "none", "null", ""))) {
+  csv_path_reference <- paste0(getwd(), "/", csv_path_reference_arg)
+}
 print(csv_path_reference)
 
 #genomes <- "RL50IS200_rep1_fwd"
@@ -132,7 +142,24 @@ apply_labels_reference <- function(genome) {
 }
 
 
-formatted_reference <- lapply(genomes, apply_labels_reference)[[1]]
+empty_reference_df <- function() {
+  tibble(
+    seqnames = character(),
+    start = integer(),
+    end = integer(),
+    TE_string = character(),
+    score = integer(),
+    strand = character()
+  )
+}
+
+formatted_reference <- empty_reference_df()
+if (reference_enabled) {
+  if (is.null(csv_path_reference) || !file.exists(csv_path_reference)) {
+    stop("Reference detection enabled but reference predictions CSV is missing: ", csv_path_reference)
+  }
+  formatted_reference <- lapply(genomes, apply_labels_reference)[[1]]
+}
 
 apply_labels <- function(genome) {
   # Determine genome name structure for parsing the CSV file

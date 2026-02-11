@@ -11,6 +11,13 @@ def cleanup_enabled():
     return bool(value)
 
 
+def reference_detection_enabled():
+    value = config.get("disable_reference_detection", False)
+    if isinstance(value, str):
+        value = value.strip().lower() in {"1", "true", "yes", "y"}
+    return not bool(value)
+
+
 def maybe_temp(path):
     return temp(path) if cleanup_enabled() else path
 
@@ -1078,10 +1085,13 @@ bed_to_vcf_script = workflow.basedir + "/scripts/bed_to_vcf.py"
 rule find_breakpoints:
     input:
         predictions="output/{sample}/predictions.csv",
-        predictions_ref="output_reference/{sample}/predictions.csv",
+        predictions_ref=lambda wildcards: [] if not reference_detection_enabled() else [f"output_reference/{wildcards.sample}/predictions.csv"],
         downsampled_bam="downsampled/{sample}.bam",
         downsampled_bam_index="downsampled/{sample}.bam.bai",
         candidate_dir="candidate_regions_data/{sample}"
+    params:
+        predictions_ref=lambda wildcards, input: input.predictions_ref[0] if len(input.predictions_ref) else "NA",
+        reference_enabled=lambda wildcards: "1" if reference_detection_enabled() else "0"
     output:
         bed="output/{sample}_TEforest_nonredundant.bed",
         bps="output/{sample}_TEforest_bps_nonredundant.bed",
@@ -1090,7 +1100,7 @@ rule find_breakpoints:
     log:
         "logs/{sample}/find_breakpoints.log",
     shell:
-        "{find_breakpoints_script} {wildcards.sample} {input.predictions} output/ downsampled/ {input.predictions_ref} /candidate_regions_data/"
+        "{find_breakpoints_script} {wildcards.sample} {input.predictions} output/ downsampled/ {params.predictions_ref} /candidate_regions_data/ {params.reference_enabled}"
 
 
 rule bed_to_vcf:
