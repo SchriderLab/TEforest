@@ -1,4 +1,6 @@
 from snakemake.utils import min_version
+import os
+import re
 
 min_version("8.0")
 
@@ -15,6 +17,96 @@ def maybe_temp(path):
 
 def maybe_temp_dir(path):
     return temp(directory(path)) if cleanup_enabled() else directory(path)
+
+
+MODEL_COVERAGES = [5, 10, 20, 30, 40, 50]
+FASTQ_EXTS = (".fastq.gz", ".fq.gz", ".fastq", ".fq")
+
+
+def is_auto_model(value):
+    if value is None:
+        return True
+    if isinstance(value, str):
+        return value.strip().lower() in {"auto", "none", ""}
+    return False
+
+
+def parse_coverage_file(path):
+    try:
+        with open(path, "r") as fh:
+            text = fh.read()
+    except OSError:
+        return None
+    match = re.search(r"([0-9]+(?:\.[0-9]+)?)", text)
+    if not match:
+        return None
+    return float(match.group(1))
+
+
+def choose_model_coverage(observed_cov):
+    if observed_cov is None:
+        return MODEL_COVERAGES[-1]
+    for target in MODEL_COVERAGES:
+        if abs(observed_cov - target) < 0.01:
+            return target
+    for target in MODEL_COVERAGES:
+        if observed_cov <= target:
+            return target
+    return MODEL_COVERAGES[-1]
+
+
+def model_path(kind, cov):
+    return os.path.join(workflow.basedir, "models", f"teforest_{kind}_{cov}X.pkl")
+
+
+def selected_model_path(sample, kind):
+    return f"selected_models/{sample}_{kind}.pkl"
+
+
+def _strip_fastq_ext(name):
+    lower = name.lower()
+    for ext in FASTQ_EXTS:
+        if lower.endswith(ext):
+            return name[: -len(ext)]
+    return name
+
+
+def _sample_remainder(name, sample):
+    if name.startswith(sample):
+        return name[len(sample):], 0
+    pattern = re.compile(rf"(?:^|[_.-]){re.escape(sample)}(?:[_.-]|$)")
+    match = pattern.search(name)
+    if not match:
+        return None, None
+    start = match.start()
+    if name[start] in "._-":
+        start += 1
+    return name[start + len(sample):], 1
+
+
+def _infer_read_token(remainder):
+    if remainder is None:
+        return None
+    rem = remainder.lstrip("._-")
+    patterns = [
+        (1, r"(?:^|[_.-])R1(?:[_.-]|$)"),
+        (2, r"(?:^|[_.-])R2(?:[_.-]|$)"),
+        (1, r"(?:^|[_.-])1(?:[_.-]|$)"),
+        (2, r"(?:^|[_.-])2(?:[_.-]|$)"),
+    ]
+    for read, pattern in patterns:
+        if re.search(pattern, rem):
+            return read
+    return None
+
+
+def _list_fastq_files(base_path):
+    files = []
+    for name in os.listdir(base_path):
+        lower = name.lower()
+        if any(lower.endswith(ext) for ext in FASTQ_EXTS):
+            files.append(name)
+    return files
 
 #include: "rules/common.smk"
 
@@ -70,12 +162,29 @@ rule index_ref:
         """
 
 def find_fastq(base_path, sample, read):
-    exts = ["fq", "fq.gz", "fastq", "fastq.gz"]
-    for ext in exts:
-        file_path = f"{base_path}{sample}_{read}.{ext}"
-        if os.path.exists(file_path):
-            return file_path
-    raise ValueError(f"No valid input files found for sample {sample} read {read}")
+    matches = []
+    for name in _list_fastq_files(base_path):
+        stem = _strip_fastq_ext(name)
+        remainder, priority = _sample_remainder(stem, sample)
+        if remainder is None:
+            continue
+        read_token = _infer_read_token(remainder)
+        if read_token is None:
+            continue
+        if str(read_token) == str(read):
+            matches.append((priority, name))
+    if not matches:
+        raise ValueError(
+            f"No valid input files found for sample {sample} read {read} in {base_path}."
+        )
+    matches.sort(key=lambda item: (item[0], item[1]))
+    if len(matches) > 1:
+        names = ", ".join(m[1] for m in matches)
+        raise ValueError(
+            f"Multiple FASTQ files matched sample {sample} read {read}: {names}. "
+            "Please merge lanes or pass a directory with one FASTQ per read."
+        )
+    return os.path.join(base_path, matches[0][1])
 
 rule fastp:
     input:
@@ -481,6 +590,60 @@ rule downsample_reads:
         """
 
 
+rule select_model_nonreference:
+    input:
+        coverage="downsampled/{sample}_coverage.txt"
+    output:
+        model="selected_models/{sample}_nonreference.pkl",
+        info="selected_models/{sample}_nonreference.txt"
+    run:
+        cov = parse_coverage_file(input.coverage)
+        target_cov = choose_model_coverage(cov)
+        src = model_path("nonreference", target_cov)
+        os.makedirs(os.path.dirname(output.model), exist_ok=True)
+        if not os.path.exists(src):
+            raise FileNotFoundError(f"Model not found: {src}")
+        if os.path.islink(output.model) or os.path.exists(output.model):
+            os.remove(output.model)
+        try:
+            os.symlink(src, output.model)
+        except OSError:
+            import shutil
+            shutil.copy2(src, output.model)
+        with open(output.info, "w") as fh:
+            fh.write(f"observed_coverage={cov}\n")
+            fh.write(f"chosen_coverage={target_cov}\n")
+            fh.write(f"model_path={src}\n")
+        print(f"[select_model_nonreference] coverage={cov} -> {src}")
+
+
+rule select_model_reference:
+    input:
+        coverage="downsampled/{sample}_coverage.txt"
+    output:
+        model="selected_models/{sample}_reference.pkl",
+        info="selected_models/{sample}_reference.txt"
+    run:
+        cov = parse_coverage_file(input.coverage)
+        target_cov = choose_model_coverage(cov)
+        src = model_path("reference", target_cov)
+        os.makedirs(os.path.dirname(output.model), exist_ok=True)
+        if not os.path.exists(src):
+            raise FileNotFoundError(f"Model not found: {src}")
+        if os.path.islink(output.model) or os.path.exists(output.model):
+            os.remove(output.model)
+        try:
+            os.symlink(src, output.model)
+        except OSError:
+            import shutil
+            shutil.copy2(src, output.model)
+        with open(output.info, "w") as fh:
+            fh.write(f"observed_coverage={cov}\n")
+            fh.write(f"chosen_coverage={target_cov}\n")
+            fh.write(f"model_path={src}\n")
+        print(f"[select_model_reference] coverage={cov} -> {src}")
+
+
 rule align_reads_het:
     input:
         fq1_qc="fastp_het/{sample}.R1.fq",
@@ -671,7 +834,9 @@ use_model_script = workflow.basedir + "/scripts/use_model.py"
 rule use_model:
     input:
         npz   = "condensed_feature_vectors/{sample}/{sample}_condense.npz",
-        model = config["model"]
+        model = lambda wildcards: config["model"]
+        if not is_auto_model(config.get("model"))
+        else selected_model_path(wildcards.sample, "nonreference")
     output:
         predictions = "output/{sample}/predictions.csv"
     threads: config["threads"]
@@ -692,7 +857,9 @@ rule use_model_reference:
     input:
         #featvec_csv="featvec_csvs/{sample}.csv",
         npz="condensed_feature_vectors_reference/{sample}/{sample}_condense.npz",
-        model=config["ref_model"],
+        model=lambda wildcards: config["ref_model"]
+        if not is_auto_model(config.get("ref_model"))
+        else selected_model_path(wildcards.sample, "reference"),
     output:
         predictions="output_reference/{sample}/predictions.csv",
     threads: 8

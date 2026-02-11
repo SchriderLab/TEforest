@@ -88,13 +88,13 @@ def main():
     )
     parser.add_argument(
         "--model",
-        required=True,
-        help="Path to model pkl file"
+        required=False,
+        help="Path to model pkl file (optional; if omitted, TEforest auto-selects based on coverage)"
     )
     parser.add_argument(
         "--ref_model",
-        required=True,
-        help="Path to reference model pkl file"
+        required=False,
+        help="Path to reference model pkl file (optional; if omitted, TEforest auto-selects based on coverage)"
     )
     #parser.add_argument(
     #    "--bam_path",
@@ -146,8 +146,8 @@ def main():
         "ref_genome": args.ref_genome,
         "ref_te_locations": args.ref_te_locations,
         "euchromatin": args.euchromatin,
-        "model": args.model,
-        "ref_model": args.ref_model,
+        "model": args.model if args.model else "auto",
+        "ref_model": args.ref_model if args.ref_model else "auto",
         #"bam_path:": args.bam_path,
         "bam_path": "/na/",
         "fq_base_path": args.fq_base_path,

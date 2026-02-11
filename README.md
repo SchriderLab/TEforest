@@ -76,9 +76,9 @@ python TEforest.py \
 - **`--workdir`**: Directory to store outputs and logs.
 - **`--threads`**: Number of CPU threads to use. 16 per sample is recommended.
 - **`--consensusTEs`, `--ref_genome`, `--ref_te_locations`, `--euchromatin`**: Input reference files for TE detection. All calls outside of the regions denoted in euchromatin will be filtered. Example files used for Drosophila melanogaster are located in example_files/. Be aware the BWA-mem2 will treat IUPAC bases as missing, so TEforest may have reduced performance on consensus sequences with high IUPAC content.  
-- **`--model`**: Path to the non-reference random forest model. Select a model that best matches the coverage of your reads. Alignments are automatically downsampled to the nearest available coverage—whichever is immediately lower than your average—using one of the following trained models: 5X, 10X, 20X, 30X, 40X, or 50X.
-- **`--ref_model`**: Path to the reference random forest model.
-- **`--fq_base_path`**: Directory containing FASTQ files. Should contain sample in name formatted {sample}_1.fastq.gz and {sample}_2.fastq.gz or {sample}_1.fq.gz.
+- **`--model`**: Path to the non-reference model (optional). If omitted, TEforest auto-selects a model based on the observed coverage (5X/10X/20X/30X/40X/50X). If the data are not downsampled (e.g., 48X), the next highest model is chosen (50X).  
+- **`--ref_model`**: Path to the reference model (optional). Auto-selection follows the same coverage logic as above.
+- **`--fq_base_path`**: Directory containing FASTQ files. TEforest will match common read naming conventions (e.g., `_R1/_R2`, `_1/_2`, `.1/.2`, `R1/R2`, lane tokens like `_L001_R1_001`) as long as the sample name appears in the filename.
 - **`--cleanup_intermediates`**: Optional flag to delete large intermediate files after they are used (e.g., `fastp/`, `aligned/`, `downsampled/`, `candidate_regions_data/`). Omit this if you want to keep read alignments or candidate-region BAMs for debugging.
 - **`--samples`**: List of sample identifiers to process (space-separated). Note more than one sample can be run in parallel. 
 
@@ -87,6 +87,10 @@ The script will generate:
 - Intermediate files used to run the pipeline
 - Output `.bed` files ({sample}_TEforest_bps_nonredundant.bed) for each sample in `output/` within the specified `workdir`.
 - Output `.vcf` files ({sample}_TEforest_bps_nonredundant.vcf) for each sample in `output/` within the specified `workdir`.
+
+Automatic model selection outputs:
+- `selected_models/{sample}_nonreference.pkl` and `selected_models/{sample}_reference.pkl` (symlinks to the chosen models).
+- `selected_models/{sample}_nonreference.txt` and `selected_models/{sample}_reference.txt` with the observed coverage, chosen coverage, and model path.
 
 VCF notes:
 - Non-reference calls are represented as INS records with ALT `<INS:ME:<TEFAM>>`.
