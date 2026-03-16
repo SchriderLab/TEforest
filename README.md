@@ -81,7 +81,7 @@ python TEforest.py \
   - Current reference BED usage in inference: columns 1/2/3 are used as genomic coordinates, and column 7 is used as the TE family ID.
   - Columns 4/5/6 and any trailing columns are accepted but are not used by the pipeline.
   - BED can be tab-delimited or whitespace-delimited.
-- **`--model`**: Path to the non-reference model (optional). If omitted, TEforest auto-selects a model based on the observed coverage (5X/10X/20X/30X/40X/50X). If the data are not downsampled (e.g., 48X), the next highest model is chosen (50X).  
+- **`--model`**: Path to the non-reference model (optional). If omitted, TEforest auto-selects a model based on the pipeline’s chosen downsample target coverage (5X/10X/20X/30X/40X/50X).
 - **`--ref_model`**: Path to the reference model (optional). Auto-selection follows the same coverage logic as above.
 - **`--fq_base_path`**: Directory containing FASTQ files. TEforest will match common read naming conventions (e.g., `_R1/_R2`, `_1/_2`, `.1/.2`, `R1/R2`, lane tokens like `_L001_R1_001`) as long as the sample name appears in the filename.
 - **`--cleanup_intermediates`**: Optional flag to delete large intermediate files after they are used (e.g., `fastp/`, `aligned/`, `downsampled/`, `candidate_regions_data/`). Omit this if you want to keep read alignments or candidate-region BAMs for debugging.
@@ -105,6 +105,12 @@ The script will generate:
 Automatic model selection outputs:
 - `selected_models/{sample}_nonreference.pkl` and `selected_models/{sample}_reference.pkl` (symlinks to the chosen models).
 - `selected_models/{sample}_nonreference.txt` and `selected_models/{sample}_reference.txt` with the observed coverage, chosen coverage, and model path.
+
+Coverage and downsampling behavior:
+- TEforest first measures average coverage from the aligned BAM.
+- If observed coverage is below 5X, the pipeline exits with an error.
+- TEforest then always chooses a supported downsample target from `{5, 10, 20, 30, 40, 50}` that does not exceed observed coverage.
+- Model auto-selection uses this chosen target coverage (for example, observed 18.3X -> chosen target 10X -> 10X model).
 
 VCF notes:
 - Non-reference calls are represented as INS records with ALT `<INS:ME:<TEFAM>>`.

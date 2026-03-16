@@ -836,11 +836,15 @@ rule condense_data_het:
 
 
 use_model_script = workflow.basedir + "/scripts/use_model.py"
+stream_predict_script = workflow.basedir + "/scripts/predict_from_regions_stream.py"
 
 
 rule use_model:
     input:
-        npz   = "condensed_feature_vectors/{sample}/{sample}_condense.npz",
+        featvec_csv="featvec_csvs/{sample}.csv",
+        bam="downsampled/{sample}.bam",
+        bam_index="downsampled/{sample}.bam.bai",
+        candidate_dir="candidate_regions_data/{sample}",
         model = lambda wildcards: config["model"]
         if not is_auto_model(config.get("model"))
         else selected_model_path(wildcards.sample, "nonreference")
@@ -853,17 +857,24 @@ rule use_model:
         "logs/{sample}/use_model.log"
     shell:
         """
-        python {use_model_script} \
-            -n {input.npz} \
+        python {stream_predict_script} \
+            -i {input.featvec_csv} \
+            -bd downsampled \
+            -tebd candidate_regions_data \
             -m {input.model} \
-            -o output/{wildcards.sample} \
-            -t {threads}
+            -o {output.predictions} \
+            --mode nonreference \
+            -p {threads} \
+            -t {threads} \
+            --batch_size 256
         """
 
 rule use_model_reference:
     input:
-        #featvec_csv="featvec_csvs/{sample}.csv",
-        npz="condensed_feature_vectors_reference/{sample}/{sample}_condense.npz",
+        featvec_csv="featvec_csvs/{sample}_reference.csv",
+        bam="downsampled/{sample}.bam",
+        bam_index="downsampled/{sample}.bam.bai",
+        candidate_dir="candidate_regions_data/{sample}",
         model=lambda wildcards: config["ref_model"]
         if not is_auto_model(config.get("ref_model"))
         else selected_model_path(wildcards.sample, "reference"),
@@ -875,7 +886,16 @@ rule use_model_reference:
     log:
         "logs/{sample}/use_model.log",
     shell:
-        "python {use_model_script} -n {input.npz} -m {input.model} -o output_reference/{wildcards.sample}"
+        "python {stream_predict_script} "
+        "-i {input.featvec_csv} "
+        "-bd downsampled "
+        "-tebd candidate_regions_data "
+        "-m {input.model} "
+        "-o {output.predictions} "
+        "--mode reference "
+        "-p {threads} "
+        "-t {threads} "
+        "--batch_size 256"
 
 
 organize_training_data_script = (

@@ -3,10 +3,11 @@
 # Usage: downsample_to_fastq.sh <input_bam> <threads> <output_dir> <sample> <reference_te_bed>
 #
 # 1) Calculates average and median coverage for <input_bam>, excluding regions in <reference_te_bed>.
-# 2) From target coverage options [5, 10, 20, 30, 40, 50], it picks the one closest to the observed median.
-#    - If the nearest target is higher than the observed coverage, no downsampling is performed.
-# 3) Writes chosen coverage to <output_dir>/<sample>_coverage.txt.
-# 4) Produces:
+# 2) From target coverage options [5, 10, 20, 30, 40, 50], it picks the nearest available
+#    downsampling target that is <= observed coverage (always downsampling to a supported level).
+# 3) If observed coverage is < 5X, the script exits with an error.
+# 4) Writes chosen coverage to <output_dir>/<sample>_coverage.txt.
+# 5) Produces:
 #    - coordinate-sorted downsampled BAM: <output_dir>/<sample>.bam
 #    - its index: <output_dir>/<sample>.bam.bai
 #    - FASTQs: <output_dir>/<sample>_1.fq, <output_dir>/<sample>_2.fq, <output_dir>/<sample>_singletons.fq.
@@ -71,6 +72,12 @@ echo "Average coverage: ${coverage}"
 coverage_levels=(5 10 20 30 40 50)
 observed=${coverage}
 
+# Enforce minimum supported coverage.
+if (( $(echo "$observed < 5" | bc -l) )); then
+    echo "ERROR: Observed coverage (${observed}x) is below the minimum supported coverage (5X)." >&2
+    exit 1
+fi
+
 # Find the target in the list that is numerically closest to the observed coverage.
 nearest_target=0
 min_diff=999999
@@ -84,14 +91,16 @@ for t in "${coverage_levels[@]}"; do
 done
 echo "Nearest target coverage is: ${nearest_target}"
 
-# Decide: if the nearest target is greater than the observed coverage, do not downsample.
-if (( $(echo "$nearest_target > $observed" | bc -l) )); then
-    chosen_cov=${observed}
-    echo "Observed coverage (${observed}x) is closer to a higher target (${nearest_target}x). No downsampling will be performed."
-else
-    chosen_cov=${nearest_target}
-    echo "Downsampling to chosen coverage: ${chosen_cov}x"
-fi
+# Choose the supported downsampling target that does not exceed observed coverage.
+chosen_cov=5
+for t in "${coverage_levels[@]}"; do
+    if (( $(echo "$t <= $observed" | bc -l) )); then
+        chosen_cov=$t
+    else
+        break
+    fi
+done
+echo "Chosen downsampling target coverage: ${chosen_cov}x"
 
 # Write out chosen coverage
 coverage_file="${output_dir}/${sample}_coverage.txt"
